@@ -515,3 +515,42 @@ input:focus, select:focus, textarea:focus{
 @media (max-width: 980px){
   .footer-inner{grid-template-columns: 1fr}
 }
+
+/* Dining hours */
+.hours-card{
+  margin-top: 14px;
+  padding: 14px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.04);
+}
+.hours-title{
+  font-size:12px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color: rgba(255,255,255,0.60);
+  margin-bottom: 10px;
+}
+.hours-list{
+  list-style:none;
+  padding:0;
+  margin:0;
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+.hours-list li{
+  display:flex;
+  justify-content:space-between;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: rgba(11,18,16,0.28);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.hours-list li span:first-child{
+  color: rgba(255,255,255,0.72);
+  font-weight:600;
+}
+.hours-list li span:last-child{
+  color: rgba(255,255,255,0.86);
+}
