@@ -92,11 +92,15 @@ a:hover{opacity:0.92}
   border-radius:12px;
   display:grid;
   place-items:center;
-  font-weight:700;
-  letter-spacing:0.5px;
-  background: linear-gradient(135deg, rgba(184,155,94,0.25), rgba(15,59,46,0.55));
+  background: rgba(255,255,255,0.06);
   border:1px solid rgba(255,255,255,0.16);
   box-shadow: 0 10px 22px rgba(0,0,0,0.25);
+  overflow:hidden;
+}
+.brand-mark--img img{
+  width: 120%;
+  height: 120%;
+  object-fit: contain;
 }
 .brand-text{display:flex; flex-direction:column; line-height:1.1}
 .brand-name{
