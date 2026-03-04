@@ -1,3 +1,4 @@
+html{background:#070a08;}
 /* LGCC proposal site — clean, modern, timeless */
 
 :root{
@@ -27,29 +28,13 @@
 *{box-sizing:border-box}
 html,body{
   margin:0;
-  font-family:var(--sans);
-  /* Outside the site column */
-  background: #000;
-  color:var(--text);
-  line-height:1.5;
-  position: relative;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  color: var(--text, #f1f5f4);
+  background: #070a08; /* outside of site-shell */
 }
 
 /* Site "spotlight" background is constrained to the content column */
-body::before{
-  content:"";
-  position: fixed;
-  top:0; bottom:0;
-  left:50%;
-  transform: translateX(-50%);
-  width: min(var(--container), 100%);
-  background:
-    radial-gradient(1200px 800px at 20% 10%, rgba(15,59,46,0.35), transparent 60%),
-    radial-gradient(900px 600px at 80% 20%, rgba(184,155,94,0.18), transparent 60%),
-    var(--bg);
-  z-index: -1;
-  pointer-events: none;
-}
+body::before{content:"";display:none;}
 body{
   margin:0;
   font-family:var(--sans);
@@ -577,4 +562,15 @@ input:focus, select:focus, textarea:focus{
 }
 .hours-list li span:last-child{
   color: rgba(255,255,255,0.86);
+}
+
+
+/* Constrain the “club” background to the site canvas so ultra-wide screens show black outside */
+.site-shell{
+  width: 100%;
+  max-width: 1400px; /* page boundary */
+  margin: 0 auto;
+  background: var(--bg);
+  overflow:hidden;
+  min-height:100vh;
 }
