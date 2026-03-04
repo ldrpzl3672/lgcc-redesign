@@ -562,3 +562,7 @@ input:focus, select:focus, textarea:focus{
 .hours-list li span:last-child{
   color: rgba(255,255,255,0.86);
 }
+.site-footer .container{
+  width:calc(100% - 32px);
+  max-width:1400px;
+}
