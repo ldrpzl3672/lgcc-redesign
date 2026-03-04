@@ -1,3 +1,4 @@
+html{background:#070a08;}
 /* LGCC proposal site — clean, modern, timeless */
 
 :root{
@@ -27,16 +28,9 @@
 *{box-sizing:border-box}
 html,body{
   margin:0;
-  font-family:var(--sans);
-  /* Outside the site column */
-  background:#000;
-  color:var(--text);
-  line-height:1.5;
-  position: relative;
-  display:flex;
-  justify-content:center;
-  min-height:100vh;
-  align-items: stretch;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  color: var(--text, #f1f5f4);
+  background: #070a08; /* outside of site-shell */
 }
 
 /* Site "spotlight" background is constrained to the content column */
@@ -573,12 +567,10 @@ input:focus, select:focus, textarea:focus{
 
 /* Constrain the “club” background to the site canvas so ultra-wide screens show black outside */
 .site-shell{
-  width: min(var(--container), 100%);
-  min-height: 100vh;
+  width: 100%;
+  max-width: 1400px; /* page boundary */
   margin: 0 auto;
-  position: relative;
-  background:
-    radial-gradient(1200px 800px at 20% 10%, rgba(15,59,46,0.35), transparent 60%),
-    radial-gradient(900px 600px at 80% 20%, rgba(184,155,94,0.18), transparent 60%),
-    var(--bg);
+  background: var(--bg);
+  overflow:hidden;
+  min-height:100vh;
 }
