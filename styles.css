@@ -495,19 +495,24 @@ input:focus, select:focus, textarea:focus{
 /* Footer */
 .site-footer{
   border-top: 1px solid rgba(255,255,255,0.10);
-  padding: 28px 0;
+  padding: 18px 0;
   background: rgba(0,0,0,0.18);
 }
 .footer-inner{
   display:grid;
-  grid-template-columns: 1.3fr 1fr 1.2fr;
-  gap: 16px;
-  align-items:start;
+  grid-template-columns: auto auto 1fr;
+  gap: 20px;
+  align-items:center;
 }
 .footer-brand{display:flex; align-items:center; gap:12px}
 .footer-title{font-family: var(--serif); font-weight:700}
 .footer-sub{color: var(--muted); font-size: 14px}
-.footer-links{display:flex; flex-direction:column; gap:8px}
+.footer-links{
+  display:flex;
+  flex-direction:row;
+  flex-wrap:wrap;
+  gap:14px 20px;
+}
 .footer-links a{color: var(--muted)}
 .footer-links a:hover{color: var(--text)}
 .footer-meta{color: var(--muted); font-size: 14px}
