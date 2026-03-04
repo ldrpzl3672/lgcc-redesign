@@ -209,7 +209,12 @@ a:hover{opacity:0.92}
 .hero-media{
   position:absolute;
   inset:0;
-  background-image:url("assets/hero.jpg");
+  /* Option 1: use the LGCC sunset photo as the hero background */
+  background-image:url("assets/lgcc-sunset-hero-1600.jpg");
+  background-image:image-set(
+    url("assets/lgcc-sunset-hero-1200.webp") 1x,
+    url("assets/lgcc-sunset-hero-1600.webp") 2x
+  );
   background-size:cover;
   background-position:center;
   transform: scale(1.02);
