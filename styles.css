@@ -1,7 +1,7 @@
 /* LGCC proposal site — clean, modern, timeless */
 
 :root{
-  --bg: #060807;
+  --bg: #0b1210;
   --surface: #0f1c18;
   --card: rgba(255,255,255,0.06);
   --card2: rgba(255,255,255,0.08);
@@ -18,7 +18,6 @@
   --shadow: 0 16px 42px rgba(0,0,0,0.35);
   --radius: 16px;
 
-  --container: 1280px;
   --container: 1440px;
 
   --serif: "Playfair Display", ui-serif, Georgia, serif;
@@ -26,19 +25,31 @@
 }
 
 *{box-sizing:border-box}
-html,body{height:100%}
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:-1;
-  /* Fixed-size spotlights so ultra-wide screens don't get giant gradients */
-  background:
-    radial-gradient(900px 520px at 50% 10%, rgba(118,255,195,0.10), rgba(0,0,0,0) 70%),
-    radial-gradient(760px 520px at 85% 35%, rgba(226,180,92,0.10), rgba(0,0,0,0) 70%);
+html,body{
+  margin:0;
+  font-family:var(--sans);
+  /* Outside the site column */
+  background: #000;
+  color:var(--text);
+  line-height:1.5;
+  position: relative;
 }
 
+/* Site "spotlight" background is constrained to the content column */
+body::before{
+  content:"";
+  position: fixed;
+  top:0; bottom:0;
+  left:50%;
+  transform: translateX(-50%);
+  width: min(var(--container), 100%);
+  background:
+    radial-gradient(1200px 800px at 20% 10%, rgba(15,59,46,0.35), transparent 60%),
+    radial-gradient(900px 600px at 80% 20%, rgba(184,155,94,0.18), transparent 60%),
+    var(--bg);
+  z-index: -1;
+  pointer-events: none;
+}
 body{
   margin:0;
   font-family:var(--sans);
@@ -54,8 +65,7 @@ a{color:inherit; text-decoration:none}
 a:hover{opacity:0.92}
 
 .container{
-  width:min(var(--container), calc(100% - 48px));
-  width:min(var(--container), calc(100% - 24px));
+  width:min(var(--container), calc(100% - 32px));
   margin-inline:auto;
 }
 
@@ -195,7 +205,7 @@ a:hover{opacity:0.92}
 /* Hero */
 .hero{
   position:relative;
-  min-height: clamp(520px, 62vh, 720px);
+  min-height: 78vh;
   display:grid;
   align-items:center;
   overflow:hidden;
@@ -290,7 +300,30 @@ a:hover{opacity:0.92}
 .stat-value{font-weight:800; letter-spacing:0.02em}
 .stat-label{font-size:13px; color: var(--muted)}
 
-50%{opacity:0.95; transform:translateY(6px)}
+.hero-scroll{
+  position:absolute;
+  left:50%;
+  bottom:14px;
+  transform:translateX(-50%);
+  font-size:12px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color: rgba(255,255,255,0.70);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+  pointer-events:none;
+}
+.hero-scroll-line{
+  width:1px;
+  height: 26px;
+  background: rgba(255,255,255,0.55);
+  animation: scrollPulse 1.6s ease-in-out infinite;
+}
+@keyframes scrollPulse{
+  0%,100%{opacity:0.25; transform:translateY(0)}
+  50%{opacity:0.95; transform:translateY(6px)}
 }
 
 /* Value strip */
@@ -487,7 +520,6 @@ input:focus, select:focus, textarea:focus{
 .site-footer{
   border-top: 1px solid rgba(255,255,255,0.10);
   padding: 28px 0;
-  padding: 18px 0;
   background: rgba(0,0,0,0.18);
 }
 .footer-inner{
@@ -495,32 +527,18 @@ input:focus, select:focus, textarea:focus{
   grid-template-columns: 1.3fr 1fr 1.2fr;
   gap: 16px;
   align-items:start;
-  grid-template-columns: 1.3fr auto 1fr;
-  gap: 20px;
-  align-items:center;
 }
 .footer-brand{display:flex; align-items:center; gap:12px}
 .footer-title{font-family: var(--serif); font-weight:700}
 .footer-sub{color: var(--muted); font-size: 14px}
 .footer-links{display:flex; flex-direction:column; gap:8px}
-.footer-links{
-  display:flex;
-  flex-direction:row;
-  flex-wrap:wrap;
-  gap:12px 18px;
-  align-items:center;
-}
 .footer-links a{color: var(--muted)}
 .footer-links a:hover{color: var(--text)}
 .footer-meta{color: var(--muted); font-size: 14px}
-.footer-meta{color: var(--muted); font-size: 14px; text-align:right;}
 .footer-small{color: var(--faint); margin-top: 8px}
 @media (max-width: 980px){
   .footer-inner{grid-template-columns: 1fr}
-  .footer-inner{grid-template-columns: 1fr; align-items:start}
-  .footer-meta{text-align:left}
 }
-
 
 /* Dining hours */
 .hours-card{
@@ -560,49 +578,3 @@ input:focus, select:focus, textarea:focus{
 .hours-list li span:last-child{
   color: rgba(255,255,255,0.86);
 }
-<<<<<<< HEAD
-=======
->>>>>>> parent of 721af6b (Update styles.css)
-
-
-/* --- Hero refinement (club style) --- */
-.hero{
-  padding-top: 110px;
-  padding-bottom: 90px;
-}
-.hero::after{
-  opacity: 0.88;
-}
-.hero-inner{
-  max-width: 980px;
-}
-.hero h1{
-  letter-spacing: -0.02em;
-  text-shadow: 0 10px 30px rgba(0,0,0,0.45);
-}
-.hero .lead{
-  max-width: 58ch;
-  color: rgba(255,255,255,0.80);
-}
-.hero-actions{
-  gap: 12px;
-}
-.btn{
-  border-radius: 999px;
-  padding: 12px 18px;
-}
-.btn-ghost{
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.14);
-}
-.hero-scroll{ display:none !important; }
-
-=======
-/* Footer can run wider than main content */
-.site-footer .container{
-  width:calc(100% - 32px);
-  max-width:1400px;
-  width: calc(100% - 24px);
-  max-width: 1800px;
-}
->>>>>>> parent of 96eb3cc (Update styles.css)
