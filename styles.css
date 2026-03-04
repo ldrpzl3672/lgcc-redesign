@@ -566,4 +566,3 @@ input:focus, select:focus, textarea:focus{
   width:calc(100% - 32px);
   max-width:1400px;
 }
-body{ outline: 6px solid red; }
