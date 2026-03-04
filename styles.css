@@ -216,7 +216,7 @@ a:hover{opacity:0.92}
     url("assets/lgcc-sunset-hero-1600.webp") 2x
   );
   background-size:cover;
-  background-position:center;
+  background-position: 75% 50%;
   transform: scale(1.02);
 }
 .hero-overlay{
@@ -229,6 +229,14 @@ a:hover{opacity:0.92}
 .hero-content{
   position:relative;
   padding: 76px 0 54px;
+/* Right-side hero layout */
+margin-left: auto;
+margin-right: clamp(16px, 3vw, 56px);
+max-width: min(640px, 100%);
+text-align: right;
+display: flex;
+flex-direction: column;
+align-items: flex-end;
 }
 .eyebrow{
   letter-spacing: 0.16em;
@@ -591,3 +599,10 @@ input:focus, select:focus, textarea:focus{
     radial-gradient(900px 600px at 80% 20%, rgba(184,155,94,0.18), transparent 60%),
     var(--bg);
 }
+
+
+
+/* Align hero rows to the right */
+.hero .hero-actions { justify-content: flex-end; }
+.hero .hero-stats { justify-content: flex-end; }
+.hero .tag-row { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }
