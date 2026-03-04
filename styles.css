@@ -499,10 +499,10 @@ input:focus, select:focus, textarea:focus{
   background: rgba(0,0,0,0.18);
 }
 .footer-inner{
-  display:grid;
-  grid-template-columns: auto auto 1fr;
-  gap: 20px;
+  display:flex;
+  justify-content:space-between;
   align-items:center;
+  gap:20px;
 }
 .footer-brand{display:flex; align-items:center; gap:12px}
 .footer-title{font-family: var(--serif); font-weight:700}
