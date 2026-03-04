@@ -531,6 +531,7 @@ input:focus, select:focus, textarea:focus{
 .hours-list li span:last-child{
   color: rgba(255,255,255,0.86);
 }
+<<<<<<< HEAD
 
 
 /* --- Hero refinement (club style) --- */
@@ -565,3 +566,9 @@ input:focus, select:focus, textarea:focus{
 }
 .hero-scroll{ display:none !important; }
 
+=======
+.site-footer .container{
+  width:calc(100% - 32px);
+  max-width:1400px;
+}
+>>>>>>> parent of 96eb3cc (Update styles.css)
