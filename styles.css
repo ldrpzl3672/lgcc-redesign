@@ -274,8 +274,6 @@ a:hover {
 }
 
 .hero-media {
-    z-index: 0;
-
     display: none;
 
     /* hidden on mobile */
@@ -291,6 +289,8 @@ a:hover {
     background-size: cover;
     background-position: 75% 50%;
     transform: scale(1.02);
+
+    z-index: 0;
 }
 
 .hero-overlay {
@@ -298,36 +298,36 @@ a:hover {
     inset: 0;
     background: radial-gradient(900px 480px at 20% 20%, rgba(0,0,0,0.25), transparent 60%),
     linear-gradient(to bottom, rgba(11,18,16,0.15), rgba(11,18,16,0.78));
-}
 
-/* Hero logo overlay (keep the photo unchanged; place logo via CSS) */
-.hero-logo {
-    position: absolute;
     z-index: 1;
-    right: clamp(18px, 4vw, 72px);
-    top: 52%;
+}
+
+
+/* Hero logo overlay (placed via CSS so the photo stays unchanged) */
+.hero-logo{
+    position:absolute;
+    z-index:5;
+    right: clamp(20px, 4vw, 84px);
+    top: 50%;
     transform: translateY(-50%);
-    width: clamp(140px, 18vw, 320px);
-    pointer-events: none;
-    opacity: 0.98;
+    width: clamp(150px, 16vw, 320px);
+    pointer-events:none;
+}
+
+.hero-logo img{
+    width:100%;
+    height:auto;
+    display:block;
     filter: drop-shadow(0 18px 30px rgba(0,0,0,0.35));
-    display: none; /* only show when the hero photo shows */
 }
 
-.hero-logo img {
-    width: 100%;
-    height: auto;
-    display: block;
+/* Optional: hide on smaller screens */
+@media (max-width: 899px){
+    .hero-logo{ display:none; }
 }
 
-/* Show logo only on desktop hero (where the background image is enabled) */
-@media (min-width: 900px) {
-    .hero-logo { display: block; }
-}
 
 .hero-content {
-    z-index: 2;
-
     position: relative;
     padding: 76px 0 54px;
 
@@ -339,6 +339,8 @@ a:hover {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+
+    z-index: 6;
 }
 
 .eyebrow {
