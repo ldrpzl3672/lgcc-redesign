@@ -309,7 +309,7 @@ a:hover {
     z-index:5;
 
     right: clamp(60px, 6vw, 140px);   /* move left */
-    top: 42%;                         /* move up */
+    top: 46%;                         /* move up */
 
     transform: translateY(-50%);
     width: clamp(120px, 13vw, 260px); /* slightly smaller */
