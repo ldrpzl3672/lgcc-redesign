@@ -1084,3 +1084,54 @@ textarea:focus {
     height: 280px;
   }
 }
+/* ===== Course photo scrolling gallery (portrait + landscape friendly) ===== */
+.course-gallery{
+  border-radius: var(--radius);
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.04);
+  box-shadow: 0 10px 26px rgba(0,0,0,0.18);
+  overflow: hidden;
+}
+
+.course-gallery-track{
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.course-gallery-track::after{
+  content:"";
+  flex: 0 0 12px;
+}
+
+.course-shot{
+  flex: 0 0 auto;
+  height: 250px;              /* unified “gallery height” */
+  width: auto;                /* preserve portrait/landscape ratio */
+  max-width: 82vw;            /* keeps portrait from being too wide on phones */
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.10);
+  object-fit: contain;        /* NO cropping (portrait stays portrait) */
+  background: rgba(0,0,0,0.18);
+  scroll-snap-align: start;
+}
+
+/* Desktop tuning */
+@media (min-width: 900px){
+  .course-shot{
+    height: 280px;
+    max-width: 520px;         /* prevents giant landscape images */
+  }
+}
+
+.course-gallery-hint{
+  padding: 0 14px 12px;
+  color: rgba(255,255,255,0.62);
+  font-size: 12px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+}
