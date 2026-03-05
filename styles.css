@@ -1029,3 +1029,58 @@ textarea:focus {
   }
 
 }
+/* ===== Course photo scrolling gallery ===== */
+.course-gallery{
+  border-radius: var(--radius);
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.04);
+  box-shadow: 0 10px 26px rgba(0,0,0,0.18);
+  overflow: hidden;
+}
+
+.course-gallery-track{
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.course-shot{
+  flex: 0 0 auto;
+  width: min(520px, 78vw);
+  height: 260px;
+  border-radius: 14px;
+  background-size: cover;
+  background-position: center;
+  scroll-snap-align: start;
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+/* Optional: subtle “fade edges” so it looks premium */
+.course-gallery-track{
+  mask-image: linear-gradient(to right, transparent 0, #000 28px, #000 calc(100% - 28px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 28px, #000 calc(100% - 28px), transparent 100%);
+}
+
+/* Hide scrollbar (still scrolls) */
+.course-gallery-track::-webkit-scrollbar{ height: 8px; }
+.course-gallery-track::-webkit-scrollbar-thumb{ background: rgba(255,255,255,0.18); border-radius: 999px; }
+.course-gallery-track::-webkit-scrollbar-track{ background: transparent; }
+
+.course-gallery-hint{
+  padding: 0 14px 12px;
+  color: rgba(255,255,255,0.62);
+  font-size: 12px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+}
+
+/* Desktop tuning */
+@media (min-width: 900px){
+  .course-shot{
+    width: 520px;
+    height: 280px;
+  }
+}
