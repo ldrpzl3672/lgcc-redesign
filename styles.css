@@ -1005,3 +1005,12 @@ textarea:focus {
         background-image: url("assets/lgcc-sunset-hero-1600.jpg"), url("lgcc-sunset-hero-1600.jpg"), url("lgcc-sunset-hero-1600.webp");
     }
 }
+/* Tighten hero spacing on mobile only */
+@media (max-width: 899px){
+
+  .hero-content{
+    padding-top: 12px;
+    padding-bottom: 24px;
+  }
+
+}
