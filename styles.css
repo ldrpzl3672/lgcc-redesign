@@ -25,7 +25,22 @@
 }
 
 *{box-sizing:border-box}
-html,body{height:100%}
+html,body{
+  margin:0;
+  font-family:var(--sans);
+  /* Outside the site column */
+  background:#000;
+  color:var(--text);
+  line-height:1.5;
+  position: relative;
+  display:flex;
+  justify-content:center;
+  min-height:100vh;
+  align-items: stretch;
+}
+
+/* Site "spotlight" background is constrained to the content column */
+body::before{content:"";display:none;}
 body{
   margin:0;
   font-family:var(--sans);
@@ -556,45 +571,24 @@ input:focus, select:focus, textarea:focus{
 }
 
 
-/* --- Hero: right-aligned content + logo (top panel tweaks) --- */
-.hero .container.hero-content{
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-end;
-  align-items:flex-end;
-  text-align:right;
-  height:100%;
-  padding-top: clamp(48px, 12vh, 140px);
-  padding-bottom: clamp(56px, 12vh, 160px);
+/* Constrain the “club” background to the site canvas so ultra-wide screens show black outside */
+.site-shell{
+  width: min(var(--container), 100%);
+  min-height: 100vh;
+  margin: 0 auto;
+  position: relative;
+  background:
+    radial-gradient(1200px 800px at 20% 10%, rgba(15,59,46,0.35), transparent 60%),
+    radial-gradient(900px 600px at 80% 20%, rgba(184,155,94,0.18), transparent 60%),
+    var(--bg);
 }
 
-.hero-logo{
-  width: 84px;
-  height: 84px;
-  margin-bottom: 18px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(0,0,0,0.18);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-  object-fit: contain;
-  padding: 10px;
-}
 
-.hero-actions{
-  justify-content:flex-end;
-}
+/* Ensure hero image shows on desktop but not on mobile */
+.hero-media{display:block;}
 
-/* Mobile: keep content readable + keep more green in frame */
-@media (max-width: 720px){
-  .hero{
-    background-position: 35% 70%;
+@media (max-width: 768px){
+  .hero-media{
+    display:none;
   }
-  .hero .container.hero-content{
-    align-items:flex-start;
-    text-align:left;
-    padding-top: 88px;
-    padding-bottom: 70px;
-  }
-  .hero-logo{ width:72px; height:72px; margin-bottom:14px; }
-  .hero-actions{ justify-content:flex-start; }
 }
