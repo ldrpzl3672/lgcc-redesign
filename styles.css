@@ -1014,3 +1014,18 @@ textarea:focus {
   }
 
 }
+/* ✅ Mobile: stack hero normally (photo on top, text immediately below) */
+@media (max-width: 899px){
+
+  .hero{
+    display: block !important;
+    align-items: stretch !important;
+    min-height: 0 !important;
+  }
+
+  .hero-content{
+    padding: 8px 0 18px !important;   /* pulls text up */
+    margin: 0 !important;
+  }
+
+}
