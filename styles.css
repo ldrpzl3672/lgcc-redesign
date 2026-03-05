@@ -21,17 +21,7 @@
   --container: 1440px;
 
   --serif: "Playfair Display", ui-serif, Georgia, serif;
-	  --sans: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-}
-
-/* ===== 20-line improvement (wide screens) =====
-   1) Keep everything outside the site canvas true black
-   2) Make the hero height feel consistent on huge monitors
-   3) Allow a little more width on ultra-wide displays */
-html{ background:#000; overflow-x:hidden; }
-body{ background:#000; overflow-x:hidden; }
-@media (min-width: 1800px){
-  :root{ --container: 1500px; }
+  --sans: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
 
 *{box-sizing:border-box}
@@ -39,20 +29,36 @@ html,body{
   margin:0;
   font-family:var(--sans);
   /* Outside the site column */
-  background:#000;
+  background: #000;
   color:var(--text);
   line-height:1.5;
   position: relative;
-  display:flex;
-  justify-content:center;
-  min-height:100vh;
-  align-items: stretch;
 }
 
-/* Keep the area OUTSIDE the site column plain black.
-   All gradients/spotlights live on .site-shell, not on <body>. */
-body::before{content:"";display:none;}
-body{ margin:0; background:#000; background-image:none; }
+/* Site "spotlight" background is constrained to the content column */
+body::before{
+  content:"";
+  position: fixed;
+  top:0; bottom:0;
+  left:50%;
+  transform: translateX(-50%);
+  width: min(var(--container), 100%);
+  background:
+    radial-gradient(1200px 800px at 20% 10%, rgba(15,59,46,0.35), transparent 60%),
+    radial-gradient(900px 600px at 80% 20%, rgba(184,155,94,0.18), transparent 60%),
+    var(--bg);
+  z-index: -1;
+  pointer-events: none;
+}
+body{
+  margin:0;
+  font-family:var(--sans);
+  background: radial-gradient(1200px 800px at 20% 10%, rgba(15,59,46,0.35), transparent 60%),
+              radial-gradient(900px 600px at 80% 20%, rgba(184,155,94,0.18), transparent 60%),
+              var(--bg);
+  color:var(--text);
+  line-height:1.5;
+}
 
 img{max-width:100%; height:auto}
 a{color:inherit; text-decoration:none}
@@ -199,24 +205,18 @@ a:hover{opacity:0.92}
 /* Hero */
 .hero{
   position:relative;
-  /* Keeps the hero from becoming comically tall on huge displays */
-  min-height: clamp(560px, 72vh, 760px);
   display:grid;
-  align-items:center;
   overflow:hidden;
   border-bottom: 1px solid rgba(255,255,255,0.10);
-}
+  align-items: flex-end;
+  padding: clamp(48px, 6vw, 96px) 0 clamp(72px, 8vw, 120px);
+  min-height: clamp(560px, 78vh, 760px);}
 .hero-media{
   position:absolute;
   inset:0;
-  /* Option 1: use the LGCC sunset photo as the hero background */
-  background-image:url("assets/lgcc-sunset-hero-1600.jpg");
-  background-image:image-set(
-    url("assets/lgcc-sunset-hero-1200.webp") 1x,
-    url("assets/lgcc-sunset-hero-1600.webp") 2x
-  );
+  background-image:url("assets/hero.jpg");
   background-size:cover;
-  background-position: 75% 50%;
+  background-position:center;
   transform: scale(1.02);
 }
 .hero-overlay{
@@ -229,15 +229,9 @@ a:hover{opacity:0.92}
 .hero-content{
   position:relative;
   padding: 76px 0 54px;
-/* Right-side hero layout */
-margin-left: auto;
-margin-right: clamp(16px, 3vw, 56px);
-max-width: min(640px, 100%);
-text-align: right;
-display: flex;
-flex-direction: column;
-align-items: flex-end;
-}
+  max-width: 720px;
+  align-items: flex-end;
+  text-align: right;}
 .eyebrow{
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -260,7 +254,8 @@ align-items: flex-end;
   color: rgba(255,255,255,0.86);
   margin:0 0 22px;
 }
-.hero-actions{display:flex; gap:12px; flex-wrap:wrap; margin-bottom: 28px;}
+.hero-actions{display:flex; gap:12px; flex-wrap:wrap; margin-bottom: 28px;
+  justify-content: flex-end;}
 .btn{
   display:inline-flex;
   align-items:center;
@@ -588,21 +583,33 @@ input:focus, select:focus, textarea:focus{
 }
 
 
-/* Constrain the “club” background to the site canvas so ultra-wide screens show black outside */
-.site-shell{
-  width: min(var(--container), 100%);
-  min-height: 100vh;
-  margin: 0 auto;
-  position: relative;
-  background:
-    radial-gradient(1200px 800px at 20% 10%, rgba(15,59,46,0.35), transparent 60%),
-    radial-gradient(900px 600px at 80% 20%, rgba(184,155,94,0.18), transparent 60%),
-    var(--bg);
+/* --- Hero responsive tweaks --- */
+
+@media (max-width: 720px) {
+  .hero {
+    min-height: 600px;
+    padding: 48px 0 72px;
+  }
+
+  .hero-media {
+    /* Keep more of the green / fairway visible on phones */
+    background-position: 55% 60%;
+  }
+
+  .hero-content {
+    max-width: 560px;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .hero-actions {
+    justify-content: flex-start;
+  }
 }
 
 
 
-/* Align hero rows to the right */
-.hero .hero-actions { justify-content: flex-end; }
-.hero .hero-stats { justify-content: flex-end; }
-.hero .tag-row { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }
+.hero .btn-primary {
+  border-radius: 999px;
+  padding: 10px 14px;
+}
