@@ -21,7 +21,17 @@
   --container: 1440px;
 
   --serif: "Playfair Display", ui-serif, Georgia, serif;
-  --sans: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+	  --sans: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+/* ===== 20-line improvement (wide screens) =====
+   1) Keep everything outside the site canvas true black
+   2) Make the hero height feel consistent on huge monitors
+   3) Allow a little more width on ultra-wide displays */
+html{ background:#000; overflow-x:hidden; }
+body{ background:#000; overflow-x:hidden; }
+@media (min-width: 1800px){
+  :root{ --container: 1500px; }
 }
 
 *{box-sizing:border-box}
@@ -39,17 +49,10 @@ html,body{
   align-items: stretch;
 }
 
-/* Site "spotlight" background is constrained to the content column */
+/* Keep the area OUTSIDE the site column plain black.
+   All gradients/spotlights live on .site-shell, not on <body>. */
 body::before{content:"";display:none;}
-body{
-  margin:0;
-  font-family:var(--sans);
-  background: radial-gradient(1200px 800px at 20% 10%, rgba(15,59,46,0.35), transparent 60%),
-              radial-gradient(900px 600px at 80% 20%, rgba(184,155,94,0.18), transparent 60%),
-              var(--bg);
-  color:var(--text);
-  line-height:1.5;
-}
+body{ margin:0; background:#000; background-image:none; }
 
 img{max-width:100%; height:auto}
 a{color:inherit; text-decoration:none}
@@ -196,18 +199,25 @@ a:hover{opacity:0.92}
 /* Hero */
 .hero{
   position:relative;
-  min-height: 78vh;
+  /* Keeps the hero from becoming comically tall on huge displays */
+  min-height: clamp(560px, 72vh, 760px);
   display:grid;
   align-items:center;
   overflow:hidden;
   border-bottom: 1px solid rgba(255,255,255,0.10);
 }
 .hero-media{
+  display: none; /* hidden on mobile */
   position:absolute;
   inset:0;
-  background-image:url("assets/hero.jpg");
+  /* Option 1: use the LGCC sunset photo as the hero background */
+  background-image:url("assets/lgcc-sunset-hero-1600.jpg");
+  background-image:image-set(
+    url("assets/lgcc-sunset-hero-1200.webp") 1x,
+    url("assets/lgcc-sunset-hero-1600.webp") 2x
+  );
   background-size:cover;
-  background-position:center;
+  background-position: 75% 50%;
   transform: scale(1.02);
 }
 .hero-overlay{
@@ -220,6 +230,14 @@ a:hover{opacity:0.92}
 .hero-content{
   position:relative;
   padding: 76px 0 54px;
+/* Right-side hero layout */
+margin-left: auto;
+margin-right: clamp(16px, 3vw, 56px);
+max-width: min(640px, 100%);
+text-align: right;
+display: flex;
+flex-direction: column;
+align-items: flex-end;
 }
 .eyebrow{
   letter-spacing: 0.16em;
@@ -584,11 +602,27 @@ input:focus, select:focus, textarea:focus{
 }
 
 
-/* Ensure hero image shows on desktop but not on mobile */
-.hero-media{display:block;}
 
-@media (max-width: 768px){
-  .hero-media{
-    display:none;
+/* Align hero rows to the right */
+.hero .hero-actions { justify-content: flex-end; }
+.hero .hero-stats { justify-content: flex-end; }
+.hero .tag-row { display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap; }
+
+
+/* Desktop hero background image (keep mobile clean) */
+@media (min-width: 900px) {
+  .hero-media {
+    display: block;
+    background-image: image-set(
+      url("assets/lgcc-sunset-hero-1600.webp") type("image/webp") 1x,
+      url("assets/lgcc-sunset-hero-1600.jpg") type("image/jpeg") 1x
+    );
+    background-image: -webkit-image-set(
+      url("assets/lgcc-sunset-hero-1600.webp") 1x,
+      url("assets/lgcc-sunset-hero-1600.jpg") 1x
+    );
+    /* extra fallback if you keep images in the root instead of /assets */
+    background-image: url("assets/lgcc-sunset-hero-1600.jpg"), url("lgcc-sunset-hero-1600.jpg"), url("lgcc-sunset-hero-1600.webp");
   }
 }
+
