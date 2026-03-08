@@ -1135,3 +1135,64 @@ textarea:focus {
   letter-spacing: 0.10em;
   text-transform: uppercase;
 }
+/* Dining section cleanup */
+.dining-layout{
+    align-items: start;
+    gap: 28px;
+}
+
+.dining-card{
+    align-self: start;
+}
+
+.dining-media{
+    height: 340px;
+    background-position: center;
+}
+
+.dining-card-body{
+    padding: 14px 16px 16px;
+}
+
+.dining-copy{
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.dining-copy .eyebrow{
+    margin: 0;
+}
+
+.dining-copy h2{
+    margin: 0;
+}
+
+.dining-copy .lead-sm{
+    margin: 0;
+    max-width: 58ch;
+}
+
+.dining-info-grid{
+    grid-template-columns: 1fr;
+    margin-top: 4px;
+}
+
+.dining-hours-card{
+    margin-top: 0;
+    max-width: 320px;
+}
+
+@media (max-width: 980px){
+    .dining-layout{
+        gap: 20px;
+    }
+
+    .dining-media{
+        height: 280px;
+    }
+
+    .dining-hours-card{
+        max-width: 100%;
+    }
+}
