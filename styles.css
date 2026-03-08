@@ -1507,3 +1507,29 @@ textarea:focus {
         grid-template-columns: 1fr;
     }
 }
+/* Highlighted membership card */
+.featured-membership{
+    border: 1px solid rgba(184,155,94,0.45);
+    background: linear-gradient(
+        145deg,
+        rgba(184,155,94,0.10),
+        rgba(255,255,255,0.05)
+    );
+    box-shadow: 0 18px 38px rgba(0,0,0,0.35);
+    position: relative;
+}
+
+.featured-membership::before{
+    content:"Most Popular";
+    position:absolute;
+    top:-12px;
+    left:18px;
+    font-size:11px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    background:rgba(184,155,94,0.95);
+    color:#111;
+    padding:4px 8px;
+    border-radius:6px;
+    font-weight:600;
+}
