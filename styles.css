@@ -1703,9 +1703,34 @@ textarea:focus {
     text-decoration: underline;
 }
 
+.events-split{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+}
+
+.events-group{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.events-group-head h3{
+    margin: 0;
+}
+
+.events-group .cards{
+    grid-template-columns: 1fr;
+}
+
 @media (max-width: 899px){
     .events-callout{
         text-align: left;
         margin-top: 12px;
+    }
+
+    .events-split{
+        grid-template-columns: 1fr;
     }
 }
