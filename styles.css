@@ -1621,3 +1621,68 @@ textarea:focus {
         grid-template-columns: 1fr;
     }
 }
+
+
+/* 75th anniversary blurb */
+.anniversary-note{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin: 0 0 22px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(184,155,94,0.34);
+    background: rgba(11,18,16,0.42);
+    max-width: 620px;
+    box-shadow: 0 10px 22px rgba(0,0,0,0.18);
+}
+
+.anniversary-badge{
+    flex: 0 0 auto;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width: 88px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(184,155,94,0.18);
+    border: 1px solid rgba(184,155,94,0.36);
+    color: var(--cream);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+.anniversary-note p{
+    margin: 0;
+    color: rgba(255,255,255,0.86);
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.result-topline{
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.result-card .text-link,
+.schedule-card .text-link{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+}
+
+@media (max-width: 899px){
+    .anniversary-note{
+        align-items:flex-start;
+        flex-direction:column;
+        gap:10px;
+        max-width: 100%;
+    }
+}

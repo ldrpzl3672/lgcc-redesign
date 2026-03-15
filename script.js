@@ -48,3 +48,93 @@
     });
   }
 })();
+
+
+// Load Upcoming Events cards from data/upcoming-events.json
+(function () {
+    const container = document.getElementById("upcomingEventsContainer");
+    if (!container) return;
+
+    fetch("data/upcoming-events.json")
+        .then((response) => {
+            if (!response.ok) throw new Error("Could not load upcoming-events.json");
+            return response.json();
+        })
+        .then((data) => {
+            const events = Array.isArray(data.events) ? data.events : [];
+
+            if (!events.length) {
+                container.innerHTML = `
+                    <article class="card schedule-card">
+                        <p class="schedule-date">Coming Soon</p>
+                        <h3>Coming Soon</h3>
+                        <p>Upcoming events will appear here.</p>
+                    </article>
+                `;
+                return;
+            }
+
+            container.innerHTML = events.map((event) => `
+                <article class="card schedule-card">
+                    <p class="schedule-date">${event.date || "Coming Soon"}</p>
+                    <h3>${event.title || ""}</h3>
+                    <p>${event.summary || ""}</p>
+                    ${event.url ? `<a class="text-link" href="${event.url}">Learn More →</a>` : ""}
+                </article>
+            `).join("");
+        })
+        .catch(() => {
+            container.innerHTML = `
+                <article class="card schedule-card">
+                    <p class="schedule-date">Coming Soon</p>
+                    <h3>Coming Soon</h3>
+                    <p>Upcoming events will appear here.</p>
+                </article>
+            `;
+        });
+})();
+
+// Load Recent Competition cards from data/recent-results.json
+(function () {
+    const container = document.getElementById("recentResultsContainer");
+    if (!container) return;
+
+    fetch("data/recent-results.json")
+        .then((response) => {
+            if (!response.ok) throw new Error("Could not load recent-results.json");
+            return response.json();
+        })
+        .then((data) => {
+            const results = Array.isArray(data.results) ? data.results : [];
+
+            if (!results.length) {
+                container.innerHTML = `
+                    <article class="card result-card">
+                        <div class="result-topline">Club Event Result</div>
+                        <h3>No results posted yet</h3>
+                        <p class="result-winner">Check back soon for official club competition results.</p>
+                    </article>
+                `;
+                return;
+            }
+
+            container.innerHTML = results.map((result) => `
+                <article class="card result-card">
+                    <div class="result-topline">${result.label || "Club Event Result"}</div>
+                    <h3>${result.title || ""}</h3>
+                    <p class="result-winner">${result.winner || ""}</p>
+                    <p>${result.summary || ""}</p>
+                    ${result.url ? `<a class="text-link" href="${result.url}">See Full Results →</a>` : ""}
+                </article>
+            `).join("");
+        })
+        .catch(() => {
+            container.innerHTML = `
+                <article class="card result-card">
+                    <div class="result-topline">Club Event Result</div>
+                    <h3>Results unavailable</h3>
+                    <p class="result-winner">We could not load recent competition results right now.</p>
+                </article>
+            `;
+        });
+})();
