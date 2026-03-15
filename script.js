@@ -50,10 +50,37 @@
 })();
 
 
+
+
 // Load Upcoming Events cards from data/upcoming-events.json
 (function () {
-    const container = document.getElementById("upcomingEventsContainer");
-    if (!container) return;
+    const golfContainer = document.getElementById("upcomingGolfEventsContainer");
+    const socialContainer = document.getElementById("upcomingSocialEventsContainer");
+    if (!golfContainer && !socialContainer) return;
+
+    function renderCards(container, items, emptyText) {
+        if (!container) return;
+
+        if (!items.length) {
+            container.innerHTML = `
+                <article class="card schedule-card">
+                    <p class="schedule-date">Coming Soon</p>
+                    <h3>Coming Soon</h3>
+                    <p>${emptyText}</p>
+                </article>
+            `;
+            return;
+        }
+
+        container.innerHTML = items.map((event) => `
+            <article class="card schedule-card">
+                <p class="schedule-date">${event.date || "Coming Soon"}</p>
+                <h3>${event.title || ""}</h3>
+                <p>${event.summary || ""}</p>
+                ${event.url ? `<a class="text-link" href="${event.url}">Learn More →</a>` : ""}
+            </article>
+        `).join("");
+    }
 
     fetch("data/upcoming-events.json")
         .then((response) => {
@@ -61,36 +88,15 @@
             return response.json();
         })
         .then((data) => {
-            const events = Array.isArray(data.events) ? data.events : [];
+            const golfEvents = Array.isArray(data.golf_events) ? data.golf_events : [];
+            const socialEvents = Array.isArray(data.social_events) ? data.social_events : [];
 
-            if (!events.length) {
-                container.innerHTML = `
-                    <article class="card schedule-card">
-                        <p class="schedule-date">Coming Soon</p>
-                        <h3>Coming Soon</h3>
-                        <p>Upcoming events will appear here.</p>
-                    </article>
-                `;
-                return;
-            }
-
-            container.innerHTML = events.map((event) => `
-                <article class="card schedule-card">
-                    <p class="schedule-date">${event.date || "Coming Soon"}</p>
-                    <h3>${event.title || ""}</h3>
-                    <p>${event.summary || ""}</p>
-                    ${event.url ? `<a class="text-link" href="${event.url}">Learn More →</a>` : ""}
-                </article>
-            `).join("");
+            renderCards(golfContainer, golfEvents, "Upcoming golf events will appear here.");
+            renderCards(socialContainer, socialEvents, "Upcoming social events will appear here.");
         })
         .catch(() => {
-            container.innerHTML = `
-                <article class="card schedule-card">
-                    <p class="schedule-date">Coming Soon</p>
-                    <h3>Coming Soon</h3>
-                    <p>Upcoming events will appear here.</p>
-                </article>
-            `;
+            renderCards(golfContainer, [], "Upcoming golf events will appear here.");
+            renderCards(socialContainer, [], "Upcoming social events will appear here.");
         });
 })();
 

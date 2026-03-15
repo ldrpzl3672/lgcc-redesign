@@ -1686,3 +1686,46 @@ textarea:focus {
         max-width: 100%;
     }
 }
+
+
+/* Split upcoming events layout */
+.events-callout{
+    margin: 16px 0 0;
+    color: var(--muted);
+}
+
+.events-callout a{
+    color: var(--gold);
+    text-decoration: none;
+}
+
+.events-callout a:hover{
+    text-decoration: underline;
+}
+
+.events-split{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: start;
+}
+
+.events-group{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.events-group-head h3{
+    margin: 0;
+}
+
+.events-group .cards{
+    grid-template-columns: 1fr;
+}
+
+@media (max-width: 899px){
+    .events-split{
+        grid-template-columns: 1fr;
+    }
+}
