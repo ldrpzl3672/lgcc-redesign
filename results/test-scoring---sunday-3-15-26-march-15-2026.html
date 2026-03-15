@@ -94,6 +94,20 @@
     .money {
       white-space: nowrap;
     }
+
+    .empty-note {
+      font-family: Arial, sans-serif;
+      color: #d9d4c7;
+      margin-top: 10px;
+    }
+
+    ul.skins-list {
+      margin: 14px 0 0;
+      padding-left: 18px;
+      font-family: Arial, sans-serif;
+      color: #f5f1e8;
+      line-height: 1.7;
+    }
   </style>
 </head>
 <body>
@@ -102,11 +116,9 @@
 
     <section class="card">
       <div class="eyebrow">Club Event Result</div>
-      <h1>Test Scoring — Sunday 3-15-26</h1>
-      <div class="meta">March 15, 2026 • Points Game • 16 Players</div>
-      <div class="summary">
-        Winner: Rodney Bice — +4 points ($95)
-      </div>
+      <h1 id="eventTitle">Event Results</h1>
+      <div class="meta" id="eventMeta"></div>
+      <div class="summary" id="winnerSummary"></div>
     </section>
 
     <section class="card">
@@ -124,22 +136,263 @@
             <th>Payout</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Rodney Bice</td>
-            <td>25</td>
-            <td>29</td>
-            <td>+4</td>
-            <td>26</td>
-            <td class="money">$95</td>
-          </tr>
-        </tbody>
+        <tbody id="standingsBody"></tbody>
       </table>
     </section>
+
+    <section class="card">
+      <div class="eyebrow">Skins</div>
+      <h2>Skins Results</h2>
+      <div id="skinsContent" class="empty-note"></div>
+    </section>
   </div>
+
   <script>
-const resultsData = PASTE_JSON_HERE;
-</script>
+    const resultsData = {{
+  "event_name": "Test Scoring -- Sunday 3-15-26",
+  "event_date": "2026-03-15",
+  "event_type": "Points Game",
+  "player_count": 16,
+  "points_game_pot": 160,
+  "skins_pot": 160,
+  "total_collected": 320,
+  "slug": "test-scoring----sunday-3-15-26-march-15-2026",
+  "url": "/results/test-scoring----sunday-3-15-26-march-15-2026.html",
+  "standings": [
+    {
+      "rank": 1,
+      "player_name": "Rodney Bice",
+      "target_points_at_start": 25,
+      "total_points": 29,
+      "vs_target": 4,
+      "new_target_points": 26,
+      "payout": 95
+    },
+    {
+      "rank": 2,
+      "player_name": "Doug Sarro",
+      "target_points_at_start": 18,
+      "total_points": 19,
+      "vs_target": 1,
+      "new_target_points": 18,
+      "payout": 17
+    },
+    {
+      "rank": 2,
+      "player_name": "Danny Williams",
+      "target_points_at_start": 17,
+      "total_points": 18,
+      "vs_target": 1,
+      "new_target_points": 17,
+      "payout": 17
+    },
+    {
+      "rank": 2,
+      "player_name": "Chris Scott",
+      "target_points_at_start": 15,
+      "total_points": 16,
+      "vs_target": 1,
+      "new_target_points": 15,
+      "payout": 16
+    },
+    {
+      "rank": 5,
+      "player_name": "Stan Evrett",
+      "target_points_at_start": 21,
+      "total_points": 20,
+      "vs_target": -1,
+      "new_target_points": 21,
+      "payout": null
+    },
+    {
+      "rank": 5,
+      "player_name": "Tony Eckler",
+      "target_points_at_start": 18,
+      "total_points": 17,
+      "vs_target": -1,
+      "new_target_points": 18,
+      "payout": null
+    },
+    {
+      "rank": 7,
+      "player_name": "Jim Mitchell",
+      "target_points_at_start": 34,
+      "total_points": 32,
+      "vs_target": -2,
+      "new_target_points": 34,
+      "payout": null
+    },
+    {
+      "rank": 8,
+      "player_name": "Casey Moore",
+      "target_points_at_start": 35,
+      "total_points": 32,
+      "vs_target": -3,
+      "new_target_points": 34,
+      "payout": null
+    },
+    {
+      "rank": 8,
+      "player_name": "Paul Tubbs",
+      "target_points_at_start": 21,
+      "total_points": 18,
+      "vs_target": -3,
+      "new_target_points": 20,
+      "payout": null
+    },
+    {
+      "rank": 10,
+      "player_name": "Juan Tello",
+      "target_points_at_start": 30,
+      "total_points": 26,
+      "vs_target": -4,
+      "new_target_points": 29,
+      "payout": null
+    },
+    {
+      "rank": 10,
+      "player_name": "Cory Deffendall",
+      "target_points_at_start": 21,
+      "total_points": 17,
+      "vs_target": -4,
+      "new_target_points": 20,
+      "payout": null
+    },
+    {
+      "rank": 10,
+      "player_name": "Todd Lester",
+      "target_points_at_start": 20,
+      "total_points": 16,
+      "vs_target": -4,
+      "new_target_points": 19,
+      "payout": null
+    },
+    {
+      "rank": 13,
+      "player_name": "Jason Ezell",
+      "target_points_at_start": 29,
+      "total_points": 24,
+      "vs_target": -5,
+      "new_target_points": 28,
+      "payout": null
+    },
+    {
+      "rank": 13,
+      "player_name": "Brad Davis",
+      "target_points_at_start": 23,
+      "total_points": 18,
+      "vs_target": -5,
+      "new_target_points": 22,
+      "payout": null
+    },
+    {
+      "rank": 15,
+      "player_name": "Danny Parkerson",
+      "target_points_at_start": 25,
+      "total_points": 19,
+      "vs_target": -6,
+      "new_target_points": 23,
+      "payout": null
+    },
+    {
+      "rank": 16,
+      "player_name": "Jay Pittman",
+      "target_points_at_start": 22,
+      "total_points": 15,
+      "vs_target": -7,
+      "new_target_points": 20,
+      "payout": null
+    }
+  ],
+  "skins": {
+    "pot": 160,
+    "no_skins_won": false,
+    "refunded": false,
+    "payout_per_skin": 160,
+    "skin_wins": [
+      {
+        "hole": 1,
+        "winner": "Chris Scott",
+        "score": 3,
+        "payout": 160
+      }
+    ]
+  }
+}
+    };
+
+    function formatVsTarget(value) {
+      if (value === 0) return "E";
+      return value > 0 ? `+${value}` : `${value}`;
+    }
+
+    function formatMoney(value) {
+      if (value == null || value === "") return "";
+      return `$${value}`;
+    }
+
+    function formatDate(dateStr) {
+      const d = new Date(dateStr + "T12:00:00");
+      return d.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      });
+    }
+
+    function renderPage(data) {
+      document.title = `${data.event_name} | Lebanon Golf & Country Club`;
+      document.getElementById("eventTitle").textContent = data.event_name;
+      document.getElementById("eventMeta").textContent =
+        `${formatDate(data.event_date)} • ${data.event_type} • ${data.player_count} Players`;
+
+      const winner = data.standings && data.standings.length ? data.standings[0] : null;
+      document.getElementById("winnerSummary").textContent = winner
+        ? `Winner: ${winner.player_name} — ${formatVsTarget(winner.vs_target)} points (${formatMoney(winner.payout)})`
+        : "Results not available.";
+
+      const tbody = document.getElementById("standingsBody");
+      tbody.innerHTML = "";
+
+      (data.standings || []).forEach(player => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${player.rank ?? ""}</td>
+          <td>${player.player_name ?? ""}</td>
+          <td>${player.target_points_at_start ?? ""}</td>
+          <td>${player.total_points ?? ""}</td>
+          <td>${formatVsTarget(player.vs_target ?? 0)}</td>
+          <td>${player.new_target_points ?? ""}</td>
+          <td class="money">${formatMoney(player.payout)}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      const skinsContent = document.getElementById("skinsContent");
+
+      if (!data.skins_results || data.skins_results.length === 0) {
+        if (data.skins_message) {
+          skinsContent.textContent = data.skins_message;
+        } else {
+          skinsContent.textContent = "No skins results available.";
+        }
+      } else {
+        const ul = document.createElement("ul");
+        ul.className = "skins-list";
+
+        data.skins_results.forEach(item => {
+          const li = document.createElement("li");
+          const holes = Array.isArray(item.winning_holes) ? item.winning_holes.join(", ") : "";
+          li.textContent = `${item.player_name} — Holes ${holes} — ${formatMoney(item.subtotal_payout)}`;
+          ul.appendChild(li);
+        });
+
+        skinsContent.innerHTML = "";
+        skinsContent.appendChild(ul);
+      }
+    }
+
+    renderPage(resultsData);
+  </script>
 </body>
 </html>
