@@ -50,6 +50,50 @@
 })();
 
 
+// Load Upcoming Events cards from data/upcoming-events.json
+(function () {
+    const container = document.getElementById("upcomingEventsContainer");
+    if (!container) return;
+
+    fetch("data/upcoming-events.json")
+        .then((response) => {
+            if (!response.ok) throw new Error("Could not load upcoming-events.json");
+            return response.json();
+        })
+        .then((data) => {
+            const events = Array.isArray(data.events) ? data.events : [];
+
+            if (!events.length) {
+                container.innerHTML = `
+                    <article class="card event-card">
+                        <div class="event-date">Coming Soon</div>
+                        <h3>New event coming soon</h3>
+                        <p>Check back soon for golf events, social events, and club activities.</p>
+                    </article>
+                `;
+                return;
+            }
+
+            container.innerHTML = events.map((event) => `
+                <article class="card event-card">
+                    <div class="event-date">${event.date || "Coming Soon"}</div>
+                    <h3>${event.title || ""}</h3>
+                    <p>${event.summary || ""}</p>
+                    ${event.url ? `<a class="text-link" href="${event.url}">Learn More →</a>` : ""}
+                </article>
+            `).join("");
+        })
+        .catch(() => {
+            container.innerHTML = `
+                <article class="card event-card">
+                    <div class="event-date">Coming Soon</div>
+                    <h3>New event coming soon</h3>
+                    <p>Check back soon for golf events, social events, and club activities.</p>
+                </article>
+            `;
+        });
+})();
+
 // Load Recent Competition cards from data/recent-results.json
 (function () {
     const container = document.getElementById("recentResultsContainer");

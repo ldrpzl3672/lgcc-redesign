@@ -1534,17 +1534,146 @@ textarea:focus {
     font-weight:600;
 }
 
-/* Recent competition cards */
+/* ===== Anniversary / events / results ===== */
+.anniversary-section {
+    padding-top: 24px;
+}
+
+.anniversary-banner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.8fr) auto;
+    gap: 24px;
+    align-items: center;
+    border: 1px solid rgba(184,155,94,0.34);
+    background: linear-gradient(145deg, rgba(184,155,94,0.14), rgba(255,255,255,0.04));
+}
+
+.anniversary-copy h2,
+.anniversary-copy .lead-sm,
+.anniversary-copy .eyebrow {
+    margin-top: 0;
+}
+
+.anniversary-badge {
+    min-width: 132px;
+    min-height: 132px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(184,155,94,0.18)), rgba(11,18,16,0.55);
+    border: 1px solid rgba(184,155,94,0.42);
+    box-shadow: 0 16px 38px rgba(0,0,0,0.28);
+    padding: 16px;
+}
+
+.anniversary-number {
+    display: block;
+    font-family: var(--serif);
+    font-size: 48px;
+    line-height: 1;
+    color: var(--cream);
+}
+
+.anniversary-label {
+    display: block;
+    margin-top: 6px;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.cards.three {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.schedule-card,
+.result-card {
+    height: 100%;
+}
+
+.schedule-date,
+.result-topline {
+    margin: 0 0 10px;
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 700;
+}
+
+.result-winner {
+    font-weight: 600;
+    color: var(--cream);
+}
+
+@media (max-width: 980px) {
+    .anniversary-banner {
+        grid-template-columns: 1fr;
+    }
+
+    .anniversary-badge {
+        justify-self: start;
+    }
+
+    .cards.three {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* 75th anniversary blurb */
+.anniversary-note{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin: 0 0 22px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(184,155,94,0.34);
+    background: rgba(11,18,16,0.42);
+    max-width: 620px;
+    box-shadow: 0 10px 22px rgba(0,0,0,0.18);
+}
+
+.anniversary-badge{
+    flex: 0 0 auto;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width: 88px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    background: rgba(184,155,94,0.18);
+    border: 1px solid rgba(184,155,94,0.36);
+    color: var(--cream);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+.anniversary-note p{
+    margin: 0;
+    color: rgba(255,255,255,0.86);
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.event-cards,
 .results-cards{
     align-items: stretch;
 }
 
+.event-card,
 .result-card{
     display:flex;
     flex-direction:column;
     min-height: 220px;
 }
 
+.event-date,
 .result-topline{
     font-size: 12px;
     letter-spacing: 0.14em;
@@ -1554,6 +1683,7 @@ textarea:focus {
     font-weight: 600;
 }
 
+.event-card h3,
 .result-card h3{
     margin: 0 0 10px;
 }
@@ -1563,13 +1693,24 @@ textarea:focus {
     font-weight: 600;
 }
 
+.event-card p:last-of-type,
 .result-card p:last-of-type{
     margin-bottom: 14px;
 }
 
+.event-card .text-link,
 .result-card .text-link{
     margin-top: auto;
     display: inline-flex;
     align-items: center;
     gap: 6px;
+}
+
+@media (max-width: 899px){
+    .anniversary-note{
+        align-items:flex-start;
+        flex-direction:column;
+        gap:10px;
+        max-width: 100%;
+    }
 }

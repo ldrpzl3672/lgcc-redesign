@@ -1,0 +1,22 @@
+{
+  "events": [
+    {
+      "date": "Coming Soon",
+      "title": "New Event Coming Soon",
+      "summary": "Upcoming golf and social events will appear here once they are pushed from the club app.",
+      "url": ""
+    },
+    {
+      "date": "Coming Soon",
+      "title": "More Club Events On The Way",
+      "summary": "Seasonal gatherings, tournaments, and club activities will show up here automatically.",
+      "url": ""
+    },
+    {
+      "date": "Coming Soon",
+      "title": "Social Events Coming Soon",
+      "summary": "This section is ready for future social events once they are added to the app.",
+      "url": ""
+    }
+  ]
+}
