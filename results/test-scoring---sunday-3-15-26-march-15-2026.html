@@ -148,7 +148,7 @@
   </div>
 
   <script>
-    const resultsData = {{
+    const resultsData = {
   "event_name": "Test Scoring -- Sunday 3-15-26",
   "event_date": "2026-03-15",
   "event_type": "Points Game",
@@ -370,9 +370,9 @@
 
       const skinsContent = document.getElementById("skinsContent");
 
-      if (!data.skins_results || data.skins_results.length === 0) {
-        if (data.skins_message) {
-          skinsContent.textContent = data.skins_message;
+            if (!data.skins || !data.skins.skin_wins || data.skins.skin_wins.length === 0) {
+        if (data.skins && data.skins.no_skins_won) {
+          skinsContent.textContent = "No skins were won.";
         } else {
           skinsContent.textContent = "No skins results available.";
         }
@@ -380,10 +380,9 @@
         const ul = document.createElement("ul");
         ul.className = "skins-list";
 
-        data.skins_results.forEach(item => {
+        data.skins.skin_wins.forEach(item => {
           const li = document.createElement("li");
-          const holes = Array.isArray(item.winning_holes) ? item.winning_holes.join(", ") : "";
-          li.textContent = `${item.player_name} — Holes ${holes} — ${formatMoney(item.subtotal_payout)}`;
+          li.textContent = `${item.winner} — Hole ${item.hole} — Score ${item.score} — ${formatMoney(item.payout)}`;
           ul.appendChild(li);
         });
 
