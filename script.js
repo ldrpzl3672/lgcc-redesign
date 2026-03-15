@@ -52,44 +52,45 @@
 
 // Load Recent Competition cards from data/recent-results.json
 (function () {
-  const container = document.getElementById("recentResultsContainer");
-  if (!container) return;
+    const container = document.getElementById("recentResultsContainer");
+    if (!container) return;
 
-  fetch("data/recent-results.json")
-    .then((response) => {
-      if (!response.ok) throw new Error("Failed to load recent-results.json");
-      return response.json();
-    })
-    .then((data) => {
-      const results = Array.isArray(data.results) ? data.results : [];
-      if (!results.length) {
-        container.innerHTML = `
-          <article class="card result-card">
-            <div class="result-topline">Club Event Result</div>
-            <h3>No results posted yet</h3>
-            <p class="result-winner">Check back soon for official club results.</p>
-          </article>
-        `;
-        return;
-      }
+    fetch("data/recent-results.json")
+        .then((response) => {
+            if (!response.ok) throw new Error("Could not load recent-results.json");
+            return response.json();
+        })
+        .then((data) => {
+            const results = Array.isArray(data.results) ? data.results : [];
 
-      container.innerHTML = results.map((result) => `
-        <article class="card result-card">
-          <div class="result-topline">${result.label || "Club Event Result"}</div>
-          <h3>${result.title || ""}</h3>
-          <p class="result-winner">${result.winner || ""}</p>
-          <p>${result.summary || ""}</p>
-          ${result.url ? `<p><a class="text-link" href="${result.url}">See Full Results →</a></p>` : ""}
-        </article>
-      `).join("");
-    })
-    .catch(() => {
-      container.innerHTML = `
-        <article class="card result-card">
-          <div class="result-topline">Club Event Result</div>
-          <h3>Results unavailable</h3>
-          <p class="result-winner">We could not load recent competition results right now.</p>
-        </article>
-      `;
-    });
+            if (!results.length) {
+                container.innerHTML = `
+                    <article class="card result-card">
+                        <div class="result-topline">Club Event Result</div>
+                        <h3>No results posted yet</h3>
+                        <p class="result-winner">Check back soon for official club competition results.</p>
+                    </article>
+                `;
+                return;
+            }
+
+            container.innerHTML = results.map((result) => `
+                <article class="card result-card">
+                    <div class="result-topline">${result.label || "Club Event Result"}</div>
+                    <h3>${result.title || ""}</h3>
+                    <p class="result-winner">${result.winner || ""}</p>
+                    <p>${result.summary || ""}</p>
+                    ${result.url ? `<a class="text-link" href="${result.url}">See Full Results →</a>` : ""}
+                </article>
+            `).join("");
+        })
+        .catch(() => {
+            container.innerHTML = `
+                <article class="card result-card">
+                    <div class="result-topline">Club Event Result</div>
+                    <h3>Results unavailable</h3>
+                    <p class="result-winner">We could not load recent competition results right now.</p>
+                </article>
+            `;
+        });
 })();
