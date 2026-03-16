@@ -1734,3 +1734,14 @@ textarea:focus {
         grid-template-columns: 1fr;
     }
 }
+
+/* ── Result card mobile fix: allow height to grow with content ── */
+@media (max-width: 767px) {
+    .result-card {
+        height: auto;
+        min-height: 0;
+    }
+    .cards.three {
+        align-items: start;
+    }
+}
