@@ -125,9 +125,10 @@
             }
 
             container.innerHTML = results.map((result) => `
-                <article class="card result-card">
-                    <div class="result-topline">${result.label || "Club Event Result"}${result.game_type ? `<span style="display:inline-block;margin-top:6px;padding:3px 10px;border-radius:999px;background:rgba(184,155,94,0.18);border:1px solid rgba(184,155,94,0.35);color:#b89b5e;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">${result.game_type}</span>` : ""}</div>
-                    <h3>${result.title || ""}</h3>
+                <article class="card result-card" style="position:relative;">
+                    ${result.game_type ? `<span style="position:absolute;top:14px;right:16px;padding:3px 10px;border-radius:999px;background:rgba(184,155,94,0.18);border:1px solid rgba(184,155,94,0.32);color:#b89b5e;font-size:11px;font-weight:600;letter-spacing:0.02em;white-space:nowrap;">${result.game_type}</span>` : ""}
+                    <div class="result-topline">${result.label || "Club Event Result"}</div>
+                    <h3 style="${result.game_type ? 'padding-right:100px;' : ''}">${result.title || ""}</h3>
                     <p class="result-winner">${result.winner || ""}</p>
                     <p>${result.summary || ""}</p>${result.summary2 ? `<p style="margin:3px 0 0;font-size:0.875em;opacity:0.82">${result.summary2}</p>` : ""}
                     ${result.url ? `<a class="text-link" href="${result.url}">See Full Results →</a>` : ""}
