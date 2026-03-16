@@ -108,6 +108,82 @@
       color: #f5f1e8;
       line-height: 1.7;
     }
+  
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px;
+      margin-top: 14px;
+      background: #0b1614;
+    }
+
+    .results-table {
+      width: max-content;
+      min-width: 100%;
+      margin-top: 0;
+      table-layout: auto;
+    }
+
+    .results-table th,
+    .results-table td {
+      background: #0b1614;
+      white-space: nowrap;
+    }
+
+    .results-table thead th {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: #10201c;
+      box-shadow: 0 1px 0 rgba(255,255,255,0.08);
+    }
+
+    .results-table .sticky-col {
+      position: sticky;
+      z-index: 4;
+      background: #0b1614;
+      box-shadow: 1px 0 0 rgba(255,255,255,0.06);
+    }
+
+    .results-table thead .sticky-col {
+      z-index: 7;
+      background: #10201c;
+    }
+
+    .results-table .sticky-col-1 {
+      left: 0;
+      min-width: 64px;
+    }
+
+    .results-table .sticky-col-2 {
+      left: 84px;
+      min-width: 170px;
+    }
+
+    @media (max-width: 640px) {
+      .card {
+        padding: 20px;
+      }
+
+      .results-table th,
+      .results-table td {
+        padding: 10px 8px;
+        font-size: 14px;
+      }
+
+      .results-table .sticky-col-1 {
+        min-width: 56px;
+      }
+
+      .results-table .sticky-col-2 {
+        left: 72px;
+        min-width: 150px;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -124,20 +200,22 @@
     <section class="card">
       <div class="eyebrow">Final Standings</div>
       <h2>Results</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Rank</th>
-            <th>Player</th>
-            <th>Target</th>
-            <th>Points</th>
-            <th>Vs Target</th>
-            <th>New Target</th>
-            <th>Payout</th>
-          </tr>
-        </thead>
-        <tbody id="standingsBody"></tbody>
-      </table>
+      <div class="table-scroll">
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th class="sticky-col sticky-col-1">Rank</th>
+              <th class="sticky-col sticky-col-2">Player</th>
+              <th>Target</th>
+              <th>Points</th>
+              <th>Vs Target</th>
+              <th>New Target</th>
+              <th>Payout</th>
+            </tr>
+          </thead>
+          <tbody id="standingsBody"></tbody>
+        </table>
+      </div>
     </section>
 
     <section class="card">
@@ -356,8 +434,8 @@
       (data.standings || []).forEach(player => {
         const tr = document.createElement("tr");
         tr.innerHTML = `
-          <td>${player.rank ?? ""}</td>
-          <td>${player.player_name ?? ""}</td>
+          <td class="sticky-col sticky-col-1">${player.rank ?? ""}</td>
+          <td class="sticky-col sticky-col-2">${player.player_name ?? ""}</td>
           <td>${player.target_points_at_start ?? ""}</td>
           <td>${player.total_points ?? ""}</td>
           <td>${formatVsTarget(player.vs_target ?? 0)}</td>
