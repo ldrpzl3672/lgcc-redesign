@@ -222,24 +222,26 @@
     .col-payout { font-weight: 700; color: var(--gold); }
 
     /* ── Skins player groups ── */
-    .skin-player-group { border-top: 2px solid rgba(255,255,255,0.14); }
-    .skin-player-group.last-group tbody tr:last-child td { border-bottom: none; }
+    .skin-player-group { border-top: 2px solid rgba(255,255,255,0.16); }
+    .skin-player-group.last-group tr:last-child td { border-bottom: none; }
     .skin-player-header td {
-      padding: 12px 14px 6px;
-      font-size: 13px;
+      padding: 12px 14px 7px;
+      font-size: 14px;
       font-weight: 700;
       color: var(--text);
-      letter-spacing: 0.02em;
       background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
+    .skin-player-name { font-weight: 700; }
     .skin-detail-row td { padding: 8px 14px; color: var(--muted); font-size: 14px; }
     .skin-subtotal-row td {
-      padding: 8px 14px 12px;
+      padding: 9px 14px 12px;
       border-top: 1px solid rgba(255,255,255,0.10);
       border-bottom: none;
       background: rgba(184,155,94,0.06);
     }
-    .skin-subtotal-label { color: var(--faint); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+    .skin-subtotal-label { color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+    .skin-subtotal-count { color: var(--faint); font-size: 12px; font-weight: 600; }
     .skin-subtotal-amt { font-size: 15px; font-weight: 700; color: var(--gold); }
 
     /* ── Misc ── */
@@ -491,22 +493,36 @@
       <span class="pot-badge">Pot: $160</span>
     </div>
     <div class="table-wrap">
-      <table>
-        <thead><tr><th>Hole</th><th style="text-align:center">Score</th><th style="text-align:center">Payout</th></tr></thead>
+      <table class="skins-table">
+        <colgroup>
+          <col style="min-width:160px;width:45%">
+          <col style="width:15%">
+          <col style="width:15%">
+          <col style="width:15%">
+        </colgroup>
+        <thead><tr>
+          <th>Player</th>
+          <th style="text-align:center">Hole</th>
+          <th style="text-align:center">Score</th>
+          <th style="text-align:center">Payout</th>
+        </tr></thead>
         
           <tbody class="skin-player-group last-group">
             <tr class="skin-player-header">
-              <td colspan="3" class="col-name skin-player-name">Chris Scott</td>
+              <td class="skin-player-name">Chris Scott</td>
+              <td></td><td></td><td></td>
             </tr>
             <tr class="skin-detail-row">
+            <td></td>
             <td class="col-num">Hole 1</td>
             <td class="col-num">3</td>
             <td class="col-num col-payout">$160</td>
           </tr>
             <tr class="skin-subtotal-row">
-              <td class="col-num skin-subtotal-label">1 skin</td>
-              <td class="col-num"></td>
-              <td class="col-num col-payout skin-subtotal-amt">$160</td>
+              <td class="skin-subtotal-label">Subtotal</td>
+              <td class="col-num skin-subtotal-count">1 skin</td>
+              <td></td>
+              <td class="col-num skin-subtotal-amt">$160</td>
             </tr>
           </tbody>
       </table>
