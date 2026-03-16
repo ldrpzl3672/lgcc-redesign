@@ -221,6 +221,27 @@
     .col-bold { font-weight: 700; color: var(--green-accent); }
     .col-payout { font-weight: 700; color: var(--gold); }
 
+    /* ── Skins player groups ── */
+    .skin-player-group { border-top: 2px solid rgba(255,255,255,0.14); }
+    .skin-player-group.last-group tbody tr:last-child td { border-bottom: none; }
+    .skin-player-header td {
+      padding: 12px 14px 6px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.02em;
+      background: rgba(255,255,255,0.03);
+    }
+    .skin-detail-row td { padding: 8px 14px; color: var(--muted); font-size: 14px; }
+    .skin-subtotal-row td {
+      padding: 8px 14px 12px;
+      border-top: 1px solid rgba(255,255,255,0.10);
+      border-bottom: none;
+      background: rgba(184,155,94,0.06);
+    }
+    .skin-subtotal-label { color: var(--faint); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+    .skin-subtotal-amt { font-size: 15px; font-weight: 700; color: var(--gold); }
+
     /* ── Misc ── */
     .no-result-msg {
       padding: 18px 22px;
@@ -471,8 +492,23 @@
     </div>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Hole</th><th>Winner</th><th>Score</th><th>Payout</th></tr></thead>
-        <tbody><tr><td class="col-num">Hole 1</td><td class="col-name">Chris Scott</td><td class="col-num">3</td><td class="col-num col-payout">$160</td></tr></tbody>
+        <thead><tr><th>Hole</th><th style="text-align:center">Score</th><th style="text-align:center">Payout</th></tr></thead>
+        
+          <tbody class="skin-player-group last-group">
+            <tr class="skin-player-header">
+              <td colspan="3" class="col-name skin-player-name">Chris Scott</td>
+            </tr>
+            <tr class="skin-detail-row">
+            <td class="col-num">Hole 1</td>
+            <td class="col-num">3</td>
+            <td class="col-num col-payout">$160</td>
+          </tr>
+            <tr class="skin-subtotal-row">
+              <td class="col-num skin-subtotal-label">1 skin</td>
+              <td class="col-num"></td>
+              <td class="col-num col-payout skin-subtotal-amt">$160</td>
+            </tr>
+          </tbody>
       </table>
     </div>
     
