@@ -266,6 +266,27 @@
       color: var(--faint);
     }
 
+    /* ── Photo button ── */
+    .photo-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 14px;
+      padding: 9px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.07);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .photo-btn:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.28); }
+    .photo-btn.disabled { opacity: 0.45; cursor: default; pointer-events: none; }
+    .photo-btn svg { flex-shrink: 0; opacity: 0.75; }
+
     @media (max-width: 540px) {
       .top-bar { flex-direction: column; align-items: flex-start; gap: 12px; }
       .card { padding: 16px; }
@@ -301,6 +322,10 @@
     <p class="eyebrow">Points Game &nbsp;·&nbsp; Club Results</p>
     <h1 class="event-title">Test Scoring -- Sunday 3-15-26</h1>
     <div class="event-meta">March 15, 2026</div>
+    <span class="photo-btn disabled">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          View Event Photos (0)
+        </span>
   </div>
 
   <!-- Summary stats card -->
@@ -529,6 +554,8 @@
     </div>
     
   </div>
+
+  
 
   <footer class="site-footer">
     Lebanon Golf &amp; Country Club &nbsp;·&nbsp; Points Game Results &nbsp;·&nbsp; March 16, 2026
