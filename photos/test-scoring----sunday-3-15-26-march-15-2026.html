@@ -80,16 +80,18 @@
 
   <p class="eyebrow">Points Game &nbsp;·&nbsp; Event Photos</p>
   <h1 class="page-title">Test Scoring -- Sunday 3-15-26</h1>
-  <p class="page-meta">March 15, 2026 &nbsp;·&nbsp; 0 photos</p>
+  <p class="page-meta">March 15, 2026 &nbsp;·&nbsp; 1 photo</p>
 
-  <div class="empty-state">No photos have been uploaded for this event yet.</div>
+  <div class="photo-grid"><div class="photo-item" onclick="openLightbox(0)">
+      <img src="https://base44.app/api/apps/69ad1acaaa8eca64c17ca6c7/files/public/69ad1acaaa8eca64c17ca6c7/c2894f600_IMG_9323.png" alt="Event photo" loading="lazy" />
+    </div></div>
 
   <!-- Lightbox -->
   <div class="lightbox" id="lightbox" onclick="closeLightboxOutside(event)">
     <div class="lb-inner">
       <button class="lb-close" onclick="closeLightbox()">&#x2715;</button>
       <button class="lb-nav lb-prev" onclick="prevPhoto(event)">&#x2039;</button>
-      
+      <img class="lb-img" id="lb-img-0" src="https://base44.app/api/apps/69ad1acaaa8eca64c17ca6c7/files/public/69ad1acaaa8eca64c17ca6c7/c2894f600_IMG_9323.png" alt="Event photo" style="display:none" />
       <button class="lb-nav lb-next" onclick="nextPhoto(event)">&#x203a;</button>
       <div class="lb-counter" id="lb-counter"></div>
     </div>
@@ -101,7 +103,7 @@
 </div>
 
 <script>
-  const total = 0;
+  const total = 1;
   let current = 0;
   function openLightbox(i) {
     current = i;
