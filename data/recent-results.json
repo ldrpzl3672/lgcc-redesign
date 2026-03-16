@@ -2,9 +2,16 @@
   "results": [
     {
       "label": "Club Event Result",
-      "title": "Test Scoring \u2014 Sunday 3-15-26",
-      "winner": "Winner: Rodney Bice \u2014 +4 points ($95)",
-      "summary": "16 players competed \u00b7 $160 pot \u00b7 1 skin won",
+      "title": "Test Scoring -- Sunday 3-15-26 — 2026-03-15",
+      "winner": "Winner: Rodney Bice — +4 pts ($90)",
+      "summary": "16 players competed · $160 pot",
+      "url": "/results/test-scoring----sunday-3-15-26-march-15-2026.html"
+    },
+    {
+      "label": "Club Event Result",
+      "title": "Test Scoring — Sunday 3-15-26",
+      "winner": "Winner: Rodney Bice — +4 points ($95)",
+      "summary": "16 players competed · $160 pot · 1 skin won",
       "url": "/lgcc-redesign/results/test-scoring---sunday-3-15-26-march-15-2026.html"
     }
   ]
