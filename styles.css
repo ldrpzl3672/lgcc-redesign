@@ -1790,3 +1790,18 @@ textarea:focus {
     grid-template-columns: 1fr;
   }
 }
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.contact-card {
+  text-align: center;
+}
