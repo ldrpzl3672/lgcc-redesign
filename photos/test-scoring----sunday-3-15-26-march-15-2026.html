@@ -33,13 +33,11 @@
     .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin: 0 0 8px; }
     .page-title { font-family: var(--serif); font-size: clamp(24px, 5vw, 36px); font-weight: 700; line-height: 1.1; margin: 0 0 6px; color: var(--text); }
     .page-meta { font-size: 14px; color: var(--muted); margin-bottom: 28px; }
-    /* Photo grid */
     .photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
     .photo-item { aspect-ratio: 1; border-radius: 10px; overflow: hidden; cursor: pointer; background: rgba(255,255,255,0.05); border: 1px solid var(--line); transition: transform 0.15s, border-color 0.15s; }
     .photo-item:hover { transform: scale(1.02); border-color: rgba(184,155,94,0.45); }
     .photo-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .empty-state { text-align: center; padding: 60px 20px; color: var(--muted); font-size: 15px; }
-    /* Lightbox */
     .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 1000; align-items: center; justify-content: center; }
     .lightbox.open { display: flex; }
     .lb-inner { position: relative; max-width: 90vw; max-height: 90vh; }
@@ -57,9 +55,7 @@
       .photo-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
       .lb-prev { left: -42px; } .lb-next { right: -42px; }
     }
-    @media (max-width: 380px) {
-      .lb-prev, .lb-next { display: none; }
-    }
+    @media (max-width: 380px) { .lb-prev, .lb-next { display: none; } }
   </style>
 </head>
 <body>
@@ -83,44 +79,31 @@
   <p class="page-meta">March 15, 2026 &nbsp;·&nbsp; 1 photo</p>
 
   <div class="photo-grid"><div class="photo-item" onclick="openLightbox(0)">
-      <img src="https://base44.app/api/apps/69ad1acaaa8eca64c17ca6c7/files/public/69ad1acaaa8eca64c17ca6c7/c2894f600_IMG_9323.png" alt="Event photo" loading="lazy" />
+      <img src="../assets/event-photos/test-scoring----sunday-3-15-26-march-15-2026/c2894f600-img-9323.png" alt="Event photo" loading="lazy" />
     </div></div>
 
-  <!-- Lightbox -->
   <div class="lightbox" id="lightbox" onclick="closeLightboxOutside(event)">
     <div class="lb-inner">
       <button class="lb-close" onclick="closeLightbox()">&#x2715;</button>
       <button class="lb-nav lb-prev" onclick="prevPhoto(event)">&#x2039;</button>
-      <img class="lb-img" id="lb-img-0" src="https://base44.app/api/apps/69ad1acaaa8eca64c17ca6c7/files/public/69ad1acaaa8eca64c17ca6c7/c2894f600_IMG_9323.png" alt="Event photo" style="display:none" />
+      <img class="lb-img" id="lb-img-0" src="../assets/event-photos/test-scoring----sunday-3-15-26-march-15-2026/c2894f600-img-9323.png" alt="Event photo" style="display:none" />
       <button class="lb-nav lb-next" onclick="nextPhoto(event)">&#x203a;</button>
       <div class="lb-counter" id="lb-counter"></div>
     </div>
   </div>
 
   <footer class="site-footer">
-    Lebanon Golf &amp; Country Club &nbsp;·&nbsp; Event Photos &nbsp;·&nbsp; March 16, 2026
+    Lebanon Golf &amp; Country Club &nbsp;·&nbsp; Event Photos &nbsp;·&nbsp; March 17, 2026
   </footer>
 </div>
-
 <script>
   const total = 1;
   let current = 0;
-  function openLightbox(i) {
-    current = i;
-    showPhoto();
-    document.getElementById('lightbox').classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeLightbox() {
-    document.getElementById('lightbox').classList.remove('open');
-    document.body.style.overflow = '';
-  }
+  function openLightbox(i) { current = i; showPhoto(); document.getElementById('lightbox').classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow = ''; }
   function closeLightboxOutside(e) { if (e.target === document.getElementById('lightbox')) closeLightbox(); }
   function showPhoto() {
-    for (let i = 0; i < total; i++) {
-      const el = document.getElementById('lb-img-' + i);
-      if (el) el.style.display = i === current ? 'block' : 'none';
-    }
+    for (let i = 0; i < total; i++) { const el = document.getElementById('lb-img-' + i); if (el) el.style.display = i === current ? 'block' : 'none'; }
     document.getElementById('lb-counter').textContent = total > 0 ? (current + 1) + ' / ' + total : '';
   }
   function prevPhoto(e) { e.stopPropagation(); current = (current - 1 + total) % total; showPhoto(); }
