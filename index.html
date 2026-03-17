@@ -225,6 +225,7 @@
                 <!-- DINING -->
 <section class="section" id="dining">
     <div class="container">
+        
         <div class="section-head">
             <div>
                 <p class="eyebrow">Dining</p>
@@ -236,60 +237,68 @@
             </div>
         </div>
 
-        <div style="display:grid; gap:1.25rem;">
-            
-            <div class="card dining-info-card">
-                <div class="card-title">Sammy’s at The Club</div>
-                <div class="card-text">
-                    Restaurant Phone:
-                    <a class="text-link" href="tel:6154707012">(615) 470-7012</a><br>
-                    Menu:
-                    <a class="text-link" href="https://thesammyb.com" target="_blank" rel="noopener">thesammyb.com</a>
-                </div>
+        <!-- INFO BAR -->
+        <div class="card" style="margin-bottom:1rem;">
+            <div class="card-title">Sammy’s at The Club</div>
+            <div class="card-text">
+                Restaurant Phone:
+                <a class="text-link" href="tel:6154707012">(615) 470-7012</a><br>
+                Menu:
+                <a class="text-link" href="https://thesammyb.com" target="_blank">thesammyb.com</a>
             </div>
-
-            <div class="card media-card dining-card">
-                <div
-                    class="media dining-media"
-                    style="background-image:url('assets/sammys-1200.webp'); aspect-ratio: 16 / 9; min-height: 320px; background-size: cover; background-position: center;"
-                    role="img"
-                    aria-label="Sammy’s at The Club dining room"
-                ></div>
-            </div>
-
-            <div class="hours-card dining-hours-card dining-hours-full">
-                <div class="hours-title">Spring Hours of Operation</div>
-
-                <div class="hours-grid">
-                    <div class="card dining-hours-panel">
-                        <div class="card-title dining-hours-panel-title">Kitchen</div>
-                        <ul class="hours-list">
-                            <li><span>Monday</span><span>Closed</span></li>
-                            <li><span>Tuesday</span><span>11:00 AM – 3:00 PM</span></li>
-                            <li><span>Wednesday</span><span>11:00 AM – 3:00 PM</span></li>
-                            <li><span>Thursday</span><span>11:00 AM – 8:00 PM</span></li>
-                            <li><span>Friday</span><span>11:00 AM – 8:00 PM</span></li>
-                            <li><span>Saturday</span><span>10:00 AM – 8:00 PM</span></li>
-                            <li><span>Sunday</span><span>10:00 AM – 3:00 PM</span></li>
-                        </ul>
-                    </div>
-
-                    <div class="card dining-hours-panel">
-                        <div class="card-title dining-hours-panel-title">Bar</div>
-                        <ul class="hours-list">
-                            <li><span>Monday</span><span>Closed</span></li>
-                            <li><span>Tuesday</span><span>11:00 AM – 6:00 PM</span></li>
-                            <li><span>Wednesday</span><span>11:00 AM – 6:00 PM</span></li>
-                            <li><span>Thursday</span><span>11:00 AM – 9:00 PM</span></li>
-                            <li><span>Friday</span><span>11:00 AM – 9:00 PM</span></li>
-                            <li><span>Saturday</span><span>10:00 AM – 9:00 PM</span></li>
-                            <li><span>Sunday</span><span>10:00 AM – 6:00 PM</span></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
         </div>
+
+        <!-- IMAGE FULL WIDTH -->
+        <div class="card media-card" style="margin-bottom:1rem;">
+            <div 
+                style="
+                    background-image:url('assets/sammys-1200.webp');
+                    width:100%;
+                    aspect-ratio:16/9;
+                    background-size:cover;
+                    background-position:center;
+                    border-radius:12px;
+                "
+            ></div>
+        </div>
+
+        <!-- HOURS FULL WIDTH -->
+        <div class="card" style="padding:1rem;">
+            <div class="hours-title" style="margin-bottom:1rem;">Spring Hours of Operation</div>
+
+            <div class="hours-grid">
+                
+                <!-- KITCHEN -->
+                <div class="hours-col">
+                    <div class="card-title" style="margin-bottom:.75rem;">Kitchen</div>
+                    <ul class="hours-list">
+                        <li><span>Monday</span><span>Closed</span></li>
+                        <li><span>Tuesday</span><span>11:00 AM – 3:00 PM</span></li>
+                        <li><span>Wednesday</span><span>11:00 AM – 3:00 PM</span></li>
+                        <li><span>Thursday</span><span>11:00 AM – 8:00 PM</span></li>
+                        <li><span>Friday</span><span>11:00 AM – 8:00 PM</span></li>
+                        <li><span>Saturday</span><span>10:00 AM – 8:00 PM</span></li>
+                        <li><span>Sunday</span><span>10:00 AM – 3:00 PM</span></li>
+                    </ul>
+                </div>
+
+                <!-- BAR -->
+                <div class="hours-col">
+                    <div class="card-title" style="margin-bottom:.75rem;">Bar</div>
+                    <ul class="hours-list">
+                        <li><span>Monday</span><span>Closed</span></li>
+                        <li><span>Tuesday</span><span>11:00 AM – 6:00 PM</span></li>
+                        <li><span>Wednesday</span><span>11:00 AM – 6:00 PM</span></li>
+                        <li><span>Thursday</span><span>11:00 AM – 9:00 PM</span></li>
+                        <li><span>Friday</span><span>11:00 AM – 9:00 PM</span></li>
+                        <li><span>Saturday</span><span>10:00 AM – 9:00 PM</span></li>
+                        <li><span>Sunday</span><span>10:00 AM – 6:00 PM</span></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
     </div>
 </section>
 
