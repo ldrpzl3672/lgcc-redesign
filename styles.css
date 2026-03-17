@@ -1774,3 +1774,19 @@ textarea:focus {
         grid-template-columns: 1fr;
     }
 }
+.hours-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  width: 100%;
+}
+
+.hours-col {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .hours-grid {
+    grid-template-columns: 1fr;
+  }
+}
