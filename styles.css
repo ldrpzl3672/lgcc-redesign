@@ -1745,3 +1745,32 @@ textarea:focus {
         align-items: start;
     }
 }
+
+
+/* ===== Dining hours full-width layout under image ===== */
+.dining-hours-full {
+    width: 100%;
+}
+
+.hours-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    width: 100%;
+}
+
+.dining-hours-panel {
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.dining-hours-panel-title {
+    margin-bottom: 0.75rem;
+}
+
+@media (max-width: 767px) {
+    .hours-grid {
+        grid-template-columns: 1fr;
+    }
+}
