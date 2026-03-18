@@ -1829,3 +1829,24 @@ textarea:focus {
     text-align: left;
   }
 }
+.lb-results-link {
+  text-align: center;
+  margin-top: 14px;
+}
+
+.lb-results-btn {
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(184,155,94,0.35);
+  background: rgba(184,155,94,0.10);
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.lb-results-btn:hover {
+  background: rgba(184,155,94,0.18);
+}
