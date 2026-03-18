@@ -1850,3 +1850,66 @@ textarea:focus {
 .lb-results-btn:hover {
   background: rgba(184,155,94,0.18);
 }
+.lb-inner {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lb-inner img {
+  max-width: 90vw;
+  max-height: 78vh;
+  object-fit: contain;
+  border-radius: 8px;
+  display: block;
+}
+
+.lb-bottom-ui {
+  position: absolute;
+  left: 50%;
+  bottom: -56px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: max-content;
+}
+
+.lb-results-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(184,155,94,0.35);
+  background: rgba(184,155,94,0.10);
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.lb-results-btn:hover {
+  background: rgba(184,155,94,0.18);
+}
+
+@media (max-width: 540px) {
+  .lb-inner img {
+    max-height: 70vh;
+  }
+
+  .lb-bottom-ui {
+    bottom: -64px;
+  }
+
+  .lb-results-btn {
+    font-size: 12px;
+    padding: 9px 16px;
+  }
+}
