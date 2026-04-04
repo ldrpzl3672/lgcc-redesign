@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LGCC Event Results</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--bg:#0b1210;--surface:#0f1c18;--card:rgba(255,255,255,0.06);--card2:rgba(255,255,255,0.08);--text:rgba(255,255,255,0.92);--muted:rgba(255,255,255,0.65);--faint:rgba(255,255,255,0.40);--line:rgba(255,255,255,0.12);--gold:#b89b5e;--gold-dim:rgba(184,155,94,0.20);--green-accent:#6ee7b7;--radius:16px;--serif:"Playfair Display",Georgia,serif;--sans:Inter,system-ui,-apple-system,Arial,sans-serif;}
+    *,*::before,*::after{box-sizing:border-box}html{background:#000}
+    body{margin:0;font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+    .page-shell{max-width:860px;margin:0 auto;padding:0 20px 60px}
+    .top-bar{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);margin-bottom:36px}
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+    .brand-mark{width:40px;height:40px;border-radius:10px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.05);overflow:hidden;display:grid;place-items:center}
+    .brand-mark img{width:110%;height:110%;object-fit:contain}
+    .brand-text{display:flex;flex-direction:column;line-height:1.15}
+    .brand-name{font-family:var(--serif);font-size:14px;font-weight:600;color:var(--text)}
+    .brand-tag{font-size:11px;color:var(--muted)}
+    .back-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:999px;border:1px solid rgba(184,155,94,0.35);background:rgba(184,155,94,0.10);color:var(--gold);font-size:13px;font-weight:600;text-decoration:none;transition:background 0.15s,border-color 0.15s}
+    .back-btn:hover{background:rgba(184,155,94,0.18);border-color:rgba(184,155,94,0.55)}
+    .event-hero{margin-bottom:28px}
+    .eyebrow{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin:0 0 8px}
+    .event-title{font-family:var(--serif);font-size:clamp(26px,5vw,40px);font-weight:700;line-height:1.1;margin:0 0 8px;color:var(--text)}
+    .event-meta{font-size:14px;color:var(--muted)}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px 24px}
+    .summary-card{display:flex;flex-wrap:wrap;gap:16px 32px;margin-bottom:20px}
+    .stat-item{display:flex;flex-direction:column;gap:2px}
+    .stat-label{font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--faint)}
+    .stat-value{font-size:22px;font-weight:700;color:var(--text)}
+    .stat-value.gold{color:var(--gold)}
+    .payout-strip{display:flex;flex-wrap:wrap;gap:8px;padding-top:14px;border-top:1px solid var(--line);margin-top:4px}
+    .payout-pill{padding:5px 12px;border-radius:999px;background:var(--gold-dim);border:1px solid rgba(184,155,94,0.28);font-size:13px;color:var(--text)}
+    .payout-pill strong{color:var(--gold)}
+    .section-card{margin-bottom:20px;padding:0;overflow:hidden}
+    .section-header{display:flex;align-items:center;justify-content:space-between;padding:16px 22px;border-bottom:1px solid var(--line)}
+    h2{font-family:var(--serif);font-size:18px;font-weight:700;margin:0;color:var(--text)}
+    .pot-badge{font-size:12px;font-weight:700;padding:4px 11px;border-radius:999px;background:var(--gold-dim);border:1px solid rgba(184,155,94,0.30);color:var(--gold)}
+    .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+    table{width:100%;border-collapse:collapse;font-size:14px}
+    thead tr{background:rgba(255,255,255,0.04);border-bottom:1px solid var(--line)}
+    th{padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--faint);text-align:left;white-space:nowrap}
+    td{padding:11px 14px;border-bottom:1px solid rgba(255,255,255,0.06);color:var(--text);vertical-align:middle}
+    tbody tr:last-child td{border-bottom:none}
+    tbody tr:hover td{background:rgba(255,255,255,0.03)}
+    .winner-row td{background:rgba(184,155,94,0.08)}.winner-row:hover td{background:rgba(184,155,94,0.12)}
+    .col-place{color:var(--muted);font-weight:600;white-space:nowrap}
+    .col-name{font-weight:600;min-width:120px}
+    .col-num{text-align:center;white-space:nowrap}
+    .col-bold{font-weight:700;color:var(--green-accent)}
+    .col-payout{font-weight:700;color:var(--gold)}
+
+    .skin-blocks-wrap{
+      padding:16px;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+
+    .skin-block{
+      border:2px solid rgba(184,155,94,0.24);
+      border-radius:14px;
+      overflow:hidden;
+      background:rgba(255,255,255,0.03);
+      box-shadow:0 8px 18px rgba(0,0,0,0.18);
+    }
+
+    .skin-block-odd{
+      background:rgba(255,255,255,0.03);
+    }
+
+    .skin-block-even{
+      background:rgba(255,255,255,0.06);
+    }
+
+    .skin-block-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 16px;
+      border-bottom:1px solid rgba(255,255,255,0.10);
+      background:rgba(255,255,255,0.04);
+    }
+
+    .skin-player-name{
+      font-size:18px;
+      font-weight:700;
+      color:var(--text);
+      line-height:1.2;
+    }
+
+    .skin-player-count{
+      flex-shrink:0;
+      font-size:12px;
+      font-weight:700;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:0.08em;
+      padding:4px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.10);
+    }
+
+    .skin-block-head-row,
+    .skin-row{
+      display:grid;
+      grid-template-columns:minmax(90px,1.2fr) minmax(56px,0.8fr) minmax(70px,1fr);
+      gap:12px;
+      align-items:center;
+      padding-left:16px;
+      padding-right:16px;
+    }
+
+    .skin-block-head-row{
+      padding-top:12px;
+      padding-bottom:10px;
+      border-bottom:1px solid rgba(255,255,255,0.10);
+      font-size:11px;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:0.08em;
+      color:var(--faint);
+    }
+
+    .skin-row{
+      padding-top:12px;
+      padding-bottom:12px;
+      border-bottom:1px solid rgba(255,255,255,0.05);
+    }
+
+    .skin-row:last-child{
+      border-bottom:none;
+    }
+
+    .skin-col{
+      min-width:0;
+      font-size:14px;
+      color:var(--text);
+    }
+
+    .skin-hole{
+      font-weight:600;
+    }
+
+    .skin-score{
+      text-align:center;
+    }
+
+    .skin-payout{
+      text-align:right;
+      color:var(--gold);
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .skin-head-label{
+      color:var(--faint);
+    }
+
+    .skin-block-footer{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 16px;
+      border-top:1px solid rgba(255,255,255,0.10);
+      background:rgba(184,155,94,0.08);
+      font-size:14px;
+      font-weight:700;
+      color:var(--text);
+    }
+
+    .skin-subtotal-amount{
+      color:var(--gold);
+      font-size:18px;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .no-result-msg{
+      padding:18px 22px;
+      color:var(--muted);
+      font-size:14px;
+      margin:0;
+    }
+
+    .rollover-note{
+      padding:10px 22px 16px;
+      font-size:13px;
+      color:var(--muted);
+      font-style:italic;
+      margin:0;
+    }
+
+    .site-footer{
+      text-align:center;
+      padding-top:28px;
+      border-top:1px solid var(--line);
+      font-size:12px;
+      color:var(--faint);
+    }
+
+    .photo-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      margin-top:14px;
+      padding:9px 18px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,0.18);
+      background:rgba(255,255,255,0.07);
+      color:var(--text);
+      font-size:13px;
+      font-weight:600;
+      text-decoration:none;
+      transition:background 0.15s,border-color 0.15s;
+    }
+
+    .photo-btn:hover{
+      background:rgba(255,255,255,0.12);
+      border-color:rgba(255,255,255,0.28);
+    }
+
+    .photo-btn.disabled{
+      opacity:0.45;
+      cursor:default;
+      pointer-events:none;
+    }
+
+    @media(max-width:540px){
+      .top-bar{flex-direction:column;align-items:flex-start;gap:12px}
+      .card{padding:16px}
+      .section-header{padding:14px 16px}
+      th,td{padding:9px 10px}
+
+      .skin-blocks-wrap{
+        padding:12px;
+        gap:12px;
+      }
+
+      .skin-block{
+        border-radius:12px;
+      }
+
+      .skin-block-header{
+        padding:13px 14px;
+      }
+
+      .skin-player-name{
+        font-size:16px;
+      }
+
+      .skin-player-count{
+        font-size:11px;
+      }
+
+      .skin-block-head-row,
+      .skin-row{
+        grid-template-columns:minmax(76px,1.1fr) 54px minmax(64px,0.9fr);
+        gap:10px;
+        padding-left:14px;
+        padding-right:14px;
+      }
+
+      .skin-col{
+        font-size:13px;
+      }
+
+      .skin-block-footer{
+        padding:12px 14px;
+      }
+
+      .skin-subtotal-amount{
+        font-size:16px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page-shell">
+  <nav class="top-bar">
+    <a class="brand" href="../index.html">
+      <div class="brand-mark"><img src="../assets/logo.png" alt="LGCC" onerror="this.style.display='none'" /></div>
+      <div class="brand-text"><span class="brand-name">Lebanon Golf &amp; Country Club</span><span class="brand-tag">Est. 1951</span></div>
+    </a>
+    <a class="back-btn" href="../index.html#results">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      All Results
+    </a>
+  </nav>
+<!-- LGCC:DYNAMIC_START -->
+<!-- title: Saturday 4-4-26 Results — LGCC -->
+<!-- event-type: Points Game -->
+<!-- event-date: 2026-04-04 -->
+  <div class="event-hero">
+    <p class="eyebrow">Points Game &nbsp;·&nbsp; Club Results</p>
+    <h1 class="event-title">Saturday 4-4-26</h1>
+    
+    <span class="photo-btn disabled"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>No Photos</span>
+  </div>
+
+  <div class="card summary-card">
+    <div class="stat-item"><span class="stat-label">Players</span><span class="stat-value">32</span></div>
+    <div class="stat-item"><span class="stat-label">Points Game Pot</span><span class="stat-value gold">$320</span></div>
+    <div class="stat-item"><span class="stat-label">Scats Pot</span><span class="stat-value gold">$320</span></div>
+    <div class="stat-item"><span class="stat-label">Total Collected</span><span class="stat-value">$640</span></div>
+    <div style="width:100%"><div class="payout-strip"><span class="payout-pill">1st: <strong>$130</strong></span><span class="payout-pill">2nd: <strong>$75</strong></span><span class="payout-pill">3rd: <strong>$45</strong></span></div></div>
+  </div>
+
+  <div class="card section-card">
+    <div class="section-header"><h2>Standings</h2></div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Place</th>
+            <th>Player</th>
+            <th style="text-align:center">Target</th>
+            <th style="text-align:center">Points</th>
+            <th style="text-align:center">vs Target</th>
+            <th style="text-align:center">New Target</th>
+            <th style="text-align:center">Payout</th>
+          </tr>
+        </thead>
+        <tbody><tr class="winner-row">
+      <td class="col-place">T1</td>
+      <td class="col-name">Danny Parkerson</td>
+      <td class="col-num">23</td>
+      <td class="col-num col-bold">28</td>
+      <td class="col-num" style="color:#6ee7b7;font-weight:700">+5</td>
+      <td class="col-num">24</td>
+      <td class="col-num col-payout">$80</td>
+    </tr>
+<tr class="winner-row">
+      <td class="col-place">T1</td>
+      <td class="col-name">Michael Patterson</td>
+      <td class="col-num">19</td>
+      <td class="col-num col-bold">24</td>
+      <td class="col-num" style="color:#6ee7b7;font-weight:700">+5</td>
+      <td class="col-num">20</td>
+      <td class="col-num col-payout">$80</td>
+    </tr>
+<tr class="winner-row">
+      <td class="col-place">T1</td>
+      <td class="col-name">Doug Sarro</td>
+      <td class="col-num">18</td>
+      <td class="col-num col-bold">23</td>
+      <td class="col-num" style="color:#6ee7b7;font-weight:700">+5</td>
+      <td class="col-num">19</td>
+      <td class="col-num col-payout">$80</td>
+    </tr>
+<tr class="winner-row">
+      <td class="col-place">T1</td>
+      <td class="col-name">Eddy Blaylock</td>
+      <td class="col-num">17</td>
+      <td class="col-num col-bold">22</td>
+      <td class="col-num" style="color:#6ee7b7;font-weight:700">+5</td>
+      <td class="col-num">18</td>
+      <td class="col-num col-payout">$80</td>
+    </tr>
+<tr class="">
+      <td class="col-place">T5</td>
+      <td class="col-name">Jordan Miller</td>
+      <td class="col-num">28</td>
+      <td class="col-num col-bold">32</td>
+      <td class="col-num" style="color:#6ee7b7;font-weight:700">+4</td>
+      <td class="col-num">29</td>
+      <td class="col-num col-payout">—</td>
+    </tr>
+<tr class="">
+      <td class="col-place">T5</td>
+      <td class="col-name">Kirk Honeycutt</td>
+      <td class="col-num">23</td>
+      <td class="col-num col-bold">27</td>
+      <td class="col-num" style="color:#6ee7b7;font-weight:700">+4</td>
+      <td class="col-num">24</td>
+      <td class="col-num col-payout">—</td>
+    </tr>
+<tr class="">
+      <td class="col-place">T5</td>
+      <td class="col-name">Tony Eckler</td>
+      <td class="col-num">18</td>
+      <td class="col-num col-bold">22</td>
+      <td class="col-num" style="color:#6ee7b7;font-weight:700">+4</td>
+      <td class="col-num">19</td>
+      <td class="col-num col-payout">—</td>
+    </tr>
+<tr class="">
+      <td class="col-place">T5</td>
+      <td class="col-name">Joey Musice</td>
+      <td class="col-num">17</td>
+      <td class="col-num col-bold">21</td>
+      <td class="col-num" style="color:#6ee7b7;font-weight:700">+4</td>
+      <td class="col-num">18</td>
+      <td class="col-num col-payout">—</td>
+    </tr>
+<tr class="">
+      <td class="col-place">9th</td>
+      <td class="col-name">Brody Tubbs</td>
+      <td class="col-num">17</td>
+      <td class="col-num col-bold">20</td>
+      <td class="col-num" style="color:#6ee7b7;font-weight:700">+3</td>
+      <td class="col-num">18</td>
+      <td class="col-num col-payout">—</td>
+    </tr>
+<tr class="">
+      <td class="col-place">T10</td>
+      <td class="col-name">Casey Moore</td>
+      <td class="col-num">37</td>
+      <td class="col-num col-bold">39</td>
+      <td class="col-num" style="color:#6ee7b7;font-weight:700">+2</td>
+      <td class="col-num">37</td>
+      <td class="col-num col-payout">—</td>
+    </tr>
+<tr class="">
+      <td class="col-place">T10</td>
+      <td class="col-name">Cory Deffendall</td>
+      <td class="col-num">23</td>
+      <td class="col-num col-bold">25</td>
+      <td class="col-num" style="color:#6ee7b7;font-weight:700">+2</td>
+      <td class="col-num">23</td>
+      <td class="col-num col-payout">—</td>
+    </tr>
+<tr class="">
+      <td class="col-place">T10</td>
+      <td class="col-name">Brad Davis</td>
+      <td class="col-num">22</td>
+      <td class="col-num col-bold">24</td>
+      <td class="col-num" style="color:#6ee7b7;font-weight:700">+2</td>
+      <td class="col-num">22</td>
+      <td class="col-num col-payout">—</td>
+    </tr>
+<tr class="">
+      <td class="col-place">T13</td>
+      <td class="col-name">Jonathan Weaver</td>
+      <td class="col-num">35</td>
+      <td class="col-num col-bold">36</td>
+      <td class="col-num" style="color:#6ee7b7;font-weight:700">+1</td>
+      <td class="col-num">35</td>
+      <td class="col-num col-payout">—</td>
+    </tr>
+<tr class="">
+      <td class="col-place">T13</td>
+      <td class="col-name">Colin Mitchell</td>
+      <td class="col-num">33</td>
+      <td class="col-num col-bold">34</td>
+      <td class="col-num" style="color:#6ee7b7;font-weight:700">+1</td>
+      <td class="col-num">33</td>
+      <td class="col-num col-payout">—</td>
+    </tr>
+<tr class="">
+      <td class="col-place">T13</td>
+      <td class="col-name">John Williams</td>
+      <td class="col-num">28</td>
+      <td class="col-num col-bold">29</td>
+      <td class="col-num" style="color:#6ee7b7;font-weight:700">+1</td>
+      <td class="col-num">28</td>
+      <td class="col-num col-payout">—</td>
+    </tr>
+<tr class="">
+      <td class="col-place">T13</td>
+      <td class="col-name">Todd Lester</td>
+      <td class="col-num">20</td>
+      <td class="col-num col-bold">21</td>
+      <td class="col-num" style="color:#6ee7b7;font-weight:700">+1</td>
+      <td class="col-num">20</td>
+      <td class="col-num col-payout">—</td>
+    </tr>
+<tr class="">
+      <td class="col-place">T13</td>
+      <td class="col-name">Danny Williams</td>
+      <td class="col-num">17</td>
+      <td class="col-num col-bold">18</td>
+      <td class="col-num" style="color:#6ee7b7;font-weight:700">+1</td>
+      <td class="col-num">17</td>
+      <td class="col-num col-payout">—</td>
+    </tr>
+<tr class="">
+      <td class="col-place">18th</td>
+      <td class="col-name">Jon Schmitt</td>
+      <td class="col-num">26</td>
+      <td class="col-num col-bold">26</td>
+      <td class="col-num">E</td>
+      <td class="col-num">26</td>
+      <td class="col-num col-payout">—</td>
+    </tr>
+<tr class="">
+      <td class="col-place">T19</td>
+      <td class="col-name">Jack Mitchell</td>
+      <td class="col-num">28</td>
+      <td class="col-num col-bold">27</td>
+      <td class="col-num" style="color:#fca5a5">-1</td>
+      <td class="col-num">28</td>
+      <td class="col-num col-payout">—</td>
+    </tr>
+<tr class="">
+      <td class="col-place">T19</td>
+      <td class="col-name">Randy Buttrey</td>
+      <td class="col-num">26</td>
+      <td class="col-num col-bold">25</td>
+      <td class="col-num" style="color:#fca5a5">-1</td>
+      <td class="col-num">26</td>
+      <td class="col-num col-payout">—</td>
+    </tr>
+<tr class="">
+      <td class="col-place">T21</td>
+      <td class="col-name">Mark Senne</td>
+      <td class="col-num">23</td>
+      <td class="col-num col-bold">21</td>
+      <td class="col-num" style="color:#fca5a5">-2</td>
+      <td class="col-num">23</td>
+      <td class="col-num col-payout">—</td>
+    </tr>
+<tr class="">
+      <td class="col-place">T21</td>
+      <td class="col-name">David Walker</td>
+      <td class="col-num">11</td>
+      <td class="col-num col-bold">9</td>
+      <td class="col-num" style="color:#fca5a5">-2</td>
+      <td class="col-num">11</td>
+      <td class="col-num col-payout">—</td>
+    </tr>
+<tr class="">
+      <td class="col-place">T23</td>
+      <td class="col-name">Jason Ezell</td>
+      <td class="col-num">28</td>
+      <td class="col-num col-bold">25</td>
+      <td class="col-num" style="color:#fca5a5">-3</td>
+      <td class="col-num">27</td>
+      <td class="col-num col-payout">—</td>
+    </tr>
+<tr class="">
+      <td class="col-place">T23</td>
+      <td class="col-name">Paul Tubbs</td>
+      <td class="col-num">22</td>
+      <td class="col-num col-bold">19</td>
+      <td class="col-num" style="color:#fca5a5">-3</td>
+      <td class="col-num">21</td>
+      <td class="col-num col-payout">—</td>
+    </tr>
+<tr class="">
+      <td class="col-place">T25</td>
+      <td class="col-name">Jim Mitchell</td>
+      <td class="col-num">34</td>
+      <td class="col-num col-bold">30</td>
+      <td class="col-num" style="color:#fca5a5">-4</td>
+      <td class="col-num">33</td>
+      <td class="col-num col-payout">—</td>
+    </tr>
+<tr class="">
+      <td class="col-place">T25</td>
+      <td class="col-name">Tyson Davis</td>
+      <td class="col-num">16</td>
+      <td class="col-num col-bold">12</td>
+      <td class="col-num" style="color:#fca5a5">-4</td>
+      <td class="col-num">15</td>
+      <td class="col-num col-payout">—</td>
+    </tr>
+<tr class="">
+      <td class="col-place">T25</td>
+      <td class="col-name">Jimmy Scott</td>
+      <td class="col-num">14</td>
+      <td class="col-num col-bold">10</td>
+      <td class="col-num" style="color:#fca5a5">-4</td>
+      <td class="col-num">13</td>
+      <td class="col-num col-payout">—</td>
+    </tr>
+<tr class="">
+      <td class="col-place">28th</td>
+      <td class="col-name">Steve Turley</td>
+      <td class="col-num">12</td>
+      <td class="col-num col-bold">7</td>
+      <td class="col-num" style="color:#fca5a5">-5</td>
+      <td class="col-num">11</td>
+      <td class="col-num col-payout">—</td>
+    </tr>
+<tr class="">
+      <td class="col-place">T29</td>
+      <td class="col-name">Chris Simmons</td>
+      <td class="col-num">23</td>
+      <td class="col-num col-bold">17</td>
+      <td class="col-num" style="color:#fca5a5">-6</td>
+      <td class="col-num">21</td>
+      <td class="col-num col-payout">—</td>
+    </tr>
+<tr class="">
+      <td class="col-place">T29</td>
+      <td class="col-name">Chris Scott</td>
+      <td class="col-num">17</td>
+      <td class="col-num col-bold">11</td>
+      <td class="col-num" style="color:#fca5a5">-6</td>
+      <td class="col-num">15</td>
+      <td class="col-num col-payout">—</td>
+    </tr>
+<tr class="">
+      <td class="col-place">T29</td>
+      <td class="col-name">Mark Scott</td>
+      <td class="col-num">15</td>
+      <td class="col-num col-bold">9</td>
+      <td class="col-num" style="color:#fca5a5">-6</td>
+      <td class="col-num">13</td>
+      <td class="col-num col-payout">—</td>
+    </tr>
+<tr class="">
+      <td class="col-place">32th</td>
+      <td class="col-name">Dustin Shorter</td>
+      <td class="col-num">32</td>
+      <td class="col-num col-bold">25</td>
+      <td class="col-num" style="color:#fca5a5">-7</td>
+      <td class="col-num">30</td>
+      <td class="col-num col-payout">—</td>
+    </tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card section-card">
+        <div class="section-header">
+          <h2>Scats Results</h2>
+          <span class="pot-badge">Pot: $320</span>
+        </div>
+        <div class="skin-blocks-wrap">
+          
+          <div class="skin-block skin-block-odd">
+            <div class="skin-block-header">
+              <div class="skin-player-name">Randy Buttrey</div>
+              <div class="skin-player-count">2 scats</div>
+            </div>
+
+            <div class="skin-block-head-row">
+              <div class="skin-col skin-head-label">Hole</div>
+              <div class="skin-col skin-head-label skin-score">Score</div>
+              <div class="skin-col skin-head-label skin-payout">Payout</div>
+            </div>
+
+            <div class="skin-block-body">
+              
+          <div class="skin-row">
+            <div class="skin-col skin-hole">Hole 11</div>
+            <div class="skin-col skin-score">2</div>
+            <div class="skin-col skin-payout">$40</div>
+          </div>
+        
+          <div class="skin-row">
+            <div class="skin-col skin-hole">Hole 13</div>
+            <div class="skin-col skin-score">2</div>
+            <div class="skin-col skin-payout">$40</div>
+          </div>
+        
+            </div>
+
+            <div class="skin-block-footer">
+              <span>Subtotal</span>
+              <span class="skin-subtotal-amount">$80</span>
+            </div>
+          </div>
+        
+          <div class="skin-block skin-block-even">
+            <div class="skin-block-header">
+              <div class="skin-player-name">Casey Moore</div>
+              <div class="skin-player-count">1 scat</div>
+            </div>
+
+            <div class="skin-block-head-row">
+              <div class="skin-col skin-head-label">Hole</div>
+              <div class="skin-col skin-head-label skin-score">Score</div>
+              <div class="skin-col skin-head-label skin-payout">Payout</div>
+            </div>
+
+            <div class="skin-block-body">
+              
+          <div class="skin-row">
+            <div class="skin-col skin-hole">Hole 9</div>
+            <div class="skin-col skin-score">3</div>
+            <div class="skin-col skin-payout">$40</div>
+          </div>
+        
+            </div>
+
+            <div class="skin-block-footer">
+              <span>Subtotal</span>
+              <span class="skin-subtotal-amount">$40</span>
+            </div>
+          </div>
+        
+          <div class="skin-block skin-block-odd">
+            <div class="skin-block-header">
+              <div class="skin-player-name">Colin Mitchell</div>
+              <div class="skin-player-count">1 scat</div>
+            </div>
+
+            <div class="skin-block-head-row">
+              <div class="skin-col skin-head-label">Hole</div>
+              <div class="skin-col skin-head-label skin-score">Score</div>
+              <div class="skin-col skin-head-label skin-payout">Payout</div>
+            </div>
+
+            <div class="skin-block-body">
+              
+          <div class="skin-row">
+            <div class="skin-col skin-hole">Hole 14</div>
+            <div class="skin-col skin-score">4</div>
+            <div class="skin-col skin-payout">$40</div>
+          </div>
+        
+            </div>
+
+            <div class="skin-block-footer">
+              <span>Subtotal</span>
+              <span class="skin-subtotal-amount">$40</span>
+            </div>
+          </div>
+        
+          <div class="skin-block skin-block-even">
+            <div class="skin-block-header">
+              <div class="skin-player-name">David Walker</div>
+              <div class="skin-player-count">1 scat</div>
+            </div>
+
+            <div class="skin-block-head-row">
+              <div class="skin-col skin-head-label">Hole</div>
+              <div class="skin-col skin-head-label skin-score">Score</div>
+              <div class="skin-col skin-head-label skin-payout">Payout</div>
+            </div>
+
+            <div class="skin-block-body">
+              
+          <div class="skin-row">
+            <div class="skin-col skin-hole">Hole 4</div>
+            <div class="skin-col skin-score">2</div>
+            <div class="skin-col skin-payout">$40</div>
+          </div>
+        
+            </div>
+
+            <div class="skin-block-footer">
+              <span>Subtotal</span>
+              <span class="skin-subtotal-amount">$40</span>
+            </div>
+          </div>
+        
+          <div class="skin-block skin-block-odd">
+            <div class="skin-block-header">
+              <div class="skin-player-name">Jason Ezell</div>
+              <div class="skin-player-count">1 scat</div>
+            </div>
+
+            <div class="skin-block-head-row">
+              <div class="skin-col skin-head-label">Hole</div>
+              <div class="skin-col skin-head-label skin-score">Score</div>
+              <div class="skin-col skin-head-label skin-payout">Payout</div>
+            </div>
+
+            <div class="skin-block-body">
+              
+          <div class="skin-row">
+            <div class="skin-col skin-hole">Hole 2</div>
+            <div class="skin-col skin-score">2</div>
+            <div class="skin-col skin-payout">$40</div>
+          </div>
+        
+            </div>
+
+            <div class="skin-block-footer">
+              <span>Subtotal</span>
+              <span class="skin-subtotal-amount">$40</span>
+            </div>
+          </div>
+        
+          <div class="skin-block skin-block-even">
+            <div class="skin-block-header">
+              <div class="skin-player-name">Jim Mitchell</div>
+              <div class="skin-player-count">1 scat</div>
+            </div>
+
+            <div class="skin-block-head-row">
+              <div class="skin-col skin-head-label">Hole</div>
+              <div class="skin-col skin-head-label skin-score">Score</div>
+              <div class="skin-col skin-head-label skin-payout">Payout</div>
+            </div>
+
+            <div class="skin-block-body">
+              
+          <div class="skin-row">
+            <div class="skin-col skin-hole">Hole 17</div>
+            <div class="skin-col skin-score">3</div>
+            <div class="skin-col skin-payout">$40</div>
+          </div>
+        
+            </div>
+
+            <div class="skin-block-footer">
+              <span>Subtotal</span>
+              <span class="skin-subtotal-amount">$40</span>
+            </div>
+          </div>
+        
+          <div class="skin-block skin-block-odd">
+            <div class="skin-block-header">
+              <div class="skin-player-name">Tony Eckler</div>
+              <div class="skin-player-count">1 scat</div>
+            </div>
+
+            <div class="skin-block-head-row">
+              <div class="skin-col skin-head-label">Hole</div>
+              <div class="skin-col skin-head-label skin-score">Score</div>
+              <div class="skin-col skin-head-label skin-payout">Payout</div>
+            </div>
+
+            <div class="skin-block-body">
+              
+          <div class="skin-row">
+            <div class="skin-col skin-hole">Hole 8</div>
+            <div class="skin-col skin-score">3</div>
+            <div class="skin-col skin-payout">$40</div>
+          </div>
+        
+            </div>
+
+            <div class="skin-block-footer">
+              <span>Subtotal</span>
+              <span class="skin-subtotal-amount">$40</span>
+            </div>
+          </div>
+        
+        </div>
+        
+      </div>
+
+  <footer class="site-footer">Lebanon Golf &amp; Country Club &nbsp;·&nbsp; Points Game Results</footer>
+<!-- LGCC:DYNAMIC_END -->
+</div>
+</body>
+</html>
