@@ -2,6 +2,16 @@
   "results": [
     {
       "label": "Club Event Result",
+      "game_type": "Points Game",
+      "title": "Saturday 4-4-26",
+      "winner": "Winner: Danny Parkerson — +5 pts ($80)",
+      "summary": "32 players competed · $320 points pot",
+      "summary2": "8 scats · $320 scats pot",
+      "url": "/results/saturday-4-4-26-april-4-2026.html",
+      "event_date": "2026-04-04"
+    },
+    {
+      "label": "Club Event Result",
       "game_type": "Par 3",
       "title": "4-1-26",
       "winner": "Winner: Joey Bradley ($55)",
@@ -39,16 +49,6 @@
       "summary2": "3 scats · $170 scats pot",
       "url": "/results/sunday-points-32226-march-22-2026.html",
       "event_date": "2026-03-22"
-    },
-    {
-      "label": "Club Event Result",
-      "game_type": "Points Game",
-      "title": "Saturday 3-21-26",
-      "winner": "Winner: Dustin Shorter — +12 pts ($120)",
-      "summary": "23 players competed · $230 points pot",
-      "summary2": "6 scats · $230 scats pot",
-      "url": "/results/saturday-3-21-26-march-21-2026.html",
-      "event_date": "2026-03-21"
     }
   ]
 }
