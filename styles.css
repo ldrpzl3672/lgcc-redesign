@@ -1297,3 +1297,39 @@ a:hover {
     max-height: 70px;
   }
 }
+/* MINI BANNER WRAPPER */
+.event-mini-banner,
+.mini-banner,
+.banner-mini,
+.event-banner-mini,
+.spring-fling-mini-banner {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto 18px auto;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  overflow: visible !important;
+}
+
+/* MINI BANNER IMAGE */
+.event-mini-banner img,
+.mini-banner img,
+.banner-mini img,
+.event-banner-mini img,
+.spring-fling-mini-banner img {
+  display: block;
+  width: auto !important;
+  max-width: 100%;
+  height: auto !important;
+  margin: 0;
+  padding: 0;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  object-fit: contain !important;
+}
