@@ -1,4 +1,4 @@
-/* LGCC site — cleaned + consolidated */
+/* LGCC site â cleaned + consolidated */
 :root {
   --bg: #0b1210;
   --surface: #0f1c18;
@@ -1234,6 +1234,14 @@ a:hover {
 
   .anniversary-badge {
     justify-self: start;
+  }
+}
+
+/* Mobile: stack two-column card grids vertically */
+@media (max-width: 767px) {
+  .cards.two,
+  .cards.three {
+    grid-template-columns: 1fr;
   }
 }
 
