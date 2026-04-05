@@ -214,8 +214,8 @@
       + badge
       + '<p class="result-label">' + safe(ev.label || "Event Result") + '</p>'
       + '<h3 class="result-title">' + safe(ev.title) + '</h3>'
-      + '<p class="result-winner">' + safe(ev.winner_text || ev.winner) + '</p>'
-      + '<p class="result-summary">' + safe(ev.summary_text || ev.summary) + '</p>'
+      + '<p class="result-winner">' + safe(ev.winner_text) + '</p>'
+      + '<p class="result-summary">' + safe(ev.summary_text) + '</p>'
       + summary2
       + '<a class="result-link" href="' + safe(detailUrl) + '">View full results &rarr;</a>'
       + '</div>'
@@ -242,8 +242,7 @@
     fetch("/data/recent-results.json?v=" + Date.now())
       .then(function (r) { return r.ok ? r.json() : []; })
       .then(function (data) {
-        var items = Array.isArray(data) ? data : (Array.isArray(data.results) ? data.results : []);
-        renderResults(items, container);
+        renderResults(Array.isArray(data) ? data : [], container);
       })
       .catch(function () {
         var section = container.closest ? container.closest("section") : null;
