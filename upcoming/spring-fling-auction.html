@@ -14,12 +14,10 @@
       --bg:#0b1210;
       --surface:#0f1c18;
       --card:rgba(255,255,255,0.06);
-      --card-strong:rgba(255,255,255,0.08);
       --text:rgba(255,255,255,0.92);
       --muted:rgba(255,255,255,0.72);
       --faint:rgba(255,255,255,0.42);
       --line:rgba(255,255,255,0.12);
-      --line-strong:rgba(184,155,94,0.25);
       --gold:#b89b5e;
       --gold-soft:rgba(184,155,94,0.12);
       --green:#6ee7b7;
@@ -45,6 +43,7 @@
       word-wrap:break-word;
     }
 
+    a { color:inherit; }
     img { max-width:100%; height:auto; display:block; }
 
     .page-shell{
@@ -156,6 +155,10 @@
         rgba(255,255,255,0.04);
     }
 
+    .card{
+      padding:22px 24px;
+    }
+
     .eyebrow{
       font-size:11px;
       font-weight:800;
@@ -246,7 +249,7 @@
       color:var(--muted);
       font-size:15px;
       line-height:1.75;
-      max-width:760px;
+      max-width:780px;
     }
 
     .trip-grid{
@@ -259,25 +262,9 @@
       background:var(--card);
       border:1px solid var(--line);
       border-radius:var(--radius);
-      overflow:hidden;
       box-shadow:var(--shadow);
       min-width:0;
-    }
-
-    .trip-media{
-      aspect-ratio: 4 / 3;
-      overflow:hidden;
-      background:rgba(255,255,255,0.04);
-    }
-
-    .trip-media img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-    }
-
-    .trip-body{
-      padding:18px;
+      padding:20px 18px;
     }
 
     .trip-tag{
@@ -292,22 +279,22 @@
       font-weight:800;
       letter-spacing:0.08em;
       text-transform:uppercase;
-      margin-bottom:10px;
+      margin-bottom:12px;
     }
 
     .trip-title{
       margin:0 0 8px;
-      font-size:22px;
-      line-height:1.15;
+      font-size:28px;
+      line-height:1.05;
       font-family:var(--serif);
       color:var(--text);
     }
 
     .trip-subtitle{
-      margin:0 0 12px;
+      margin:0 0 14px;
       color:var(--muted);
       font-size:14px;
-      line-height:1.65;
+      line-height:1.7;
     }
 
     .trip-list{
@@ -322,20 +309,16 @@
     }
 
     .trip-note{
-      margin-top:12px;
+      margin-top:14px;
       font-size:12px;
       color:var(--faint);
-      line-height:1.6;
+      line-height:1.65;
     }
 
     .auction-layout{
       display:grid;
       grid-template-columns:minmax(0, 1.2fr) minmax(0, 0.8fr);
       gap:18px;
-    }
-
-    .card{
-      padding:22px 24px;
     }
 
     .auction-list{
@@ -391,6 +374,12 @@
       padding:16px;
     }
 
+    .callout{
+      background:
+        linear-gradient(180deg, rgba(110,231,183,0.06), rgba(255,255,255,0.03));
+      border:1px solid rgba(110,231,183,0.16);
+    }
+
     .mini-label{
       margin:0 0 6px;
       font-size:11px;
@@ -413,12 +402,6 @@
       color:var(--muted);
       font-size:14px;
       line-height:1.7;
-    }
-
-    .callout{
-      background:
-        linear-gradient(180deg, rgba(110,231,183,0.06), rgba(255,255,255,0.03));
-      border:1px solid rgba(110,231,183,0.16);
     }
 
     .site-footer{
@@ -482,20 +465,16 @@
       </a>
 
       <div class="top-actions">
-        <a class="nav-btn" href="spring-fling-april-25-2026.html">
-          Event Details
-        </a>
-        <a class="nav-btn" href="../index.html#upcoming">
-          All Events
-        </a>
+        <a class="nav-btn" href="spring-fling-april-25-2026.html">Event Details</a>
+        <a class="nav-btn" href="../index.html#upcoming">All Events</a>
       </div>
     </nav>
 
     <section class="hero-card">
-      <p class="eyebrow">Spring Fling &nbsp;·&nbsp; Auction &amp; Featured Trips</p>
+      <p class="eyebrow">Spring Fling · Auction &amp; Featured Trips</p>
       <h1 class="page-title">Auction Items, Trips &amp; Special Experiences</h1>
       <p class="lead">
-        Explore featured travel packages, golf experiences, and auction items included in the Spring Fling event. This page highlights premium trips, event experiences, and additional items available as part of the auction and prize offering. :contentReference[oaicite:3]{index=3} :contentReference[oaicite:4]{index=4} :contentReference[oaicite:5]{index=5}
+        Explore featured travel packages, golf experiences, and auction items included in the Spring Fling event. This page highlights premium trips, event experiences, and additional auction offerings.
       </p>
 
       <div class="meta-row">
@@ -514,74 +493,59 @@
       </div>
 
       <p class="section-copy" style="margin-bottom:18px;">
-        The featured packages include a 2027 Phoenix Open suite experience, a Mexico getaway, and a Sonoma golf and dining retreat. The descriptions below are based on the event display boards you uploaded. :contentReference[oaicite:6]{index=6} :contentReference[oaicite:7]{index=7} :contentReference[oaicite:8]{index=8}
+        Featured packages include a Phoenix Open suite experience, a Mexico getaway, and a Sonoma golf and dining retreat.
       </p>
 
       <div class="trip-grid">
         <article class="trip-card">
-          <div class="trip-media">
-            <img src="../assets/spring-fling-waste-management-open.jpg" alt="Phoenix Open featured package" onerror="this.parentElement.style.display='none'" />
-          </div>
-          <div class="trip-body">
-            <div class="trip-tag">Featured Experience</div>
-            <h3 class="trip-title">Waste Management Open 2027</h3>
-            <p class="trip-subtitle">
-              A luxury suite experience overlooking the 18th hole at the Phoenix Open in Scottsdale.
-            </p>
-            <ul class="trip-list">
-              <li>Two wristbands for the Raise Away suite at the 18th hole</li>
-              <li>One guaranteed day: Thursday or Sunday, subject to availability</li>
-              <li>Open bar in the suite</li>
-              <li>Breakfast and lunch buffet included</li>
-            </ul>
-            <p class="trip-note">
-              Airfare and hotel are not included. Dates and exact suite placement remain subject to tournament availability. :contentReference[oaicite:9]{index=9}
-            </p>
-          </div>
+          <div class="trip-tag">Featured Experience</div>
+          <h3 class="trip-title">Waste Management Open 2027</h3>
+          <p class="trip-subtitle">
+            A luxury suite experience overlooking the 18th hole at the Phoenix Open in Scottsdale.
+          </p>
+          <ul class="trip-list">
+            <li>Two wristbands for the Raise Away suite on the 18th hole</li>
+            <li>One guaranteed day: Thursday or Sunday, subject to availability</li>
+            <li>Open bar in the suite</li>
+            <li>Breakfast and lunch buffet included</li>
+          </ul>
+          <p class="trip-note">
+            Airfare and hotel are not included.
+          </p>
         </article>
 
         <article class="trip-card">
-          <div class="trip-media">
-            <img src="../assets/spring-fling-gems-of-mexico.jpg" alt="Gems of Mexico getaway" onerror="this.parentElement.style.display='none'" />
-          </div>
-          <div class="trip-body">
-            <div class="trip-tag">Travel Package</div>
-            <h3 class="trip-title">Gems of Mexico</h3>
-            <p class="trip-subtitle">
-              A winner’s choice 7-night getaway at The Mayan Palace in Riviera Maya, Nuevo Vallarta, or Puerto Peñasco.
-            </p>
-            <ul class="trip-list">
-              <li>7-night stay in a Studio Master Suite</li>
-              <li>Accommodates up to 4 people</li>
-              <li>Designed for 2 adults and up to 2 children under 12</li>
-              <li>Booking assistance provided</li>
-            </ul>
-            <p class="trip-note">
-              Resort fees and taxes may apply at redemption. Occupancy and redemption terms are subject to certificate rules. :contentReference[oaicite:10]{index=10}
-            </p>
-          </div>
+          <div class="trip-tag">Travel Package</div>
+          <h3 class="trip-title">Gems of Mexico</h3>
+          <p class="trip-subtitle">
+            A winner’s choice 7-night getaway at The Mayan Palace in Riviera Maya, Nuevo Vallarta, or Puerto Peñasco.
+          </p>
+          <ul class="trip-list">
+            <li>7-night stay in a Studio Master Suite</li>
+            <li>Accommodates up to 4 people</li>
+            <li>Designed for 2 adults and up to 2 children under 12</li>
+            <li>Booking assistance provided</li>
+          </ul>
+          <p class="trip-note">
+            Resort fees and taxes may apply at redemption.
+          </p>
         </article>
 
         <article class="trip-card">
-          <div class="trip-media">
-            <img src="../assets/spring-fling-sonoma.jpg" alt="Sonoma golf getaway" onerror="this.parentElement.style.display='none'" />
-          </div>
-          <div class="trip-body">
-            <div class="trip-tag">Golf Retreat</div>
-            <h3 class="trip-title">Gourmet &amp; Golf Sonoma Retreat</h3>
-            <p class="trip-subtitle">
-              A Sonoma getaway featuring a luxury stay, golf for two, Michelin-rated dining, and wine tasting.
-            </p>
-            <ul class="trip-list">
-              <li>2-night stay at Fairmont Sonoma Mission Inn &amp; Spa</li>
-              <li>1 round of golf for two with cart</li>
-              <li>Dinner for two at Sant&eacute;</li>
-              <li>Wine tasting for two at Chateau St. Jean</li>
-            </ul>
-            <p class="trip-note">
-              Booking windows, blackout periods, local taxes, and resort-related charges may apply. :contentReference[oaicite:11]{index=11}
-            </p>
-          </div>
+          <div class="trip-tag">Golf Retreat</div>
+          <h3 class="trip-title">Gourmet &amp; Golf Sonoma Retreat</h3>
+          <p class="trip-subtitle">
+            A Sonoma getaway featuring a luxury stay, golf for two, Michelin-rated dining, and wine tasting.
+          </p>
+          <ul class="trip-list">
+            <li>2-night stay at Fairmont Sonoma Mission Inn &amp; Spa</li>
+            <li>1 round of golf for two with cart</li>
+            <li>Dinner for two at Sant&eacute;</li>
+            <li>Wine tasting for two at Chateau St. Jean</li>
+          </ul>
+          <p class="trip-note">
+            Booking windows, blackout periods, and local taxes may apply.
+          </p>
         </article>
       </div>
     </section>
@@ -597,7 +561,7 @@
       <div class="auction-layout">
         <div class="card">
           <p class="section-copy" style="margin-bottom:14px;">
-            In addition to the featured trips, the auction includes golf rounds, memorabilia, experiences, home items, collectibles, and specialty packages from the list you shared.
+            In addition to the featured trips, the auction includes golf rounds, memorabilia, experiences, home items, collectibles, and specialty packages.
           </p>
 
           <div class="auction-list">
@@ -625,27 +589,27 @@
         </div>
 
         <div class="info-stack">
-          <div class="card callout">
-            <p class="mini-label">Trip Drawing</p>
+          <div class="mini-card callout">
+            <p class="mini-label">Featured Drawing</p>
             <h3 class="mini-title">Special Trip Opportunity</h3>
             <p class="mini-copy">
-              The Spring Fling auction page also supports a dedicated area for a special trip drawing or separately promoted premium travel package. This gives you room to feature one headline item above the rest whenever you want.
+              This section can later be updated to spotlight one headline trip, drawing item, or premium sponsor package above the rest of the auction offerings.
             </p>
           </div>
 
-          <div class="card">
+          <div class="mini-card">
             <p class="mini-label">Auction Notes</p>
             <h3 class="mini-title">Items May Be Updated</h3>
             <p class="mini-copy">
-              Auction offerings can be revised as new items arrive, sponsors are added, or featured packages are adjusted before event night.
+              Auction items can be revised as new donations arrive, sponsors are added, or featured packages are adjusted before event night.
             </p>
           </div>
 
-          <div class="card">
+          <div class="mini-card">
             <p class="mini-label">Event Timing</p>
             <h3 class="mini-title">Live Auction Follows Dinner</h3>
             <p class="mini-copy">
-              Spring Fling event details list dinner at 7:00 PM and the live auction at 8:00 PM on Saturday evening.
+              The Spring Fling schedule lists dinner at 7:00 PM and the live auction at 8:00 PM on Saturday evening.
             </p>
           </div>
         </div>
