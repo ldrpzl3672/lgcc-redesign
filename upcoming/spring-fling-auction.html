@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spring Fling Auction — LGCC</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root{
+      --bg:#0b1210;
+      --surface:#0f1c18;
+      --card:rgba(255,255,255,0.06);
+      --card-strong:rgba(255,255,255,0.08);
+      --text:rgba(255,255,255,0.92);
+      --muted:rgba(255,255,255,0.72);
+      --faint:rgba(255,255,255,0.42);
+      --line:rgba(255,255,255,0.12);
+      --line-strong:rgba(184,155,94,0.25);
+      --gold:#b89b5e;
+      --gold-soft:rgba(184,155,94,0.12);
+      --green:#6ee7b7;
+      --green-soft:rgba(110,231,183,0.10);
+      --radius:16px;
+      --shadow:0 18px 40px rgba(0,0,0,0.22);
+      --serif:"Playfair Display", Georgia, serif;
+      --sans:Inter, system-ui, -apple-system, Arial, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing:border-box; }
+    html { background:#000; overflow-x:hidden; }
+    body{
+      margin:0;
+      font-family:var(--sans);
+      background:
+        radial-gradient(circle at top, rgba(184,155,94,0.08), transparent 28%),
+        var(--bg);
+      color:var(--text);
+      line-height:1.6;
+      min-height:100vh;
+      overflow-x:hidden;
+      word-wrap:break-word;
+    }
+
+    img { max-width:100%; height:auto; display:block; }
+
+    .page-shell{
+      width:100%;
+      max-width:1040px;
+      margin:0 auto;
+      padding:0 20px 64px;
+    }
+
+    .top-bar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:14px 0;
+      border-bottom:1px solid var(--line);
+      margin-bottom:36px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+      min-width:0;
+    }
+
+    .brand-mark{
+      width:40px;
+      height:40px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,0.14);
+      background:rgba(255,255,255,0.05);
+      overflow:hidden;
+      display:grid;
+      place-items:center;
+      flex-shrink:0;
+    }
+
+    .brand-mark img{
+      width:110%;
+      height:110%;
+      object-fit:contain;
+    }
+
+    .brand-text{
+      display:flex;
+      flex-direction:column;
+      line-height:1.15;
+      min-width:0;
+    }
+
+    .brand-name{
+      font-family:var(--serif);
+      font-size:14px;
+      font-weight:600;
+      color:var(--text);
+    }
+
+    .brand-tag{
+      font-size:11px;
+      color:var(--muted);
+    }
+
+    .top-actions{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      gap:10px;
+    }
+
+    .nav-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:7px;
+      padding:9px 16px;
+      border-radius:999px;
+      border:1px solid rgba(184,155,94,0.35);
+      background:rgba(184,155,94,0.10);
+      color:var(--gold);
+      font-size:13px;
+      font-weight:700;
+      text-decoration:none;
+      transition:background 0.15s, border-color 0.15s, transform 0.15s;
+      white-space:nowrap;
+    }
+
+    .nav-btn:hover{
+      background:rgba(184,155,94,0.18);
+      border-color:rgba(184,155,94,0.55);
+      transform:translateY(-1px);
+    }
+
+    .hero-card,
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+
+    .hero-card{
+      padding:28px 28px 24px;
+      margin-bottom:22px;
+      background:
+        linear-gradient(135deg, rgba(184,155,94,0.08), rgba(255,255,255,0.03)),
+        rgba(255,255,255,0.04);
+    }
+
+    .eyebrow{
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:0.14em;
+      text-transform:uppercase;
+      color:var(--gold);
+      margin:0 0 10px;
+    }
+
+    .page-title{
+      font-family:var(--serif);
+      font-size:clamp(30px, 5vw, 44px);
+      line-height:1.05;
+      margin:0 0 12px;
+      color:var(--text);
+    }
+
+    .lead{
+      margin:0;
+      max-width:760px;
+      color:var(--muted);
+      font-size:16px;
+      line-height:1.75;
+    }
+
+    .meta-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:18px;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 14px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:0.04em;
+      text-transform:uppercase;
+    }
+
+    .pill-gold{
+      background:rgba(184,155,94,0.12);
+      border:1px solid rgba(184,155,94,0.30);
+      color:var(--gold);
+    }
+
+    .pill-green{
+      background:var(--green-soft);
+      border:1px solid rgba(110,231,183,0.26);
+      color:var(--green);
+    }
+
+    .section{
+      margin-top:24px;
+    }
+
+    .section-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:14px;
+    }
+
+    .section-kicker{
+      margin:0 0 4px;
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:0.14em;
+      text-transform:uppercase;
+      color:var(--gold);
+    }
+
+    .section-title{
+      margin:0;
+      font-family:var(--serif);
+      font-size:clamp(24px, 4vw, 32px);
+      line-height:1.1;
+      color:var(--text);
+    }
+
+    .section-copy{
+      margin:0;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.75;
+      max-width:760px;
+    }
+
+    .trip-grid{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0, 1fr));
+      gap:18px;
+    }
+
+    .trip-card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      min-width:0;
+    }
+
+    .trip-media{
+      aspect-ratio: 4 / 3;
+      overflow:hidden;
+      background:rgba(255,255,255,0.04);
+    }
+
+    .trip-media img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .trip-body{
+      padding:18px;
+    }
+
+    .trip-tag{
+      display:inline-flex;
+      align-items:center;
+      padding:5px 10px;
+      border-radius:999px;
+      background:rgba(184,155,94,0.10);
+      border:1px solid rgba(184,155,94,0.24);
+      color:var(--gold);
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+      margin-bottom:10px;
+    }
+
+    .trip-title{
+      margin:0 0 8px;
+      font-size:22px;
+      line-height:1.15;
+      font-family:var(--serif);
+      color:var(--text);
+    }
+
+    .trip-subtitle{
+      margin:0 0 12px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.65;
+    }
+
+    .trip-list{
+      margin:0;
+      padding-left:18px;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .trip-list li{
+      margin:0 0 8px;
+    }
+
+    .trip-note{
+      margin-top:12px;
+      font-size:12px;
+      color:var(--faint);
+      line-height:1.6;
+    }
+
+    .auction-layout{
+      display:grid;
+      grid-template-columns:minmax(0, 1.2fr) minmax(0, 0.8fr);
+      gap:18px;
+    }
+
+    .card{
+      padding:22px 24px;
+    }
+
+    .auction-list{
+      display:grid;
+      gap:10px;
+      margin-top:8px;
+    }
+
+    .auction-item{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:14px;
+      padding:12px 14px;
+      border-radius:14px;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.08);
+    }
+
+    .auction-name{
+      font-size:15px;
+      font-weight:600;
+      color:var(--text);
+      min-width:0;
+    }
+
+    .auction-type{
+      flex-shrink:0;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:4px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.08);
+      color:var(--muted);
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:0.06em;
+      text-transform:uppercase;
+      text-align:center;
+    }
+
+    .info-stack{
+      display:grid;
+      gap:14px;
+    }
+
+    .mini-card{
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:14px;
+      padding:16px;
+    }
+
+    .mini-label{
+      margin:0 0 6px;
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:0.14em;
+      text-transform:uppercase;
+      color:var(--gold);
+    }
+
+    .mini-title{
+      margin:0 0 8px;
+      font-size:18px;
+      font-weight:800;
+      color:var(--text);
+      line-height:1.25;
+    }
+
+    .mini-copy{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
+    }
+
+    .callout{
+      background:
+        linear-gradient(180deg, rgba(110,231,183,0.06), rgba(255,255,255,0.03));
+      border:1px solid rgba(110,231,183,0.16);
+    }
+
+    .site-footer{
+      text-align:center;
+      padding-top:28px;
+      border-top:1px solid var(--line);
+      font-size:12px;
+      color:var(--faint);
+      margin-top:28px;
+    }
+
+    @media (max-width: 920px){
+      .trip-grid{
+        grid-template-columns:1fr;
+      }
+
+      .auction-layout{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width: 640px){
+      .page-shell{
+        padding:0 16px 54px;
+      }
+
+      .top-bar{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .top-actions{
+        width:100%;
+        justify-content:flex-start;
+      }
+
+      .hero-card,
+      .card{
+        padding:18px 16px;
+        border-radius:14px;
+      }
+
+      .auction-item{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <nav class="top-bar">
+      <a class="brand" href="../index.html">
+        <div class="brand-mark">
+          <img src="../assets/logo.png" alt="LGCC" onerror="this.style.display='none'" />
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">Lebanon Golf &amp; Country Club</span>
+          <span class="brand-tag">Est. 1951</span>
+        </div>
+      </a>
+
+      <div class="top-actions">
+        <a class="nav-btn" href="spring-fling-april-25-2026.html">
+          Event Details
+        </a>
+        <a class="nav-btn" href="../index.html#upcoming">
+          All Events
+        </a>
+      </div>
+    </nav>
+
+    <section class="hero-card">
+      <p class="eyebrow">Spring Fling &nbsp;·&nbsp; Auction &amp; Featured Trips</p>
+      <h1 class="page-title">Auction Items, Trips &amp; Special Experiences</h1>
+      <p class="lead">
+        Explore featured travel packages, golf experiences, and auction items included in the Spring Fling event. This page highlights premium trips, event experiences, and additional items available as part of the auction and prize offering. :contentReference[oaicite:3]{index=3} :contentReference[oaicite:4]{index=4} :contentReference[oaicite:5]{index=5}
+      </p>
+
+      <div class="meta-row">
+        <div class="pill pill-gold">Live Auction</div>
+        <div class="pill pill-green">Featured Trips</div>
+        <div class="pill pill-gold">Event Packages</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <p class="section-kicker">Featured Trips</p>
+          <h2 class="section-title">Premium Travel &amp; Golf Packages</h2>
+        </div>
+      </div>
+
+      <p class="section-copy" style="margin-bottom:18px;">
+        The featured packages include a 2027 Phoenix Open suite experience, a Mexico getaway, and a Sonoma golf and dining retreat. The descriptions below are based on the event display boards you uploaded. :contentReference[oaicite:6]{index=6} :contentReference[oaicite:7]{index=7} :contentReference[oaicite:8]{index=8}
+      </p>
+
+      <div class="trip-grid">
+        <article class="trip-card">
+          <div class="trip-media">
+            <img src="../assets/spring-fling-waste-management-open.jpg" alt="Phoenix Open featured package" onerror="this.parentElement.style.display='none'" />
+          </div>
+          <div class="trip-body">
+            <div class="trip-tag">Featured Experience</div>
+            <h3 class="trip-title">Waste Management Open 2027</h3>
+            <p class="trip-subtitle">
+              A luxury suite experience overlooking the 18th hole at the Phoenix Open in Scottsdale.
+            </p>
+            <ul class="trip-list">
+              <li>Two wristbands for the Raise Away suite at the 18th hole</li>
+              <li>One guaranteed day: Thursday or Sunday, subject to availability</li>
+              <li>Open bar in the suite</li>
+              <li>Breakfast and lunch buffet included</li>
+            </ul>
+            <p class="trip-note">
+              Airfare and hotel are not included. Dates and exact suite placement remain subject to tournament availability. :contentReference[oaicite:9]{index=9}
+            </p>
+          </div>
+        </article>
+
+        <article class="trip-card">
+          <div class="trip-media">
+            <img src="../assets/spring-fling-gems-of-mexico.jpg" alt="Gems of Mexico getaway" onerror="this.parentElement.style.display='none'" />
+          </div>
+          <div class="trip-body">
+            <div class="trip-tag">Travel Package</div>
+            <h3 class="trip-title">Gems of Mexico</h3>
+            <p class="trip-subtitle">
+              A winner’s choice 7-night getaway at The Mayan Palace in Riviera Maya, Nuevo Vallarta, or Puerto Peñasco.
+            </p>
+            <ul class="trip-list">
+              <li>7-night stay in a Studio Master Suite</li>
+              <li>Accommodates up to 4 people</li>
+              <li>Designed for 2 adults and up to 2 children under 12</li>
+              <li>Booking assistance provided</li>
+            </ul>
+            <p class="trip-note">
+              Resort fees and taxes may apply at redemption. Occupancy and redemption terms are subject to certificate rules. :contentReference[oaicite:10]{index=10}
+            </p>
+          </div>
+        </article>
+
+        <article class="trip-card">
+          <div class="trip-media">
+            <img src="../assets/spring-fling-sonoma.jpg" alt="Sonoma golf getaway" onerror="this.parentElement.style.display='none'" />
+          </div>
+          <div class="trip-body">
+            <div class="trip-tag">Golf Retreat</div>
+            <h3 class="trip-title">Gourmet &amp; Golf Sonoma Retreat</h3>
+            <p class="trip-subtitle">
+              A Sonoma getaway featuring a luxury stay, golf for two, Michelin-rated dining, and wine tasting.
+            </p>
+            <ul class="trip-list">
+              <li>2-night stay at Fairmont Sonoma Mission Inn &amp; Spa</li>
+              <li>1 round of golf for two with cart</li>
+              <li>Dinner for two at Sant&eacute;</li>
+              <li>Wine tasting for two at Chateau St. Jean</li>
+            </ul>
+            <p class="trip-note">
+              Booking windows, blackout periods, local taxes, and resort-related charges may apply. :contentReference[oaicite:11]{index=11}
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <p class="section-kicker">Auction List</p>
+          <h2 class="section-title">Additional Auction Items</h2>
+        </div>
+      </div>
+
+      <div class="auction-layout">
+        <div class="card">
+          <p class="section-copy" style="margin-bottom:14px;">
+            In addition to the featured trips, the auction includes golf rounds, memorabilia, experiences, home items, collectibles, and specialty packages from the list you shared.
+          </p>
+
+          <div class="auction-list">
+            <div class="auction-item"><div class="auction-name">Rolling Thunder</div><div class="auction-type">Cart / Wheels</div></div>
+            <div class="auction-item"><div class="auction-name">Entry Table</div><div class="auction-type">Table</div></div>
+            <div class="auction-item"><div class="auction-name">Mirror</div><div class="auction-type">Mirror</div></div>
+            <div class="auction-item"><div class="auction-name">Big Clock</div><div class="auction-type">Large Wall Clock</div></div>
+            <div class="auction-item"><div class="auction-name">Foot Massager</div><div class="auction-type">Electric Foot Bath</div></div>
+            <div class="auction-item"><div class="auction-name">Ladies Watch</div><div class="auction-type">Watch</div></div>
+            <div class="auction-item"><div class="auction-name">Elvis Coins</div><div class="auction-type">Collectable</div></div>
+            <div class="auction-item"><div class="auction-name">NASCAR Coins</div><div class="auction-type">Collectable</div></div>
+            <div class="auction-item"><div class="auction-name">Whiskey Basket</div><div class="auction-type">Whiskey / Glasses / Etc</div></div>
+            <div class="auction-item"><div class="auction-name">SoundWaves</div><div class="auction-type">Cabana for 8 and Passes</div></div>
+            <div class="auction-item"><div class="auction-name">Putter</div><div class="auction-type">New Cleveland</div></div>
+            <div class="auction-item"><div class="auction-name">Knife</div><div class="auction-type">Specialty Item</div></div>
+            <div class="auction-item"><div class="auction-name">NASCAR Experience</div><div class="auction-type">Experience</div></div>
+            <div class="auction-item"><div class="auction-name">Golf for 4 at 5 Oaks</div><div class="auction-type">Golf Rounds</div></div>
+            <div class="auction-item"><div class="auction-name">Additional Golf Rounds</div><div class="auction-type">Golf Rounds</div></div>
+            <div class="auction-item"><div class="auction-name">Nashville Preds Item</div><div class="auction-type">Signed Jersey</div></div>
+            <div class="auction-item"><div class="auction-name">Dinner for 2 @ Aubrey’s</div><div class="auction-type">$140 Value</div></div>
+            <div class="auction-item"><div class="auction-name">Red White Blue Bag Boy Golf Bag</div><div class="auction-type">Golf Gear</div></div>
+            <div class="auction-item"><div class="auction-name">Spring Plants</div><div class="auction-type">Plants</div></div>
+            <div class="auction-item"><div class="auction-name">East Nashville Putt Putt</div><div class="auction-type">Golf Rounds</div></div>
+          </div>
+        </div>
+
+        <div class="info-stack">
+          <div class="card callout">
+            <p class="mini-label">Trip Drawing</p>
+            <h3 class="mini-title">Special Trip Opportunity</h3>
+            <p class="mini-copy">
+              The Spring Fling auction page also supports a dedicated area for a special trip drawing or separately promoted premium travel package. This gives you room to feature one headline item above the rest whenever you want.
+            </p>
+          </div>
+
+          <div class="card">
+            <p class="mini-label">Auction Notes</p>
+            <h3 class="mini-title">Items May Be Updated</h3>
+            <p class="mini-copy">
+              Auction offerings can be revised as new items arrive, sponsors are added, or featured packages are adjusted before event night.
+            </p>
+          </div>
+
+          <div class="card">
+            <p class="mini-label">Event Timing</p>
+            <h3 class="mini-title">Live Auction Follows Dinner</h3>
+            <p class="mini-copy">
+              Spring Fling event details list dinner at 7:00 PM and the live auction at 8:00 PM on Saturday evening.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      Lebanon Golf &amp; Country Club &nbsp;·&nbsp; Spring Fling Auction
+    </footer>
+  </div>
+</body>
+</html>
