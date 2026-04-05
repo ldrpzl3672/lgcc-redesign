@@ -12,7 +12,6 @@
   <style>
     :root{
       --bg:#0b1210;
-      --surface:#0f1c18;
       --card:rgba(255,255,255,0.06);
       --text:rgba(255,255,255,0.92);
       --muted:rgba(255,255,255,0.72);
@@ -139,7 +138,8 @@
     }
 
     .hero-card,
-    .card{
+    .card,
+    .feature-card{
       background:var(--card);
       border:1px solid var(--line);
       border-radius:var(--radius);
@@ -178,7 +178,7 @@
 
     .lead{
       margin:0;
-      max-width:760px;
+      max-width:780px;
       color:var(--muted);
       font-size:16px;
       line-height:1.75;
@@ -252,22 +252,18 @@
       max-width:780px;
     }
 
-    .trip-grid{
+    .feature-grid{
       display:grid;
       grid-template-columns:repeat(3, minmax(0, 1fr));
       gap:18px;
     }
 
-    .trip-card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      min-width:0;
+    .feature-card{
       padding:20px 18px;
+      min-width:0;
     }
 
-    .trip-tag{
+    .feature-tag{
       display:inline-flex;
       align-items:center;
       padding:5px 10px;
@@ -282,7 +278,7 @@
       margin-bottom:12px;
     }
 
-    .trip-title{
+    .feature-title{
       margin:0 0 8px;
       font-size:28px;
       line-height:1.05;
@@ -290,25 +286,25 @@
       color:var(--text);
     }
 
-    .trip-subtitle{
+    .feature-subtitle{
       margin:0 0 14px;
       color:var(--muted);
       font-size:14px;
       line-height:1.7;
     }
 
-    .trip-list{
+    .feature-list{
       margin:0;
       padding-left:18px;
       color:var(--muted);
       font-size:14px;
     }
 
-    .trip-list li{
+    .feature-list li{
       margin:0 0 8px;
     }
 
-    .trip-note{
+    .feature-note{
       margin-top:14px;
       font-size:12px;
       color:var(--faint);
@@ -414,7 +410,7 @@
     }
 
     @media (max-width: 920px){
-      .trip-grid{
+      .feature-grid{
         grid-template-columns:1fr;
       }
 
@@ -471,80 +467,80 @@
     </nav>
 
     <section class="hero-card">
-      <p class="eyebrow">Spring Fling · Auction &amp; Featured Trips</p>
-      <h1 class="page-title">Auction Items, Trips &amp; Special Experiences</h1>
+      <p class="eyebrow">Spring Fling · Auction &amp; Featured Items</p>
+      <h1 class="page-title">Auction Items, Trips &amp; Prize Opportunities</h1>
       <p class="lead">
-        Explore featured travel packages, golf experiences, and auction items included in the Spring Fling event. This page highlights premium trips, event experiences, and additional auction offerings.
+        Spring Fling features a mix of Thursday kickoff auction items, Saturday night auction items, and tournament prize opportunities. Browse the highlighted travel packages and the additional auction offerings below.
       </p>
 
       <div class="meta-row">
-        <div class="pill pill-gold">Live Auction</div>
-        <div class="pill pill-green">Featured Trips</div>
-        <div class="pill pill-gold">Event Packages</div>
+        <div class="pill pill-gold">Thursday Auction</div>
+        <div class="pill pill-green">Saturday Auction</div>
+        <div class="pill pill-gold">Hole-in-One Prize</div>
       </div>
     </section>
 
     <section class="section">
       <div class="section-head">
         <div>
-          <p class="section-kicker">Featured Trips</p>
-          <h2 class="section-title">Premium Travel &amp; Golf Packages</h2>
+          <p class="section-kicker">Featured Items</p>
+          <h2 class="section-title">Trips &amp; Special Experiences</h2>
         </div>
       </div>
 
       <p class="section-copy" style="margin-bottom:18px;">
-        Featured packages include a Phoenix Open suite experience, a Mexico getaway, and a Sonoma golf and dining retreat.
+        The featured travel packages are split between the Thursday kickoff auction, the Saturday auction, and the on-course hole-in-one opportunity.
       </p>
 
-      <div class="trip-grid">
-        <article class="trip-card">
-          <div class="trip-tag">Featured Experience</div>
-          <h3 class="trip-title">Waste Management Open 2027</h3>
-          <p class="trip-subtitle">
+      <div class="feature-grid">
+        <article class="feature-card">
+          <div class="feature-tag">Thursday Kickoff Auction</div>
+          <h3 class="feature-title">Waste Management Open 2027</h3>
+          <p class="feature-subtitle">
             A luxury suite experience overlooking the 18th hole at the Phoenix Open in Scottsdale.
           </p>
-          <ul class="trip-list">
+          <ul class="feature-list">
             <li>Two wristbands for the Raise Away suite on the 18th hole</li>
             <li>One guaranteed day: Thursday or Sunday, subject to availability</li>
             <li>Open bar in the suite</li>
             <li>Breakfast and lunch buffet included</li>
           </ul>
-          <p class="trip-note">
-            Airfare and hotel are not included.
+          <p class="feature-note">
+            This package is auctioned during the Thursday kickoff event. Airfare and hotel are not included.
           </p>
         </article>
 
-        <article class="trip-card">
-          <div class="trip-tag">Travel Package</div>
-          <h3 class="trip-title">Gems of Mexico</h3>
-          <p class="trip-subtitle">
+        <article class="feature-card">
+          <div class="feature-tag">Saturday Auction</div>
+          <h3 class="feature-title">Gems of Mexico</h3>
+          <p class="feature-subtitle">
             A winner’s choice 7-night getaway at The Mayan Palace in Riviera Maya, Nuevo Vallarta, or Puerto Peñasco.
           </p>
-          <ul class="trip-list">
+          <ul class="feature-list">
             <li>7-night stay in a Studio Master Suite</li>
             <li>Accommodates up to 4 people</li>
             <li>Designed for 2 adults and up to 2 children under 12</li>
             <li>Booking assistance provided</li>
           </ul>
-          <p class="trip-note">
-            Resort fees and taxes may apply at redemption.
+          <p class="feature-note">
+            This package is auctioned on Saturday. Resort fees and taxes may apply at redemption.
           </p>
         </article>
 
-        <article class="trip-card">
-          <div class="trip-tag">Golf Retreat</div>
-          <h3 class="trip-title">Gourmet &amp; Golf Sonoma Retreat</h3>
-          <p class="trip-subtitle">
+        <article class="feature-card">
+          <div class="feature-tag">Hole-in-One Prize</div>
+          <h3 class="feature-title">Gourmet &amp; Golf Sonoma Retreat</h3>
+          <p class="feature-subtitle">
             A Sonoma getaway featuring a luxury stay, golf for two, Michelin-rated dining, and wine tasting.
           </p>
-          <ul class="trip-list">
+          <ul class="feature-list">
             <li>2-night stay at Fairmont Sonoma Mission Inn &amp; Spa</li>
             <li>1 round of golf for two with cart</li>
             <li>Dinner for two at Sant&eacute;</li>
             <li>Wine tasting for two at Chateau St. Jean</li>
           </ul>
-          <p class="trip-note">
-            Booking windows, blackout periods, and local taxes may apply.
+          <p class="feature-note">
+            This trip is the hole-in-one prize during tournament play. If no one wins it, it becomes a Saturday auction item.
           </p>
         </article>
       </div>
@@ -590,26 +586,26 @@
 
         <div class="info-stack">
           <div class="mini-card callout">
-            <p class="mini-label">Featured Drawing</p>
-            <h3 class="mini-title">Special Trip Opportunity</h3>
+            <p class="mini-label">Thursday Night</p>
+            <h3 class="mini-title">Kickoff Auction Feature</h3>
             <p class="mini-copy">
-              This section can later be updated to spotlight one headline trip, drawing item, or premium sponsor package above the rest of the auction offerings.
+              The Waste Management Open trip is auctioned during the Thursday kickoff event, giving it its own spotlight before tournament day.
             </p>
           </div>
 
           <div class="mini-card">
-            <p class="mini-label">Auction Notes</p>
-            <h3 class="mini-title">Items May Be Updated</h3>
+            <p class="mini-label">On-Course Prize</p>
+            <h3 class="mini-title">Sonoma Starts as a Hole-in-One Prize</h3>
             <p class="mini-copy">
-              Auction items can be revised as new donations arrive, sponsors are added, or featured packages are adjusted before event night.
+              The Sonoma getaway is tied to tournament play first. If nobody makes the hole in one, it rolls over to the Saturday auction.
             </p>
           </div>
 
           <div class="mini-card">
-            <p class="mini-label">Event Timing</p>
+            <p class="mini-label">Saturday Night</p>
             <h3 class="mini-title">Live Auction Follows Dinner</h3>
             <p class="mini-copy">
-              The Spring Fling schedule lists dinner at 7:00 PM and the live auction at 8:00 PM on Saturday evening.
+              Saturday evening includes dinner at 7:00 PM followed by the live auction at 8:00 PM, where Gems of Mexico and other featured items are available.
             </p>
           </div>
         </div>
