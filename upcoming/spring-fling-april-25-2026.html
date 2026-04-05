@@ -1,72 +1,744 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Spring Fling — Upcoming Event — LGCC</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
   <style>
-    :root{--bg:#0b1210;--surface:#0f1c18;--card:rgba(255,255,255,0.06);--text:rgba(255,255,255,0.92);--muted:rgba(255,255,255,0.65);--faint:rgba(255,255,255,0.40);--line:rgba(255,255,255,0.12);--gold:#b89b5e;--gold-dim:rgba(184,155,94,0.20);--green:#6ee7b7;--radius:16px;--serif:"Playfair Display",Georgia,serif;--sans:Inter,system-ui,-apple-system,Arial,sans-serif;}
-    *,*::before,*::after{box-sizing:border-box}html{background:#000}
-    body{margin:0;font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
-    .page-shell{max-width:860px;margin:0 auto;padding:0 20px 60px}
-    .top-bar{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);margin-bottom:36px}
-    .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
-    .brand-mark{width:40px;height:40px;border-radius:10px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.05);overflow:hidden;display:grid;place-items:center}
-    .brand-mark img{width:110%;height:110%;object-fit:contain}
-    .brand-text{display:flex;flex-direction:column;line-height:1.15}
-    .brand-name{font-family:var(--serif);font-size:14px;font-weight:600;color:var(--text)}
-    .brand-tag{font-size:11px;color:var(--muted)}
-    .back-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:999px;border:1px solid rgba(184,155,94,0.35);background:rgba(184,155,94,0.10);color:var(--gold);font-size:13px;font-weight:600;text-decoration:none;transition:background 0.15s,border-color 0.15s}
-    .back-btn:hover{background:rgba(184,155,94,0.18);border-color:rgba(184,155,94,0.55)}
-    .banner-wrap{border-radius:var(--radius);overflow:hidden;margin-bottom:28px;max-height:320px;background:rgba(255,255,255,0.04);border:1px solid var(--line)}
-    .banner-img{width:100%;height:100%;max-height:320px;object-fit:cover;display:block}
-    .eyebrow{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin:0 0 8px}
-    .event-title{font-family:var(--serif);font-size:clamp(26px,5vw,40px);font-weight:700;line-height:1.1;margin:0 0 20px;color:var(--text)}
-    .upcoming-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:999px;background:rgba(110,231,183,0.12);border:1px solid rgba(110,231,183,0.30);color:var(--green);font-size:12px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:20px}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px 24px;margin-bottom:20px}
-    .detail-row{display:flex;align-items:baseline;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.07)}
-    .detail-row:last-child{border-bottom:none}
-    .detail-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--faint);min-width:110px;flex-shrink:0}
-    .detail-value{font-size:15px;color:var(--text);font-weight:500}
-    .desc-card{background:rgba(255,255,255,0.04)}
-    .desc-text{margin:0;font-size:15px;color:var(--muted);line-height:1.7}
-    .site-footer{text-align:center;padding-top:28px;border-top:1px solid var(--line);font-size:12px;color:var(--faint);margin-top:20px}
-    @media(max-width:540px){.top-bar{flex-direction:column;align-items:flex-start;gap:12px}.card{padding:16px}.detail-label{min-width:90px}.detail-row{flex-direction:column;gap:2px}}
+    :root{
+      --bg:#0b1210;
+      --surface:#0f1c18;
+      --card:rgba(255,255,255,0.06);
+      --card-strong:rgba(255,255,255,0.08);
+      --text:rgba(255,255,255,0.92);
+      --muted:rgba(255,255,255,0.70);
+      --faint:rgba(255,255,255,0.42);
+      --line:rgba(255,255,255,0.12);
+      --line-strong:rgba(184,155,94,0.25);
+      --gold:#b89b5e;
+      --gold-soft:rgba(184,155,94,0.12);
+      --green:#6ee7b7;
+      --green-soft:rgba(110,231,183,0.12);
+      --radius:16px;
+      --radius-sm:12px;
+      --shadow:0 18px 40px rgba(0,0,0,0.22);
+      --serif:"Playfair Display", Georgia, serif;
+      --sans:Inter, system-ui, -apple-system, Arial, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing:border-box; }
+    html { background:#000; overflow-x:hidden; }
+    body{
+      margin:0;
+      font-family:var(--sans);
+      background:
+        radial-gradient(circle at top, rgba(184,155,94,0.08), transparent 28%),
+        var(--bg);
+      color:var(--text);
+      line-height:1.6;
+      min-height:100vh;
+      overflow-x:hidden;
+      word-wrap:break-word;
+    }
+
+    img { max-width:100%; height:auto; display:block; }
+
+    .page-shell{
+      width:100%;
+      max-width:860px;
+      margin:0 auto;
+      padding:0 20px 64px;
+    }
+
+    .top-bar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:14px 0;
+      border-bottom:1px solid var(--line);
+      margin-bottom:36px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+      min-width:0;
+    }
+
+    .brand-mark{
+      width:40px;
+      height:40px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,0.14);
+      background:rgba(255,255,255,0.05);
+      overflow:hidden;
+      display:grid;
+      place-items:center;
+      flex-shrink:0;
+    }
+
+    .brand-mark img{
+      width:110%;
+      height:110%;
+      object-fit:contain;
+    }
+
+    .brand-text{
+      display:flex;
+      flex-direction:column;
+      line-height:1.15;
+      min-width:0;
+    }
+
+    .brand-name{
+      font-family:var(--serif);
+      font-size:14px;
+      font-weight:600;
+      color:var(--text);
+    }
+
+    .brand-tag{
+      font-size:11px;
+      color:var(--muted);
+    }
+
+    .back-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:7px;
+      padding:9px 16px;
+      border-radius:999px;
+      border:1px solid rgba(184,155,94,0.35);
+      background:rgba(184,155,94,0.10);
+      color:var(--gold);
+      font-size:13px;
+      font-weight:700;
+      text-decoration:none;
+      transition:background 0.15s, border-color 0.15s, transform 0.15s;
+      white-space:nowrap;
+      flex-shrink:0;
+    }
+
+    .back-btn:hover{
+      background:rgba(184,155,94,0.18);
+      border-color:rgba(184,155,94,0.55);
+      transform:translateY(-1px);
+    }
+
+    .banner-wrap{
+      border-radius:var(--radius);
+      overflow:hidden;
+      margin-bottom:28px;
+      max-height:320px;
+      background:rgba(255,255,255,0.04);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+    }
+
+    .banner-img{
+      width:100%;
+      height:100%;
+      max-height:320px;
+      object-fit:cover;
+      display:block;
+    }
+
+    .eyebrow{
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:0.14em;
+      text-transform:uppercase;
+      color:var(--gold);
+      margin:0 0 8px;
+    }
+
+    .event-title{
+      font-family:var(--serif);
+      font-size:clamp(28px, 5vw, 42px);
+      font-weight:700;
+      line-height:1.08;
+      margin:0 0 18px;
+      color:var(--text);
+    }
+
+    .intro-meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-bottom:22px;
+    }
+
+    .pill,
+    .upcoming-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 14px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:0.04em;
+      text-transform:uppercase;
+    }
+
+    .upcoming-badge{
+      background:var(--green-soft);
+      border:1px solid rgba(110,231,183,0.30);
+      color:var(--green);
+    }
+
+    .pill{
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.10);
+      color:var(--muted);
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:22px 24px;
+      margin-bottom:20px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+
+    .section-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom:16px;
+    }
+
+    .section-kicker{
+      margin:0 0 4px;
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:0.14em;
+      text-transform:uppercase;
+      color:var(--gold);
+    }
+
+    .section-title{
+      margin:0;
+      font-family:var(--serif);
+      font-size:clamp(22px, 4vw, 28px);
+      line-height:1.1;
+      color:var(--text);
+    }
+
+    .section-text{
+      margin:0;
+      font-size:15px;
+      color:var(--muted);
+      line-height:1.75;
+    }
+
+    .lga-card{
+      display:grid;
+      grid-template-columns:100px minmax(0,1fr);
+      gap:18px;
+      align-items:center;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border:1px solid var(--line-strong);
+    }
+
+    .lga-logo-wrap{
+      width:100%;
+      max-width:100px;
+      border-radius:14px;
+      background:rgba(255,255,255,0.92);
+      padding:10px;
+      margin:0 auto;
+    }
+
+    .lga-logo{
+      width:100%;
+      object-fit:contain;
+    }
+
+    .lga-label{
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:0.14em;
+      text-transform:uppercase;
+      color:var(--gold);
+      margin:0 0 6px;
+    }
+
+    .lga-name{
+      margin:0 0 8px;
+      font-size:20px;
+      font-weight:800;
+      color:var(--text);
+      line-height:1.2;
+    }
+
+    .lga-text{
+      margin:0;
+      font-size:14px;
+      color:var(--muted);
+      line-height:1.7;
+    }
+
+    .info-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:14px;
+    }
+
+    .info-item{
+      min-width:0;
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:14px;
+      padding:15px 16px;
+    }
+
+    .info-label{
+      display:block;
+      margin-bottom:6px;
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:0.12em;
+      text-transform:uppercase;
+      color:var(--faint);
+    }
+
+    .info-value{
+      display:block;
+      font-size:15px;
+      line-height:1.5;
+      color:var(--text);
+      font-weight:600;
+    }
+
+    .schedule-list{
+      display:grid;
+      gap:12px;
+      margin-top:2px;
+    }
+
+    .schedule-row{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+      padding:12px 0;
+      border-bottom:1px solid rgba(255,255,255,0.07);
+    }
+
+    .schedule-row:last-child{
+      border-bottom:none;
+      padding-bottom:0;
+    }
+
+    .schedule-label{
+      font-size:15px;
+      font-weight:600;
+      color:var(--text);
+    }
+
+    .schedule-time{
+      font-size:14px;
+      font-weight:700;
+      color:var(--gold);
+      text-align:right;
+      white-space:nowrap;
+    }
+
+    .feature-list{
+      margin:14px 0 0;
+      padding-left:18px;
+      color:var(--muted);
+    }
+
+    .feature-list li{
+      margin:0 0 8px;
+    }
+
+    .cta-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:18px;
+    }
+
+    .cta-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:9px;
+      min-height:46px;
+      padding:12px 16px;
+      border-radius:999px;
+      text-decoration:none;
+      font-size:14px;
+      font-weight:800;
+      transition:transform 0.15s, background 0.15s, border-color 0.15s;
+      max-width:100%;
+    }
+
+    .cta-btn:hover{
+      transform:translateY(-1px);
+    }
+
+    .cta-primary{
+      background:rgba(184,155,94,0.14);
+      color:var(--gold);
+      border:1px solid rgba(184,155,94,0.35);
+    }
+
+    .cta-primary:hover{
+      background:rgba(184,155,94,0.20);
+      border-color:rgba(184,155,94,0.55);
+    }
+
+    .cta-secondary{
+      background:rgba(255,255,255,0.05);
+      color:var(--text);
+      border:1px solid rgba(255,255,255,0.12);
+    }
+
+    .cta-secondary:hover{
+      background:rgba(255,255,255,0.08);
+      border-color:rgba(255,255,255,0.22);
+    }
+
+    .highlight-card{
+      background:
+        linear-gradient(180deg, rgba(110,231,183,0.06), rgba(255,255,255,0.03));
+      border:1px solid rgba(110,231,183,0.16);
+    }
+
+    .contact-block{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    .contact-label{
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:0.14em;
+      text-transform:uppercase;
+      color:var(--gold);
+      margin:0;
+    }
+
+    .contact-title{
+      margin:0;
+      font-family:var(--serif);
+      font-size:clamp(22px, 4vw, 28px);
+      line-height:1.12;
+    }
+
+    .contact-copy{
+      margin:0;
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.75;
+    }
+
+    .phone-link{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      width:fit-content;
+      max-width:100%;
+      margin-top:8px;
+      padding:12px 16px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.12);
+      color:var(--text);
+      text-decoration:none;
+      font-size:16px;
+      font-weight:800;
+    }
+
+    .phone-link:hover{
+      background:rgba(255,255,255,0.09);
+      border-color:rgba(255,255,255,0.22);
+    }
+
+    .site-footer{
+      text-align:center;
+      padding-top:28px;
+      border-top:1px solid var(--line);
+      font-size:12px;
+      color:var(--faint);
+      margin-top:20px;
+    }
+
+    @media (max-width: 700px){
+      .page-shell{
+        padding:0 16px 54px;
+      }
+
+      .lga-card{
+        grid-template-columns:1fr;
+        text-align:center;
+      }
+
+      .lga-logo-wrap{
+        max-width:120px;
+      }
+
+      .info-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width: 540px){
+      .top-bar{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:12px;
+      }
+
+      .back-btn{
+        width:100%;
+      }
+
+      .card{
+        padding:18px 16px;
+        border-radius:14px;
+      }
+
+      .schedule-row{
+        flex-direction:column;
+        gap:4px;
+      }
+
+      .schedule-time{
+        text-align:left;
+        white-space:normal;
+      }
+
+      .cta-row{
+        flex-direction:column;
+      }
+
+      .cta-btn{
+        width:100%;
+      }
+
+      .phone-link{
+        width:100%;
+        justify-content:center;
+      }
+    }
   </style>
 </head>
 <body>
-<div class="page-shell">
-  <nav class="top-bar">
-    <a class="brand" href="../index.html">
-      <div class="brand-mark"><img src="../assets/logo.png" alt="LGCC" onerror="this.style.display='none'" /></div>
-      <div class="brand-text"><span class="brand-name">Lebanon Golf &amp; Country Club</span><span class="brand-tag">Est. 1951</span></div>
-    </a>
-    <a class="back-btn" href="../index.html#upcoming">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-      All Events
-    </a>
-  </nav>
+  <div class="page-shell">
+    <nav class="top-bar">
+      <a class="brand" href="../index.html">
+        <div class="brand-mark">
+          <img src="../assets/logo.png" alt="LGCC" onerror="this.style.display='none'" />
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">Lebanon Golf &amp; Country Club</span>
+          <span class="brand-tag">Est. 1951</span>
+        </div>
+      </a>
 
-  <div class="banner-wrap"><img src="https://base44.app/api/apps/69ad1acaaa8eca64c17ca6c7/files/public/69ad1acaaa8eca64c17ca6c7/2e299b550_SpringFling_1200x500.png" alt="Spring Fling banner" class="banner-img" onerror="this.parentElement.style.display='none'" /></div>
+      <a class="back-btn" href="../index.html#upcoming">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        All Events
+      </a>
+    </nav>
 
-  <p class="eyebrow">Scramble &nbsp;·&nbsp; Upcoming Event</p>
-  <h1 class="event-title">Spring Fling</h1>
-  <div class="upcoming-badge">
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-    Upcoming Event
+    <div class="banner-wrap">
+      <img
+        src="https://base44.app/api/apps/69ad1acaaa8eca64c17ca6c7/files/public/69ad1acaaa8eca64c17ca6c7/2e299b550_SpringFling_1200x500.png"
+        alt="Spring Fling banner"
+        class="banner-img"
+        onerror="this.parentElement.style.display='none'"
+      />
+    </div>
+
+    <p class="eyebrow">Scramble &nbsp;·&nbsp; Upcoming Event</p>
+    <h1 class="event-title">Spring Fling</h1>
+
+    <div class="intro-meta">
+      <div class="upcoming-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        Upcoming Event
+      </div>
+      <div class="pill">Team Scramble</div>
+      <div class="pill">18 Holes</div>
+    </div>
+
+    <div class="card lga-card">
+      <div class="lga-logo-wrap">
+        <img src="../assets/lga-logo.png" alt="Lebanon Golf Association logo" class="lga-logo" onerror="this.parentElement.style.display='none'" />
+      </div>
+      <div>
+        <p class="lga-label">Presented By</p>
+        <h2 class="lga-name">Lebanon Golf Association</h2>
+        <p class="lga-text">
+          Spring Fling is presented by the Lebanon Golf Association and hosted at Lebanon Golf &amp; Country Club as a featured spring scramble with dinner, auction activity, and special experiences.
+        </p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-head">
+        <div>
+          <p class="section-kicker">Event Details</p>
+          <h2 class="section-title">Tournament Day Information</h2>
+        </div>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">Date</span>
+          <span class="info-value">Saturday, April 25, 2026</span>
+        </div>
+
+        <div class="info-item">
+          <span class="info-label">Format</span>
+          <span class="info-value">Team Scramble · 18 Holes</span>
+        </div>
+
+        <div class="info-item">
+          <span class="info-label">Morning Shotgun</span>
+          <span class="info-value">7:30 AM</span>
+        </div>
+
+        <div class="info-item">
+          <span class="info-label">Afternoon Shotgun</span>
+          <span class="info-value">1:30 PM</span>
+        </div>
+
+        <div class="info-item">
+          <span class="info-label">Entry Fee</span>
+          <span class="info-value">$150 per player</span>
+        </div>
+
+        <div class="info-item">
+          <span class="info-label">Foursome</span>
+          <span class="info-value">$600 per foursome</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-head">
+        <div>
+          <p class="section-kicker">Saturday Schedule</p>
+          <h2 class="section-title">Day-Of Event Schedule</h2>
+        </div>
+      </div>
+
+      <div class="schedule-list">
+        <div class="schedule-row">
+          <div class="schedule-label">AM Shotgun Start</div>
+          <div class="schedule-time">7:30 AM</div>
+        </div>
+
+        <div class="schedule-row">
+          <div class="schedule-label">PM Shotgun Start</div>
+          <div class="schedule-time">1:30 PM</div>
+        </div>
+
+        <div class="schedule-row">
+          <div class="schedule-label">Dinner</div>
+          <div class="schedule-time">7:00 PM</div>
+        </div>
+
+        <div class="schedule-row">
+          <div class="schedule-label">Live Auction</div>
+          <div class="schedule-time">8:00 PM</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-head">
+        <div>
+          <p class="section-kicker">Thursday Preview</p>
+          <h2 class="section-title">Kick Off Night</h2>
+        </div>
+      </div>
+
+      <p class="section-text">
+        Join us Thursday, April 23 at 7:00 PM for the Spring Fling kickoff evening before tournament day.
+      </p>
+
+      <ul class="feature-list">
+        <li>Meet Audie, our new golf professional.</li>
+        <li>Strategize with your team before the event.</li>
+        <li>Get your starting holes early.</li>
+        <li>Bring your spouse or guest.</li>
+        <li>Preview live auction items and start bidding on silent auction offerings.</li>
+        <li>Hors d'oeuvres provided, with the bar open for the evening.</li>
+      </ul>
+
+      <div class="cta-row">
+        <a class="cta-btn cta-secondary" href="spring-fling-kickoff.html">
+          Thursday Kickoff Details
+        </a>
+      </div>
+    </div>
+
+    <div class="card highlight-card">
+      <div class="section-head">
+        <div>
+          <p class="section-kicker">Auction &amp; Experiences</p>
+          <h2 class="section-title">Featured Items, Trips &amp; Special Packages</h2>
+        </div>
+      </div>
+
+      <p class="section-text">
+        The Spring Fling event includes live auction items, travel experiences, golf packages, and featured prizes. Highlights include special trip opportunities, golf-related experiences, and premium auction offerings curated for the event.
+      </p>
+
+      <div class="cta-row">
+        <a class="cta-btn cta-primary" href="spring-fling-auction.html">
+          View Auction Items &amp; Featured Trips
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="contact-block">
+        <p class="contact-label">Sign Up</p>
+        <h2 class="contact-title">Reserve Your Spot Through the Pro Shop</h2>
+        <p class="contact-copy">
+          To enter the event, sign up through the LGCC Pro Shop. Call for player entry, foursome information, or additional tournament details.
+        </p>
+
+        <a class="phone-link" href="tel:6154448300" aria-label="Call LGCC Pro Shop">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          </svg>
+          Call the Pro Shop: 615-444-8300
+        </a>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      Lebanon Golf &amp; Country Club &nbsp;·&nbsp; Spring Fling
+    </footer>
   </div>
-
-  <div class="card">
-    <div class="detail-row"><span class="detail-label">Date</span><span class="detail-value">Saturday, April 25, 2026</span></div>
-    <div class="detail-row"><span class="detail-label">Start Time</span><span class="detail-value">7:30 AM (Morning) · 1:30 PM (Afternoon)</span></div>
-    <div class="detail-row"><span class="detail-label">Format</span><span class="detail-value">Scramble · Team Scramble · 18 Holes</span></div>
-    <div class="detail-row"><span class="detail-label">Entry Fee</span><span class="detail-value">$150 per player</span></div>
-  </div>
-
-  <div class="card desc-card"><p class="desc-text">Annual scramble, BBQ, and fundraiser auction.</p></div>
-
-  <footer class="site-footer">Lebanon Golf &amp; Country Club &nbsp;·&nbsp; Scramble</footer>
-</div>
 </body>
 </html>
