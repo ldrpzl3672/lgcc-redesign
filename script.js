@@ -1,20 +1,20 @@
-// LGCC proposal site - simple interactions (no framework)
+// LGCC site script.js
 
 (function () {
-  const year = document.getElementById("year");
+  var year = document.getElementById("year");
   if (year) year.textContent = new Date().getFullYear();
 
   // Mobile nav
-  const toggle = document.querySelector(".nav-toggle");
-  const menu = document.getElementById("navMenu");
+  var toggle = document.querySelector(".nav-toggle");
+  var menu = document.getElementById("navMenu");
   if (toggle && menu) {
-    toggle.addEventListener("click", () => {
-      const open = menu.classList.toggle("open");
+    toggle.addEventListener("click", function () {
+      var open = menu.classList.toggle("open");
       toggle.setAttribute("aria-expanded", String(open));
     });
 
-    menu.querySelectorAll("a").forEach((a) => {
-      a.addEventListener("click", () => {
+    menu.querySelectorAll("a").forEach(function (a) {
+      a.addEventListener("click", function () {
         menu.classList.remove("open");
         toggle.setAttribute("aria-expanded", "false");
       });
@@ -22,11 +22,11 @@
   }
 
   // Smooth scroll (basic)
-  document.querySelectorAll('a[href^="#"]').forEach((a) => {
-    a.addEventListener("click", (e) => {
-      const href = a.getAttribute("href");
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      var href = a.getAttribute("href");
       if (!href || href === "#") return;
-      const target = document.querySelector(href);
+      var target = document.querySelector(href);
       if (!target) return;
       e.preventDefault();
       target.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -35,10 +35,10 @@
   });
 
   // Demo form handler (no backend)
-  const form = document.getElementById("contactForm");
-  const note = document.getElementById("formNote");
+  var form = document.getElementById("contactForm");
+  var note = document.getElementById("formNote");
   if (form) {
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", function (e) {
       e.preventDefault();
       if (note) {
         note.textContent =
@@ -50,98 +50,210 @@
 })();
 
 
-
-
-// Load Upcoming Events cards from data/upcoming-events.json
+// == UPCOMING GOLF EVENTS =====================================================
+// Reads /data/upcoming-events.json (shape: { upcoming: [...] })
+// Filters to golf/competition events only.
+// Renders real event cards into #upcomingGolfEventsContainer.
+// Social container (#upcomingSocialEventsContainer) is left untouched.
+// If no golf events, shows the existing "Coming Soon" placeholder style.
 (function () {
-    const golfContainer = document.getElementById("upcomingGolfEventsContainer");
-    const socialContainer = document.getElementById("upcomingSocialEventsContainer");
-    if (!golfContainer && !socialContainer) return;
+  var SOCIAL_TYPES = ["Social Event", "social_event", "social"];
 
-    function renderCards(container, items, emptyText) {
-        if (!container) return;
+  function isGolfEvent(ev) {
+    var t = (ev.eventType || ev.event_type || "").toLowerCase();
+    for (var i = 0; i < SOCIAL_TYPES.length; i++) {
+      if (t === SOCIAL_TYPES[i].toLowerCase()) return false;
+    }
+    return true;
+  }
 
-        if (!items.length) {
-            container.innerHTML = `
-                <article class="card schedule-card">
-                    <p class="schedule-date">Coming Soon</p>
-                    <h3>Coming Soon</h3>
-                    <p>${emptyText}</p>
-                </article>
-            `;
-            return;
-        }
+  function safe(str) {
+    if (!str) return "";
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
 
-        container.innerHTML = items.map((event) => `
-            <article class="card schedule-card">
-                <p class="schedule-date">${event.date || "Coming Soon"}</p>
-                <h3>${event.title || ""}</h3>
-                <p>${event.summary || ""}</p>
-                ${event.url ? `<a class="text-link" href="${event.url}">Learn More →</a>` : ""}
-            </article>
-        `).join("");
+  function formatDate(dateStr) {
+    if (!dateStr) return "";
+    try {
+      var parts = dateStr.split("-");
+      var d = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+      return d.toLocaleDateString("en-US", {
+        weekday: "long", month: "long", day: "numeric", year: "numeric"
+      });
+    } catch (e) { return dateStr; }
+  }
+
+  function buildFormatLabel(ev) {
+    var parts = [];
+    var type = ev.eventType || ev.event_type || "";
+    if (type) parts.push(type);
+    var fmt = ev.competitionFormat || ev.competition_format || "";
+    if (fmt === "team_scramble") parts.push("Team Scramble");
+    else if (fmt === "mixed_format") parts.push("Mixed Format");
+    var holes = ev.holesTo || ev.holes_to_play || null;
+    if (holes) parts.push(holes + " Holes");
+    return parts.join(" - ");
+  }
+
+  function buildCard(ev) {
+    var title = safe(ev.title || ev.event_name || "");
+    var dateStr = safe(formatDate(ev.eventDate || ev.event_date || ""));
+    var formatLabel = safe(buildFormatLabel(ev));
+    var desc = ev.description || "";
+    var shortDesc = desc.length > 120 ? desc.slice(0, 117) + "..." : desc;
+    var detailUrl = ev.detailUrl || ev.upcoming_page_url || "#";
+    if (detailUrl !== "#" && !detailUrl.startsWith("http")) {
+      detailUrl = detailUrl; // relative URL is fine for same-site links
     }
 
-    fetch("data/upcoming-events.json")
-        .then((response) => {
-            if (!response.ok) throw new Error("Could not load upcoming-events.json");
-            return response.json();
-        })
-        .then((data) => {
-            const golfEvents = Array.isArray(data.golf_events) ? data.golf_events : [];
-            const socialEvents = Array.isArray(data.social_events) ? data.social_events : [];
+    var bannerHtml = "";
+    if (ev.bannerImage || ev.banner_url) {
+      var imgSrc = safe(ev.bannerImage || ev.banner_url);
+      bannerHtml = '<div class="schedule-banner"><img src="' + imgSrc + '" alt="' + title + '" loading="lazy" style="width:100%;max-height:160px;object-fit:cover;border-radius:8px 8px 0 0;display:block;" onerror="this.parentElement.style.display='none'"></div>';
+    }
 
-            renderCards(golfContainer, golfEvents, "Upcoming golf events will appear here.");
-            renderCards(socialContainer, socialEvents, "Upcoming social events will appear here.");
-        })
-        .catch(() => {
-            renderCards(golfContainer, [], "Upcoming golf events will appear here.");
-            renderCards(socialContainer, [], "Upcoming social events will appear here.");
-        });
+    var metaHtml = formatLabel
+      ? '<p class="schedule-date" style="margin-bottom:4px;">' + formatLabel + '</p>'
+      : '';
+
+    var descHtml = shortDesc
+      ? '<p style="margin:6px 0 12px;font-size:14px;color:rgba(255,255,255,0.65);line-height:1.5;">' + safe(shortDesc) + '</p>'
+      : '';
+
+    return '<article class="card schedule-card">'
+      + bannerHtml
+      + '<div style="padding:' + (bannerHtml ? '14px' : '0') + ' 0 0;">'
+      + '<p class="schedule-date">' + dateStr + '</p>'
+      + '<h3 style="margin:4px 0 6px;">' + title + '</h3>'
+      + metaHtml
+      + descHtml
+      + '<a href="' + safe(detailUrl) + '" class="btn btn-sm" style="display:inline-block;margin-top:4px;">View Details</a>'
+      + '</div>'
+      + '</article>';
+  }
+
+  function renderGolfEvents(container, events) {
+    if (!events || events.length === 0) {
+      // Restore the static "Coming Soon" placeholder
+      container.innerHTML = '<article class="card schedule-card">'
+        + '<p class="schedule-date">Coming Soon</p>'
+        + '<h3>Coming Soon</h3>'
+        + '<p>Upcoming tournaments, member games, and club competitions will appear here once they are scheduled.</p>'
+        + '</article>';
+      return;
+    }
+
+    // Sort soonest first
+    var sorted = events.slice().sort(function (a, b) {
+      var da = a.eventDate || a.event_date || "";
+      var db = b.eventDate || b.event_date || "";
+      return da.localeCompare(db);
+    });
+
+    container.innerHTML = sorted.map(buildCard).join("");
+  }
+
+  function init() {
+    var golfContainer = document.getElementById("upcomingGolfEventsContainer");
+    if (!golfContainer) return;
+
+    fetch("/data/upcoming-events.json?v=" + Date.now())
+      .then(function (r) { return r.ok ? r.json() : {}; })
+      .then(function (data) {
+        var all = Array.isArray(data.upcoming) ? data.upcoming : [];
+        var golf = all.filter(isGolfEvent);
+        renderGolfEvents(golfContainer, golf);
+      })
+      .catch(function () {
+        // On error, leave the container as-is (HTML placeholder stays)
+      });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
 })();
+// == END UPCOMING GOLF EVENTS =================================================
 
-// Load Recent Competition cards from data/recent-results.json
+
+// == RECENT RESULTS ===========================================================
+// Loads /data/recent-results.json and renders cards into #recentResultsContainer
 (function () {
-    const container = document.getElementById("recentResultsContainer");
+  var BASE_URL = "https://www.lebanongolfandcountryclub.com";
+
+  function safe(str) {
+    if (!str) return "";
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function buildResultCard(ev) {
+    var badge = ev.game_type
+      ? '<span class="result-badge">' + safe(ev.game_type) + '</span>'
+      : '';
+
+    var detailUrl = ev.url
+      ? (ev.url.startsWith("http") ? ev.url : BASE_URL + ev.url)
+      : "#";
+
+    var summary2 = ev.summary2
+      ? '<p class="result-summary2">' + safe(ev.summary2) + '</p>'
+      : '';
+
+    return '<article class="result-card">'
+      + '<div class="result-card-inner">'
+      + badge
+      + '<p class="result-label">' + safe(ev.label || "Event Result") + '</p>'
+      + '<h3 class="result-title">' + safe(ev.title) + '</h3>'
+      + '<p class="result-winner">' + safe(ev.winner_text) + '</p>'
+      + '<p class="result-summary">' + safe(ev.summary_text) + '</p>'
+      + summary2
+      + '<a class="result-link" href="' + safe(detailUrl) + '">View full results &rarr;</a>'
+      + '</div>'
+      + '</article>';
+  }
+
+  function renderResults(events, container) {
+    var section = container.closest ? container.closest("section") : null;
+    container.innerHTML = "";
+
+    if (!events || events.length === 0) {
+      if (section) section.style.display = "none";
+      return;
+    }
+
+    container.innerHTML = events.map(buildResultCard).join("");
+    if (section) section.style.display = "";
+  }
+
+  function init() {
+    var container = document.getElementById("recentResultsContainer");
     if (!container) return;
 
-    fetch("data/recent-results.json")
-        .then((response) => {
-            if (!response.ok) throw new Error("Could not load recent-results.json");
-            return response.json();
-        })
-        .then((data) => {
-            const results = Array.isArray(data.results) ? data.results : [];
+    fetch("/data/recent-results.json?v=" + Date.now())
+      .then(function (r) { return r.ok ? r.json() : []; })
+      .then(function (data) {
+        renderResults(Array.isArray(data) ? data : [], container);
+      })
+      .catch(function () {
+        var section = container.closest ? container.closest("section") : null;
+        if (section) section.style.display = "none";
+      });
+  }
 
-            if (!results.length) {
-                container.innerHTML = `
-                    <article class="card result-card">
-                        <div class="result-topline">Club Event Result</div>
-                        <h3>No results posted yet</h3>
-                        <p class="result-winner">Check back soon for official club competition results.</p>
-                    </article>
-                `;
-                return;
-            }
-
-            container.innerHTML = results.map((result) => `
-                <article class="card result-card" style="position:relative;">
-                    ${result.game_type ? `<span style="position:absolute;top:14px;right:16px;padding:3px 10px;border-radius:999px;background:rgba(184,155,94,0.18);border:1px solid rgba(184,155,94,0.32);color:#b89b5e;font-size:11px;font-weight:600;letter-spacing:0.02em;white-space:nowrap;">${result.game_type}</span>` : ""}
-                    <div class="result-topline">${result.label || "Club Event Result"}</div>
-                    <h3 style="${result.game_type ? 'padding-right:100px;' : ''}">${result.title || ""}</h3>
-                    <p class="result-winner">${result.winner || ""}</p>
-                    <p>${result.summary || ""}</p>${result.summary2 ? `<p style="margin:3px 0 0;font-size:0.875em;opacity:0.82">${result.summary2}</p>` : ""}
-                    ${result.url ? `<a class="text-link" href="${result.url}">See Full Results →</a>` : ""}
-                </article>
-            `).join("");
-        })
-        .catch(() => {
-            container.innerHTML = `
-                <article class="card result-card">
-                    <div class="result-topline">Club Event Result</div>
-                    <h3>Results unavailable</h3>
-                    <p class="result-winner">We could not load recent competition results right now.</p>
-                </article>
-            `;
-        });
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
 })();
+// == END RECENT RESULTS =======================================================
