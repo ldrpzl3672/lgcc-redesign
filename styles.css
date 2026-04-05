@@ -1323,3 +1323,35 @@ a:hover {
     max-height: 70px;
   }
 }
+/* ===== Featured Event Card (Homepage) ===== */
+
+.event-card--featured {
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: 16px;
+  align-items: center;
+  border: 1px solid rgba(184,155,94,0.4);
+}
+
+.event-card-image {
+  height: 120px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.event-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 700px) {
+  .event-card--featured {
+    grid-template-columns: 1fr;
+  }
+
+  .event-card-image {
+    height: 140px;
+  }
+}
