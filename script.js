@@ -1,4 +1,4 @@
-// LGCC site script.js
+// LGCC proposal site - simple interactions (no framework)
 
 (function () {
   const year = document.getElementById("year");
@@ -50,183 +50,98 @@
 })();
 
 
-// == UPCOMING EVENTS ==========================================================
-// Loads /data/upcoming-events.json and renders cards into #upcomingEventsContainer
-// Section starts hidden; shown only when events exist.
+
+
+// Load Upcoming Events cards from data/upcoming-events.json
 (function () {
-  var BASE_URL = "https://www.lebanongolfandcountryclub.com";
+    const golfContainer = document.getElementById("upcomingGolfEventsContainer");
+    const socialContainer = document.getElementById("upcomingSocialEventsContainer");
+    if (!golfContainer && !socialContainer) return;
 
-  function formatDate(dateStr) {
-    if (!dateStr) return "";
-    try {
-      var parts = dateStr.split("-");
-      var d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
-      return d.toLocaleDateString("en-US", {
-        weekday: "long", month: "long", day: "numeric", year: "numeric"
-      });
-    } catch (e) { return dateStr; }
-  }
+    function renderCards(container, items, emptyText) {
+        if (!container) return;
 
-  function safe(str) {
-    if (!str) return "";
-    return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-  }
+        if (!items.length) {
+            container.innerHTML = `
+                <article class="card schedule-card">
+                    <p class="schedule-date">Coming Soon</p>
+                    <h3>Coming Soon</h3>
+                    <p>${emptyText}</p>
+                </article>
+            `;
+            return;
+        }
 
-  function buildCard(ev) {
-    var bannerHtml = "";
-    if (ev.banner_url) {
-      bannerHtml = [
-        '<div class="upcoming-card-banner">',
-          '<img src="' + safe(ev.banner_url) + '"',
-          ' alt="' + safe(ev.event_name || ev.title) + '"',
-          ' loading="lazy"',
-          ' onerror="this.parentElement.style.display='none'">',
-        '</div>'
-      ].join("");
+        container.innerHTML = items.map((event) => `
+            <article class="card schedule-card">
+                <p class="schedule-date">${event.date || "Coming Soon"}</p>
+                <h3>${event.title || ""}</h3>
+                <p>${event.summary || ""}</p>
+                ${event.url ? `<a class="text-link" href="${event.url}">Learn More →</a>` : ""}
+            </article>
+        `).join("");
     }
 
-    var meta = [];
-    if (ev.event_type) meta.push(safe(ev.event_type));
-    if (ev.format_label) meta.push(safe(ev.format_label));
+    fetch("data/upcoming-events.json")
+        .then((response) => {
+            if (!response.ok) throw new Error("Could not load upcoming-events.json");
+            return response.json();
+        })
+        .then((data) => {
+            const golfEvents = Array.isArray(data.golf_events) ? data.golf_events : [];
+            const socialEvents = Array.isArray(data.social_events) ? data.social_events : [];
 
-    var rawDesc = ev.description || "";
-    var summary = rawDesc
-      ? safe(rawDesc.length > 120 ? rawDesc.slice(0, 117) + "..." : rawDesc)
-      : "Join us for this upcoming club event.";
+            renderCards(golfContainer, golfEvents, "Upcoming golf events will appear here.");
+            renderCards(socialContainer, socialEvents, "Upcoming social events will appear here.");
+        })
+        .catch(() => {
+            renderCards(golfContainer, [], "Upcoming golf events will appear here.");
+            renderCards(socialContainer, [], "Upcoming social events will appear here.");
+        });
+})();
 
-    var detailUrl = ev.url
-      ? (ev.url.startsWith("http") ? ev.url : BASE_URL + ev.url)
-      : "#";
-
-    return [
-      '<article class="upcoming-card">',
-        bannerHtml,
-        '<div class="upcoming-card-body">',
-          '<p class="upcoming-card-date">' + formatDate(ev.event_date) + '</p>',
-          '<h3 class="upcoming-card-title">' + safe(ev.event_name || ev.title) + '</h3>',
-          meta.length ? '<p class="upcoming-card-meta">' + meta.join(" &bull; ") + '</p>' : '',
-          '<p class="upcoming-card-summary">' + summary + '</p>',
-          '<a class="btn btn-sm btn-outline" href="' + safe(detailUrl) + '">View Details &rarr;</a>',
-        '</div>',
-      '</article>'
-    ].join("");
-  }
-
-  function renderUpcoming(events, container) {
-    var section = container.closest ? container.closest("section") : null;
-    container.innerHTML = "";
-
-    if (!events || events.length === 0) {
-      if (section) section.style.display = "none";
-      return;
-    }
-
-    // Sort soonest first
-    var sorted = events.slice().sort(function (a, b) {
-      return (a.event_date || "").localeCompare(b.event_date || "");
-    });
-
-    container.innerHTML = sorted.map(buildCard).join("");
-    if (section) section.style.display = "";
-  }
-
-  function init() {
-    var container = document.getElementById("upcomingEventsContainer");
+// Load Recent Competition cards from data/recent-results.json
+(function () {
+    const container = document.getElementById("recentResultsContainer");
     if (!container) return;
 
-    // Hide section until we know there are events
-    var section = container.closest ? container.closest("section") : null;
-    if (section) section.style.display = "none";
+    fetch("data/recent-results.json")
+        .then((response) => {
+            if (!response.ok) throw new Error("Could not load recent-results.json");
+            return response.json();
+        })
+        .then((data) => {
+            const results = Array.isArray(data.results) ? data.results : [];
 
-    fetch("/data/upcoming-events.json?v=" + Date.now())
-      .then(function (r) { return r.ok ? r.json() : []; })
-      .then(function (data) {
-        renderUpcoming(Array.isArray(data) ? data : [], container);
-      })
-      .catch(function () {
-        if (section) section.style.display = "none";
-      });
-  }
+            if (!results.length) {
+                container.innerHTML = `
+                    <article class="card result-card">
+                        <div class="result-topline">Club Event Result</div>
+                        <h3>No results posted yet</h3>
+                        <p class="result-winner">Check back soon for official club competition results.</p>
+                    </article>
+                `;
+                return;
+            }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
-  } else {
-    init();
-  }
+            container.innerHTML = results.map((result) => `
+                <article class="card result-card" style="position:relative;">
+                    ${result.game_type ? `<span style="position:absolute;top:14px;right:16px;padding:3px 10px;border-radius:999px;background:rgba(184,155,94,0.18);border:1px solid rgba(184,155,94,0.32);color:#b89b5e;font-size:11px;font-weight:600;letter-spacing:0.02em;white-space:nowrap;">${result.game_type}</span>` : ""}
+                    <div class="result-topline">${result.label || "Club Event Result"}</div>
+                    <h3 style="${result.game_type ? 'padding-right:100px;' : ''}">${result.title || ""}</h3>
+                    <p class="result-winner">${result.winner || ""}</p>
+                    <p>${result.summary || ""}</p>${result.summary2 ? `<p style="margin:3px 0 0;font-size:0.875em;opacity:0.82">${result.summary2}</p>` : ""}
+                    ${result.url ? `<a class="text-link" href="${result.url}">See Full Results →</a>` : ""}
+                </article>
+            `).join("");
+        })
+        .catch(() => {
+            container.innerHTML = `
+                <article class="card result-card">
+                    <div class="result-topline">Club Event Result</div>
+                    <h3>Results unavailable</h3>
+                    <p class="result-winner">We could not load recent competition results right now.</p>
+                </article>
+            `;
+        });
 })();
-// == END UPCOMING EVENTS ======================================================
-
-
-// == RECENT RESULTS ===========================================================
-// Loads /data/recent-results.json and renders cards into #recentResultsContainer
-(function () {
-  var BASE_URL = "https://www.lebanongolfandcountryclub.com";
-
-  function safe(str) {
-    if (!str) return "";
-    return String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-  }
-
-  function buildResultCard(ev) {
-    var badge = ev.game_type
-      ? '<span class="result-badge">' + safe(ev.game_type) + '</span>'
-      : '';
-
-    var detailUrl = ev.url
-      ? (ev.url.startsWith("http") ? ev.url : BASE_URL + ev.url)
-      : "#";
-
-    var summary2 = ev.summary2
-      ? '<p class="result-summary2">' + safe(ev.summary2) + '</p>'
-      : '';
-
-    return [
-      '<article class="result-card">',
-        '<div class="result-card-inner">',
-          badge,
-          '<p class="result-label">' + safe(ev.label || "Event Result") + '</p>',
-          '<h3 class="result-title">' + safe(ev.title) + '</h3>',
-          '<p class="result-winner">' + safe(ev.winner_text) + '</p>',
-          '<p class="result-summary">' + safe(ev.summary_text) + '</p>',
-          summary2,
-          '<a class="result-link" href="' + safe(detailUrl) + '">View full results &rarr;</a>',
-        '</div>',
-      '</article>'
-    ].join("");
-  }
-
-  function renderResults(events, container) {
-    var section = container.closest ? container.closest("section") : null;
-    container.innerHTML = "";
-
-    if (!events || events.length === 0) {
-      if (section) section.style.display = "none";
-      return;
-    }
-
-    container.innerHTML = events.map(buildResultCard).join("");
-    if (section) section.style.display = "";
-  }
-
-  function init() {
-    var container = document.getElementById("recentResultsContainer");
-    if (!container) return;
-
-    fetch("/data/recent-results.json?v=" + Date.now())
-      .then(function (r) { return r.ok ? r.json() : []; })
-      .then(function (data) {
-        renderResults(Array.isArray(data) ? data : [], container);
-      })
-      .catch(function () {
-        var section = container.closest ? container.closest("section") : null;
-        if (section) section.style.display = "none";
-      });
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
-  } else {
-    init();
-  }
-})();
-// == END RECENT RESULTS =======================================================
