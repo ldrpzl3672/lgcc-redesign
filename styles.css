@@ -1247,66 +1247,29 @@ a:hover {
     align-items: start;
   }
 }
+
 /* ===== MINI BANNER FIX (Spring Fling pages only) ===== */
-
 .mini-banner-row {
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-  gap: 18px;
-  margin: 10px 0 28px;
-  align-items: center;
-}
-
-.mini-banner {
-  border-radius: 14px;
-  overflow: hidden;
-}
-
-.mini-banner img {
-  width: 100%;
-  height: 120px;
-  object-fit: cover;
-  display: block;
-  border-radius: 14px;
-}
-
-.mini-logo {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 0 0 18px;
+  padding: 0;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
-.mini-logo img {
-  max-height: 90px;
-  width: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 8px 18px rgba(0,0,0,0.35));
-}
-
-/* Mobile */
-@media (max-width: 640px) {
-  .mini-banner-row {
-    grid-template-columns: 1fr;
-  }
-
-  .mini-banner img {
-    height: 100px;
-  }
-
-  .mini-logo img {
-    max-height: 70px;
-  }
-}
-/* MINI BANNER WRAPPER */
-.event-mini-banner,
 .mini-banner,
+.event-mini-banner,
 .banner-mini,
 .event-banner-mini,
 .spring-fling-mini-banner {
   display: block;
   width: fit-content;
   max-width: 100%;
-  margin: 0 auto 18px auto;
+  margin: 0 auto;
   padding: 0 !important;
   background: transparent !important;
   border: none !important;
@@ -1315,9 +1278,8 @@ a:hover {
   overflow: visible !important;
 }
 
-/* MINI BANNER IMAGE */
-.event-mini-banner img,
 .mini-banner img,
+.event-mini-banner img,
 .banner-mini img,
 .event-banner-mini img,
 .spring-fling-mini-banner img {
@@ -1332,4 +1294,32 @@ a:hover {
   box-shadow: none !important;
   border-radius: 0 !important;
   object-fit: contain !important;
+}
+
+.mini-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.mini-logo img {
+  max-height: 90px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 18px rgba(0,0,0,0.35));
+}
+
+@media (max-width: 640px) {
+  .mini-banner-row {
+    margin: 0 0 14px;
+  }
+
+  .mini-logo img {
+    max-height: 70px;
+  }
 }
