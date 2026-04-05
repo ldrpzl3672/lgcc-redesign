@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spring Fling — Upcoming Event — LGCC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--bg:#0b1210;--surface:#0f1c18;--card:rgba(255,255,255,0.06);--text:rgba(255,255,255,0.92);--muted:rgba(255,255,255,0.65);--faint:rgba(255,255,255,0.40);--line:rgba(255,255,255,0.12);--gold:#b89b5e;--gold-dim:rgba(184,155,94,0.20);--green:#6ee7b7;--radius:16px;--serif:"Playfair Display",Georgia,serif;--sans:Inter,system-ui,-apple-system,Arial,sans-serif;}
+    *,*::before,*::after{box-sizing:border-box}html{background:#000}
+    body{margin:0;font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+    .page-shell{max-width:860px;margin:0 auto;padding:0 20px 60px}
+    .top-bar{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);margin-bottom:36px}
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+    .brand-mark{width:40px;height:40px;border-radius:10px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.05);overflow:hidden;display:grid;place-items:center}
+    .brand-mark img{width:110%;height:110%;object-fit:contain}
+    .brand-text{display:flex;flex-direction:column;line-height:1.15}
+    .brand-name{font-family:var(--serif);font-size:14px;font-weight:600;color:var(--text)}
+    .brand-tag{font-size:11px;color:var(--muted)}
+    .back-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:999px;border:1px solid rgba(184,155,94,0.35);background:rgba(184,155,94,0.10);color:var(--gold);font-size:13px;font-weight:600;text-decoration:none;transition:background 0.15s,border-color 0.15s}
+    .back-btn:hover{background:rgba(184,155,94,0.18);border-color:rgba(184,155,94,0.55)}
+    .banner-wrap{border-radius:var(--radius);overflow:hidden;margin-bottom:28px;max-height:320px;background:rgba(255,255,255,0.04);border:1px solid var(--line)}
+    .banner-img{width:100%;height:100%;max-height:320px;object-fit:cover;display:block}
+    .eyebrow{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin:0 0 8px}
+    .event-title{font-family:var(--serif);font-size:clamp(26px,5vw,40px);font-weight:700;line-height:1.1;margin:0 0 20px;color:var(--text)}
+    .upcoming-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:999px;background:rgba(110,231,183,0.12);border:1px solid rgba(110,231,183,0.30);color:var(--green);font-size:12px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:20px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px 24px;margin-bottom:20px}
+    .detail-row{display:flex;align-items:baseline;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.07)}
+    .detail-row:last-child{border-bottom:none}
+    .detail-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--faint);min-width:110px;flex-shrink:0}
+    .detail-value{font-size:15px;color:var(--text);font-weight:500}
+    .desc-card{background:rgba(255,255,255,0.04)}
+    .desc-text{margin:0;font-size:15px;color:var(--muted);line-height:1.7}
+    .site-footer{text-align:center;padding-top:28px;border-top:1px solid var(--line);font-size:12px;color:var(--faint);margin-top:20px}
+    @media(max-width:540px){.top-bar{flex-direction:column;align-items:flex-start;gap:12px}.card{padding:16px}.detail-label{min-width:90px}.detail-row{flex-direction:column;gap:2px}}
+  </style>
+</head>
+<body>
+<div class="page-shell">
+  <nav class="top-bar">
+    <a class="brand" href="../index.html">
+      <div class="brand-mark"><img src="../assets/logo.png" alt="LGCC" onerror="this.style.display='none'" /></div>
+      <div class="brand-text"><span class="brand-name">Lebanon Golf &amp; Country Club</span><span class="brand-tag">Est. 1951</span></div>
+    </a>
+    <a class="back-btn" href="../index.html#upcoming">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      All Events
+    </a>
+  </nav>
+
+  <div class="banner-wrap"><img src="https://base44.app/api/apps/69ad1acaaa8eca64c17ca6c7/files/public/69ad1acaaa8eca64c17ca6c7/2e299b550_SpringFling_1200x500.png" alt="Spring Fling banner" class="banner-img" onerror="this.parentElement.style.display='none'" /></div>
+
+  <p class="eyebrow">Scramble &nbsp;·&nbsp; Upcoming Event</p>
+  <h1 class="event-title">Spring Fling</h1>
+  <div class="upcoming-badge">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    Upcoming Event
+  </div>
+
+  <div class="card">
+    <div class="detail-row"><span class="detail-label">Date</span><span class="detail-value">Saturday, April 25, 2026</span></div>
+    <div class="detail-row"><span class="detail-label">Start Time</span><span class="detail-value">7:30 AM (Morning) · 1:30 PM (Afternoon)</span></div>
+    <div class="detail-row"><span class="detail-label">Format</span><span class="detail-value">Scramble · Team Scramble · 18 Holes</span></div>
+    <div class="detail-row"><span class="detail-label">Entry Fee</span><span class="detail-value">$150 per player</span></div>
+  </div>
+
+  <div class="card desc-card"><p class="desc-text">Annual scramble, BBQ, and fundraiser auction.</p></div>
+
+  <footer class="site-footer">Lebanon Golf &amp; Country Club &nbsp;·&nbsp; Scramble</footer>
+</div>
+</body>
+</html>
