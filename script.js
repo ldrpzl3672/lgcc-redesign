@@ -52,53 +52,88 @@
 
 
 
-// Load Upcoming Events cards from data/upcoming-events.json
+// ── UPCOMING EVENTS ──────────────────────────────────────────────────────────
+// Loads data/upcoming-events.json and renders cards into #upcomingEventsContainer
 (function () {
-    const golfContainer = document.getElementById("upcomingGolfEventsContainer");
-    const socialContainer = document.getElementById("upcomingSocialEventsContainer");
-    if (!golfContainer && !socialContainer) return;
+  var BASE_URL = "https://www.lebanongolfandcountryclub.com";
 
-    function renderCards(container, items, emptyText) {
-        if (!container) return;
+  function formatDate(dateStr) {
+    if (!dateStr) return "";
+    try {
+      var parts = dateStr.split("-");
+      var d = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+      return d.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
+    } catch (e) { return dateStr; }
+  }
 
-        if (!items.length) {
-            container.innerHTML = `
-                <article class="card schedule-card">
-                    <p class="schedule-date">Coming Soon</p>
-                    <h3>Coming Soon</h3>
-                    <p>${emptyText}</p>
-                </article>
-            `;
-            return;
-        }
+  function safe(str) {
+    return str ? String(str).replace(/</g, "&lt;").replace(/>/g, "&gt;") : "";
+  }
 
-        container.innerHTML = items.map((event) => `
-            <article class="card schedule-card">
-                <p class="schedule-date">${event.date || "Coming Soon"}</p>
-                <h3>${event.title || ""}</h3>
-                <p>${event.summary || ""}</p>
-                ${event.url ? `<a class="text-link" href="${event.url}">Learn More →</a>` : ""}
-            </article>
-        `).join("");
+  function buildCard(ev) {
+    var bannerHtml = "";
+    if (ev.banner_url) {
+      bannerHtml = '<div class="upcoming-card-banner"><img src="' + safe(ev.banner_url) + '" alt="' + safe(ev.event_name) + '" loading="lazy" onerror="this.parentElement.style.display='none'"></div>';
     }
 
-    fetch("data/upcoming-events.json")
-        .then((response) => {
-            if (!response.ok) throw new Error("Could not load upcoming-events.json");
-            return response.json();
-        })
-        .then((data) => {
-            const golfEvents = Array.isArray(data.golf_events) ? data.golf_events : [];
-            const socialEvents = Array.isArray(data.social_events) ? data.social_events : [];
+    var meta = [];
+    if (ev.event_type) meta.push(safe(ev.event_type));
+    if (ev.format_label) meta.push(safe(ev.format_label));
 
-            renderCards(golfContainer, golfEvents, "Upcoming golf events will appear here.");
-            renderCards(socialContainer, socialEvents, "Upcoming social events will appear here.");
-        })
-        .catch(() => {
-            renderCards(golfContainer, [], "Upcoming golf events will appear here.");
-            renderCards(socialContainer, [], "Upcoming social events will appear here.");
-        });
+    var summary = ev.description
+      ? safe(ev.description.length > 120 ? ev.description.slice(0, 117) + "..." : ev.description)
+      : "Join us for this upcoming club event.";
+
+    var detailUrl = ev.url ? (ev.url.startsWith("http") ? ev.url : BASE_URL + ev.url) : "#";
+
+    return [
+      '<article class="upcoming-card">',
+        bannerHtml,
+        '<div class="upcoming-card-body">',
+          '<p class="upcoming-card-date">' + formatDate(ev.event_date) + '</p>',
+          '<h3 class="upcoming-card-title">' + safe(ev.event_name || ev.title) + '</h3>',
+          meta.length ? '<p class="upcoming-card-meta">' + meta.join(" &bull; ") + '</p>' : '',
+          '<p class="upcoming-card-summary">' + summary + '</p>',
+          '<a class="btn btn-sm btn-outline" href="' + detailUrl + '">View Details &rarr;</a>',
+        '</div>',
+      '</article>'
+    ].join("");
+  }
+
+  function renderUpcoming(events, container) {
+    container.innerHTML = "";
+    if (!events || events.length === 0) {
+      container.closest("section").style.display = "none";
+      return;
+    }
+    container.closest("section").style.display = "";
+    // Sort soonest first
+    var sorted = events.slice().sort(function (a, b) {
+      return (a.event_date || "").localeCompare(b.event_date || "");
+    });
+    container.innerHTML = sorted.map(buildCard).join("");
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    var container = document.getElementById("upcomingEventsContainer");
+    if (!container) return;
+
+    // Hide section until data loads (no flash of empty)
+    var section = container.closest("section");
+    if (section) section.style.display = "none";
+
+    fetch("/data/upcoming-events.json?v=" + Date.now())
+      .then(function (r) { return r.ok ? r.json() : []; })
+      .then(function (data) {
+        var events = Array.isArray(data) ? data : [];
+        renderUpcoming(events, container);
+      })
+      .catch(function () {
+        if (section) section.style.display = "none";
+      });
+  });
 })();
+// ── END UPCOMING EVENTS ───────────────────────────────────────────────────────
 
 // Load Recent Competition cards from data/recent-results.json
 (function () {
@@ -131,7 +166,7 @@
                     <h3 style="${result.game_type ? 'padding-right:100px;' : ''}">${result.title || ""}</h3>
                     <p class="result-winner">${result.winner || ""}</p>
                     <p>${result.summary || ""}</p>${result.summary2 ? `<p style="margin:3px 0 0;font-size:0.875em;opacity:0.82">${result.summary2}</p>` : ""}
-                    ${result.url ? `<a class="text-link" href="${result.url}">See Full Results →</a>` : ""}
+                    ${result.url ? `<a class="text-link" href="${result.url}">See Full Results â</a>` : ""}
                 </article>
             `).join("");
         })
