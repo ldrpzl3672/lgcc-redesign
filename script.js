@@ -1,4 +1,4 @@
-// LGCC proposal site - simple interactions (no framework)
+// LGCC site script.js
 
 (function () {
   const year = document.getElementById("year");
@@ -21,7 +21,7 @@
     });
   }
 
-  // Smooth scroll (basic)
+  // Smooth scroll
   document.querySelectorAll('a[href^="#"]').forEach((a) => {
     a.addEventListener("click", (e) => {
       const href = a.getAttribute("href");
@@ -34,7 +34,7 @@
     });
   });
 
-  // Demo form handler (no backend)
+  // Demo form handler
   const form = document.getElementById("contactForm");
   const note = document.getElementById("formNote");
   if (form) {
@@ -50,51 +50,120 @@
 })();
 
 
-// ================= UPCOMING EVENTS =================
+// ================= UPCOMING GOLF EVENTS =================
 (function () {
   const golfContainer = document.getElementById("upcomingGolfEventsContainer");
-  const socialContainer = document.getElementById("upcomingSocialEventsContainer");
-  if (!golfContainer && !socialContainer) return;
+  if (!golfContainer) return;
 
-  function renderCards(container, items, emptyText) {
-    if (!container) return;
+  const SOCIAL_TYPES = ["social event", "social_event", "social"];
 
-    if (!items.length) {
-      container.innerHTML = `
-        <article class="card schedule-card">
-          <p class="schedule-date">Coming Soon</p>
-          <h3>Coming Soon</h3>
-          <p>${emptyText}</p>
-        </article>
-      `;
+  function safe(str) {
+    if (str == null) return "";
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function isGolfEvent(ev) {
+    const t = String(ev.eventType || ev.event_type || "").toLowerCase();
+    return !SOCIAL_TYPES.includes(t);
+  }
+
+  function formatDate(dateStr) {
+    if (!dateStr) return "Coming Soon";
+    try {
+      const parts = dateStr.split("-");
+      if (parts.length !== 3) return dateStr;
+      const d = new Date(
+        parseInt(parts[0], 10),
+        parseInt(parts[1], 10) - 1,
+        parseInt(parts[2], 10)
+      );
+      return d.toLocaleDateString("en-US", {
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+        year: "numeric"
+      });
+    } catch (e) {
+      return dateStr;
+    }
+  }
+
+  function buildFormatLabel(ev) {
+    const parts = [];
+    const eventType = ev.eventType || ev.event_type || "";
+    const competitionFormat = ev.competitionFormat || ev.competition_format || "";
+    const holesTo = ev.holesTo || ev.holes_to_play || "";
+
+    if (eventType) parts.push(eventType);
+    if (competitionFormat === "team_scramble") parts.push("Team Scramble");
+    else if (competitionFormat === "mixed_format") parts.push("Mixed Format");
+    else if (competitionFormat && competitionFormat !== "team_scramble" && competitionFormat !== "mixed_format") {
+      parts.push(competitionFormat);
+    }
+    if (holesTo) parts.push(String(holesTo) + " Holes");
+
+    return parts.join(" - ");
+  }
+
+  function renderPlaceholder() {
+    golfContainer.innerHTML = `
+      <article class="card schedule-card">
+        <p class="schedule-date">Coming Soon</p>
+        <h3>Coming Soon</h3>
+        <p>Upcoming tournaments, member games, and club competitions will appear here once they are scheduled.</p>
+      </article>
+    `;
+  }
+
+  function buildGolfCard(ev) {
+    const title = safe(ev.title || ev.event_name || "");
+    const dateText = safe(formatDate(ev.eventDate || ev.event_date || ""));
+    const formatLabel = safe(buildFormatLabel(ev));
+    const description = safe(ev.description || "");
+    const detailUrl = safe(ev.detailUrl || ev.upcoming_page_url || "#");
+
+    return `
+      <article class="card schedule-card">
+        <p class="schedule-date">${dateText}</p>
+        <h3>${title}</h3>
+        ${formatLabel ? `<p class="schedule-date" style="margin-top:4px;">${formatLabel}</p>` : ""}
+        ${description ? `<p>${description}</p>` : ""}
+        <a class="text-link" href="${detailUrl}">View Details -></a>
+      </article>
+    `;
+  }
+
+  function renderGolfEvents(events) {
+    if (!events || !events.length) {
+      renderPlaceholder();
       return;
     }
 
-    container.innerHTML = items.map((event) => `
-      <article class="card schedule-card">
-        <p class="schedule-date">${event.date || "Coming Soon"}</p>
-        <h3>${event.title || ""}</h3>
-        <p>${event.summary || ""}</p>
-        ${event.url ? `<a class="text-link" href="${event.url}">Learn More -></a>` : ""}
-      </article>
-    `).join("");
+    const sorted = events.slice().sort((a, b) => {
+      const da = a.eventDate || a.event_date || "";
+      const db = b.eventDate || b.event_date || "";
+      return da.localeCompare(db);
+    });
+
+    golfContainer.innerHTML = sorted.map(buildGolfCard).join("");
   }
 
-  fetch("data/upcoming-events.json")
+  fetch("/data/upcoming-events.json?v=" + Date.now())
     .then((response) => {
       if (!response.ok) throw new Error("Could not load upcoming-events.json");
       return response.json();
     })
     .then((data) => {
-      const golfEvents = Array.isArray(data.golf_events) ? data.golf_events : [];
-      const socialEvents = Array.isArray(data.social_events) ? data.social_events : [];
-
-      renderCards(golfContainer, golfEvents, "Upcoming golf events will appear here.");
-      renderCards(socialContainer, socialEvents, "Upcoming social events will appear here.");
+      const all = Array.isArray(data.upcoming) ? data.upcoming : [];
+      const golfEvents = all.filter(isGolfEvent);
+      renderGolfEvents(golfEvents);
     })
     .catch(() => {
-      renderCards(golfContainer, [], "Upcoming golf events will appear here.");
-      renderCards(socialContainer, [], "Upcoming social events will appear here.");
+      renderPlaceholder();
     });
 })();
 
@@ -104,36 +173,59 @@
   const container = document.getElementById("recentResultsContainer");
   if (!container) return;
 
-  fetch("data/recent-results.json")
+  function safe(str) {
+    if (str == null) return "";
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function renderEmpty() {
+    container.innerHTML = `
+      <article class="card result-card">
+        <div class="result-topline">Club Event Result</div>
+        <h3>No results posted yet</h3>
+        <p class="result-winner">Check back soon for official club competition results.</p>
+      </article>
+    `;
+  }
+
+  function buildResultCard(result) {
+    const gameType = safe(result.game_type || "");
+    const label = safe(result.label || "Club Event Result");
+    const title = safe(result.title || "");
+    const winner = safe(result.winner || "");
+    const summary = safe(result.summary || "");
+    const summary2 = safe(result.summary2 || "");
+    const url = safe(result.url || "#");
+
+    return `
+      <article class="card result-card" style="position:relative;">
+        ${gameType ? `<span style="position:absolute;top:14px;right:16px;padding:3px 10px;border-radius:999px;background:rgba(184,155,94,0.18);border:1px solid rgba(184,155,94,0.32);color:#b89b5e;font-size:11px;font-weight:600;letter-spacing:0.02em;white-space:nowrap;">${gameType}</span>` : ""}
+        <div class="result-topline">${label}</div>
+        <h3 style="${gameType ? "padding-right:100px;" : ""}">${title}</h3>
+        <p class="result-winner">${winner}</p>
+        <p>${summary}</p>
+        ${summary2 ? `<p style="margin:3px 0 0;font-size:0.875em;opacity:0.82">${summary2}</p>` : ""}
+        <a class="text-link" href="${url}">See Full Results -></a>
+      </article>
+    `;
+  }
+
+  fetch("/data/recent-results.json?v=" + Date.now())
     .then((response) => {
       if (!response.ok) throw new Error("Could not load recent-results.json");
       return response.json();
     })
     .then((data) => {
       const results = Array.isArray(data.results) ? data.results : [];
-
       if (!results.length) {
-        container.innerHTML = `
-          <article class="card result-card">
-            <div class="result-topline">Club Event Result</div>
-            <h3>No results posted yet</h3>
-            <p class="result-winner">Check back soon for official club competition results.</p>
-          </article>
-        `;
+        renderEmpty();
         return;
       }
-
-      container.innerHTML = results.map((result) => `
-        <article class="card result-card" style="position:relative;">
-          ${result.game_type ? `<span style="position:absolute;top:14px;right:16px;padding:3px 10px;border-radius:999px;background:rgba(184,155,94,0.18);border:1px solid rgba(184,155,94,0.32);color:#b89b5e;font-size:11px;font-weight:600;letter-spacing:0.02em;white-space:nowrap;">${result.game_type}</span>` : ""}
-          <div class="result-topline">${result.label || "Club Event Result"}</div>
-          <h3 style="${result.game_type ? 'padding-right:100px;' : ''}">${result.title || ""}</h3>
-          <p class="result-winner">${result.winner || ""}</p>
-          <p>${result.summary || ""}</p>
-          ${result.summary2 ? `<p style="margin:3px 0 0;font-size:0.875em;opacity:0.82">${result.summary2}</p>` : ""}
-          ${result.url ? `<a class="text-link" href="${result.url}">See Full Results -></a>` : ""}
-        </article>
-      `).join("");
+      container.innerHTML = results.map(buildResultCard).join("");
     })
     .catch(() => {
       container.innerHTML = `
