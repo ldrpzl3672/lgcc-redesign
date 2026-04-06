@@ -41,14 +41,12 @@
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       if (note) {
-        note.textContent =
-          "Demo mode: form not connected yet. Hook to Formspree/Netlify Forms before launch.";
+        note.textContent = "Demo mode: form not connected yet. Hook to Formspree/Netlify Forms before launch.";
       }
       form.reset();
     });
   }
 })();
-
 
 // ================= UPCOMING GOLF EVENTS =================
 (function () {
@@ -85,7 +83,7 @@
         weekday: "long",
         month: "long",
         day: "numeric",
-        year: "numeric"
+        year: "numeric",
       });
     } catch (e) {
       return dateStr;
@@ -99,13 +97,18 @@
     const holesTo = ev.holesTo || ev.holes_to_play || "";
 
     if (eventType) parts.push(eventType);
+
     if (competitionFormat === "team_scramble") parts.push("Team Scramble");
     else if (competitionFormat === "mixed_format") parts.push("Mixed Format");
-    else if (competitionFormat && competitionFormat !== "team_scramble" && competitionFormat !== "mixed_format") {
+    else if (
+      competitionFormat &&
+      competitionFormat !== "team_scramble" &&
+      competitionFormat !== "mixed_format"
+    ) {
       parts.push(competitionFormat);
     }
-    if (holesTo) parts.push(String(holesTo) + " Holes");
 
+    if (holesTo) parts.push(String(holesTo) + " Holes");
     return parts.join(" - ");
   }
 
@@ -125,14 +128,24 @@
     const formatLabel = safe(buildFormatLabel(ev));
     const description = safe(ev.description || "");
     const detailUrl = safe(ev.detailUrl || ev.upcoming_page_url || "#");
+    const cardImage = safe(ev.cardImage || ev.card_image || ev.bannerImage || "");
+
+    const hasImage = !!cardImage;
 
     return `
-      <article class="card schedule-card">
-        <p class="schedule-date">${dateText}</p>
-        <h3>${title}</h3>
-        ${formatLabel ? `<p class="schedule-date" style="margin-top:4px;">${formatLabel}</p>` : ""}
-        ${description ? `<p>${description}</p>` : ""}
-        <a class="text-link" href="${detailUrl}">View Details -></a>
+      <article class="card schedule-card${hasImage ? " schedule-card--featured" : ""}">
+        <div class="schedule-card-content">
+          <p class="schedule-date">${dateText}</p>
+          <h3>${title}</h3>
+          ${formatLabel ? `<p class="schedule-card-format">${formatLabel}</p>` : ""}
+          ${description ? `<p class="schedule-card-copy">${description}</p>` : ""}
+          <a class="text-link" href="${detailUrl}">View Details -&gt;</a>
+        </div>
+        ${hasImage ? `
+          <div class="schedule-card-thumb">
+            <img src="${cardImage}" alt="${title}">
+          </div>
+        ` : ""}
       </article>
     `;
   }
@@ -167,7 +180,6 @@
     });
 })();
 
-
 // ================= RECENT RESULTS =================
 (function () {
   const container = document.getElementById("recentResultsContainer");
@@ -185,9 +197,9 @@
   function renderEmpty() {
     container.innerHTML = `
       <article class="card result-card">
-        <div class="result-topline">Club Event Result</div>
+        <p class="result-topline">Club Event Result</p>
         <h3>No results posted yet</h3>
-        <p class="result-winner">Check back soon for official club competition results.</p>
+        <p>Check back soon for official club competition results.</p>
       </article>
     `;
   }
@@ -202,14 +214,14 @@
     const url = safe(result.url || "#");
 
     return `
-      <article class="card result-card" style="position:relative;">
-        ${gameType ? `<span style="position:absolute;top:14px;right:16px;padding:3px 10px;border-radius:999px;background:rgba(184,155,94,0.18);border:1px solid rgba(184,155,94,0.32);color:#b89b5e;font-size:11px;font-weight:600;letter-spacing:0.02em;white-space:nowrap;">${gameType}</span>` : ""}
-        <div class="result-topline">${label}</div>
-        <h3 style="${gameType ? "padding-right:100px;" : ""}">${title}</h3>
-        <p class="result-winner">${winner}</p>
-        <p>${summary}</p>
-        ${summary2 ? `<p style="margin:3px 0 0;font-size:0.875em;opacity:0.82">${summary2}</p>` : ""}
-        <a class="text-link" href="${url}">See Full Results -></a>
+      <article class="card result-card">
+        ${gameType ? `<span class="pill pill-gold" style="float:right; margin-left:12px;">${gameType}</span>` : ""}
+        <p class="result-topline">${label}</p>
+        <h3>${title}</h3>
+        ${winner ? `<p class="result-winner">${winner}</p>` : ""}
+        ${summary ? `<p>${summary}</p>` : ""}
+        ${summary2 ? `<p>${summary2}</p>` : ""}
+        <a class="text-link" href="${url}">See Full Results -&gt;</a>
       </article>
     `;
   }
@@ -230,9 +242,9 @@
     .catch(() => {
       container.innerHTML = `
         <article class="card result-card">
-          <div class="result-topline">Club Event Result</div>
+          <p class="result-topline">Club Event Result</p>
           <h3>Results unavailable</h3>
-          <p class="result-winner">We could not load recent competition results right now.</p>
+          <p>We could not load recent competition results right now.</p>
         </article>
       `;
     });
