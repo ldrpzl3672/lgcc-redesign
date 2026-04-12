@@ -2,6 +2,16 @@
   "results": [
     {
       "label": "Club Event Result",
+      "game_type": "PGA Pairing",
+      "title": "Masters Pairing 2026 Saturday — 04/11/2026",
+      "winner": "Winner: Tony Eckler — +9 pts ($90)",
+      "summary": "0 players competed",
+      "summary2": null,
+      "url": "/results/masters-pairing-2026-saturday-april-11-2026.html",
+      "event_date": "2026-04-11"
+    },
+    {
+      "label": "Club Event Result",
       "game_type": "Points Game",
       "title": "Saturday 4-4-26",
       "winner": "Winners: Danny Parkerson, Michael Patterson, Doug Sarro, Eddy Blaylock - +5 pts",
@@ -39,16 +49,6 @@
       "summary2": "7 scats - $120 scats pot",
       "url": "/results/saturday-3-28-26-march-28-2026.html",
       "event_date": "2026-03-28"
-    },
-    {
-      "label": "Club Event Result",
-      "game_type": "Points Game",
-      "title": "Sunday Points 3/22/26",
-      "winner": "Winner: Casey Moore - +8 pts ($95)",
-      "summary": "17 players competed - $170 points pot",
-      "summary2": "3 scats - $170 scats pot",
-      "url": "/results/sunday-points-32226-march-22-2026.html",
-      "event_date": "2026-03-22"
     }
   ]
 }
