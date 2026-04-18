@@ -2,6 +2,16 @@
   "results": [
     {
       "label": "Club Event Result",
+      "game_type": "Points Game",
+      "title": "Saturday 4-18-26",
+      "winner": "Winner: Dylan Waters — +9 pts ($100)",
+      "summary": "21 players competed · $210 points pot",
+      "summary2": "5 scats · $210 scats pot",
+      "url": "/results/saturday-4-18-26-april-18-2026.html",
+      "event_date": "2026-04-18"
+    },
+    {
+      "label": "Club Event Result",
       "game_type": "PGA Pairing",
       "title": "Masters Pairing 2026 Sunday — 04/12/2026",
       "winner": "Winner: Jonathan Weaver — +7 pts ($80)",
@@ -39,16 +49,6 @@
       "summary2": null,
       "url": "/results/4-1-26-april-1-2026.html",
       "event_date": "2026-04-01"
-    },
-    {
-      "label": "Club Event Result",
-      "game_type": "Points Game",
-      "title": "Sunday 3-29-26",
-      "winner": "Winner: Jay Pittman - +7 pts ($95)",
-      "summary": "17 players competed - $170 points pot",
-      "summary2": "5 scats - $170 scats pot",
-      "url": "/results/sunday-3-29-26-march-29-2026.html",
-      "event_date": "2026-03-29"
     }
   ]
 }
