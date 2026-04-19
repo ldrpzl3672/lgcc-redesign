@@ -3,6 +3,16 @@
     {
       "label": "Club Event Result",
       "game_type": "Points Game",
+      "title": "Sunday 4-19-26",
+      "winner": "Winner: Scotty Covington — +11 pts ($80)",
+      "summary": "14 players competed · $140 points pot",
+      "summary2": "4 scats · $140 scats pot",
+      "url": "/results/sunday-4-19-26-april-19-2026.html",
+      "event_date": "2026-04-19"
+    },
+    {
+      "label": "Club Event Result",
+      "game_type": "Points Game",
       "title": "Saturday 4-18-26",
       "winner": "Winner: Dylan Waters — +9 pts ($100)",
       "summary": "21 players competed · $210 points pot",
@@ -39,16 +49,6 @@
       "summary2": "8 scats - $320 scats pot",
       "url": "/results/saturday-4-4-26-april-4-2026.html",
       "event_date": "2026-04-04"
-    },
-    {
-      "label": "Club Event Result",
-      "game_type": "Par 3",
-      "title": "4-1-26",
-      "winner": "Winner: Joey Bradley ($55)",
-      "summary": "22 players competed - $220 points pot",
-      "summary2": null,
-      "url": "/results/4-1-26-april-1-2026.html",
-      "event_date": "2026-04-01"
     }
   ]
 }
