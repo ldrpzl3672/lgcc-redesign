@@ -46,6 +46,9 @@
     .col-payout{font-weight:700;color:var(--gold)}
     .no-result-msg{padding:18px 22px;color:var(--muted);font-size:14px;margin:0}
     .site-footer{text-align:center;padding-top:28px;border-top:1px solid var(--line);font-size:12px;color:var(--faint)}
+    .photo-btn{display:inline-flex;align-items:center;gap:7px;margin-top:14px;padding:9px 18px;border-radius:999px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.07);color:var(--text);font-size:13px;font-weight:600;text-decoration:none;transition:background 0.15s}
+    .photo-btn:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.28)}
+    .photo-btn.disabled{opacity:0.45;cursor:default;pointer-events:none}
     @media(max-width:540px){.top-bar{flex-direction:column;align-items:flex-start;gap:12px}.card{padding:16px}.section-header{padding:14px 16px}th,td{padding:9px 10px}}
   </style>
 </head>
@@ -65,6 +68,7 @@
     <p class="eyebrow">Scramble &nbsp;·&nbsp; Club Results</p>
     <h1 class="event-title">Spring Fling</h1>
     <div class="event-meta">April 25, 2026</div>
+    <a class="photo-btn" href="../gallery/spring-fling-april-25-2026.html"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>View Event Photos (405)</a>
   </div>
   <div class="card summary-card">
     <div class="stat-item"><span class="stat-label">Teams</span><span class="stat-value">30</span></div>
@@ -322,152 +326,6 @@
           </tr></tbody></table></div>
         </div>
   <footer class="site-footer">Lebanon Golf &amp; Country Club &nbsp;·&nbsp; Scramble Results &nbsp;·&nbsp; April 25, 2026</footer>
-  <script>
-    // Lazy gallery loader — loads /data/galleries/{slug}.json on demand
-    (function() {
-      const GALLERY_PATH = "../data/galleries/spring-fling-april-25-2026.json";
-      let galleryData = null;
-      let currentPhotoIdx = 0;
-      let activeCategory = "all";
-
-      function getCurrentCategoryPhotos() {
-        if (!galleryData || !galleryData.photos) return [];
-        return galleryData.photos.map((p, i) => ({ ...p, originalIdx: i }))
-          .filter(p => activeCategory === "all" || p.category === activeCategory);
-      }
-
-      async function loadGallery() {
-        if (galleryData) return;
-        try {
-          const res = await fetch(GALLERY_PATH);
-          if (!res.ok) { console.warn("Gallery JSON not found"); return; }
-          galleryData = await res.json();
-          showGalleryUI();
-        } catch (e) {
-          console.warn("Failed to load gallery:", e.message);
-        }
-      }
-
-      function showGalleryUI() {
-        if (!galleryData || !galleryData.photos || galleryData.photos.length === 0) return;
-        const container = document.getElementById("gallery-placeholder");
-        if (!container) return;
-
-        const photos = galleryData.photos;
-        const categories = [...new Set(photos.map(p => p.category))];
-
-        // Build category tabs
-        const tabsHtml = `
-          <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
-            <button data-cat="all" style="padding:7px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.18);background:rgba(184,155,94,0.18);color:rgba(255,255,255,0.92);cursor:pointer;font-size:13px;font-weight:500;border-color:rgba(184,155,94,0.55)">All (${photos.length})</button>
-            ${categories.map(cat => {
-              const count = photos.filter(p => p.category === cat).length;
-              return `<button data-cat="${cat}" style="padding:7px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.65);cursor:pointer;font-size:13px;font-weight:500">${cat} (${count})</button>`;
-            }).join("")}
-          </div>
-        `;
-
-        // Build photo grid
-        const gridHtml = `
-          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px" id="gallery-grid">
-            ${photos.map((p, i) => `
-              <div style="aspect-ratio:1;border-radius:8px;overflow:hidden;cursor:pointer;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.05)" data-idx="${i}" data-cat="${p.category}">
-                <img src="${p.thumb}" alt="${p.caption || "photo"}" style="width:100%;height:100%;object-fit:cover" loading="lazy" decoding="async">
-              </div>
-            `).join("")}
-          </div>
-        `;
-
-        // Lightbox HTML
-        const lightboxHtml = `
-          <div id="gallery-lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.94);z-index:1000;align-items:center;justify-content:center">
-            <button id="lb-close" style="position:absolute;top:30px;right:30px;background:none;border:none;color:rgba(255,255,255,0.8);font-size:24px;cursor:pointer">×</button>
-            <button id="lb-prev" style="position:absolute;left:30px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.12);border:none;color:rgba(255,255,255,0.8);padding:10px 14px;cursor:pointer;border-radius:6px">←</button>
-            <img id="lb-img" style="max-width:90vw;max-height:90vh;object-fit:contain" src="" alt="">
-            <button id="lb-next" style="position:absolute;right:30px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.12);border:none;color:rgba(255,255,255,0.8);padding:10px 14px;cursor:pointer;border-radius:6px">→</button>
-            <div id="lb-footer" style="position:absolute;bottom:30px;left:50%;transform:translateX(-50%);text-align:center;color:rgba(255,255,255,0.8);font-size:13px">
-              <div id="lb-counter"></div>
-              <div id="lb-caption" style="margin-top:8px"></div>
-            </div>
-          </div>
-        `;
-
-        container.innerHTML = tabsHtml + gridHtml + lightboxHtml;
-
-        // Tab event listeners
-        container.querySelectorAll('[data-cat]').forEach(btn => {
-          btn.addEventListener('click', () => {
-            activeCategory = btn.dataset.cat;
-            const grid = container.querySelector('#gallery-grid');
-            const items = grid.querySelectorAll('[data-idx]');
-            items.forEach(item => {
-              item.style.display = activeCategory === "all" || item.dataset.cat === activeCategory ? "" : "none";
-            });
-            container.querySelectorAll('button[data-cat]').forEach(b => {
-              b.style.background = b.dataset.cat === activeCategory ? "rgba(184,155,94,0.18)" : "rgba(255,255,255,0.07)";
-              b.style.borderColor = b.dataset.cat === activeCategory ? "rgba(184,155,94,0.55)" : "rgba(255,255,255,0.18)";
-            });
-          });
-        });
-
-        // Photo click handlers
-        const lb = document.getElementById("gallery-lightbox");
-        container.querySelectorAll('[data-idx]').forEach(item => {
-          item.addEventListener('click', () => {
-            const originalIdx = parseInt(item.dataset.idx);
-            const categoryPhotos = getCurrentCategoryPhotos();
-            currentPhotoIdx = categoryPhotos.findIndex(p => p.originalIdx === originalIdx);
-            if (currentPhotoIdx === -1) currentPhotoIdx = 0;
-            showPhoto();
-            lb.style.display = "flex";
-            document.body.style.overflow = "hidden";
-          });
-        });
-
-        function showPhoto() {
-          const categoryPhotos = getCurrentCategoryPhotos();
-          if (categoryPhotos.length === 0) return;
-          const p = categoryPhotos[currentPhotoIdx];
-          document.getElementById("lb-img").src = p.orig;
-          document.getElementById("lb-counter").textContent = (currentPhotoIdx + 1) + " / " + categoryPhotos.length;
-          document.getElementById("lb-caption").textContent = p.caption || "";
-        }
-
-        document.getElementById("lb-close").addEventListener('click', () => {
-          lb.style.display = "none";
-          document.body.style.overflow = "";
-        });
-
-        document.getElementById("lb-prev").addEventListener('click', () => {
-          const categoryPhotos = getCurrentCategoryPhotos();
-          currentPhotoIdx = (currentPhotoIdx - 1 + categoryPhotos.length) % categoryPhotos.length;
-          showPhoto();
-        });
-
-        document.getElementById("lb-next").addEventListener('click', () => {
-          const categoryPhotos = getCurrentCategoryPhotos();
-          currentPhotoIdx = (currentPhotoIdx + 1) % categoryPhotos.length;
-          showPhoto();
-        });
-
-        lb.addEventListener('click', (e) => {
-          if (e.target === lb) { lb.style.display = "none"; document.body.style.overflow = ""; }
-        });
-
-        document.addEventListener('keydown', (e) => {
-          if (lb.style.display !== "flex") return;
-          if (e.key === "ArrowLeft") document.getElementById("lb-prev").click();
-          else if (e.key === "ArrowRight") document.getElementById("lb-next").click();
-          else if (e.key === "Escape") document.getElementById("lb-close").click();
-        });
-      }
-
-      // Auto-load gallery if it exists
-      window.addEventListener('load', loadGallery);
-      window.loadEventGallery = loadGallery; // Expose for manual loading
-    })();
-  </script>
 </div>
-<div id="gallery-placeholder" style="margin-top:28px;"></div><script>(function(){const GALLERY_PATH="../data/galleries/spring-fling-april-25-2026.json?v="+Date.now();let galleryData=null;let currentPhotoIdx=0;async function loadGallery(){if(galleryData)return;try{const res=await fetch(GALLERY_PATH);if(!res.ok){document.getElementById("gallery-placeholder").innerHTML="<p style='color: var(--muted); font-size: 13px;'>Photo gallery is not available yet.</p>";return;}galleryData=await res.json();if(!galleryData.photos||galleryData.photos.length===0){document.getElementById("gallery-placeholder").innerHTML="<p style='color: var(--muted); font-size: 13px;'>No photos found.</p>";return;}showGalleryUI();}catch(e){console.warn("Failed to load gallery:",e.message);document.getElementById("gallery-placeholder").innerHTML="<p style='color: var(--muted); font-size: 13px;'>Photo gallery failed to load.</p>";}}function showGalleryUI(){if(!galleryData||!galleryData.photos||galleryData.photos.length===0)return;const container=document.getElementById("gallery-placeholder");const photos=galleryData.photos;const categories=[...new Set(photos.map(p=>p.category))];let activeCategory="all";const tabsHtml="<div style='display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap'><button data-cat='all' style='padding:7px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.92);cursor:pointer;font-size:13px;font-weight:500'>All ("+photos.length+")</button>"+categories.map(cat=>{const count=photos.filter(p=>p.category===cat).length;return"<button data-cat='"+cat+"' style='padding:7px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.65);cursor:pointer;font-size:13px;font-weight:500'>"+cat+" ("+count+")</button>";}).join("")+"</div>";const gridHtml="<div style='display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px'>"+photos.map((p,i)=>"<div style='aspect-ratio:1;border-radius:8px;overflow:hidden;cursor:pointer;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.05)' data-idx='"+i+"' data-cat='"+p.category+"'><img src='"+p.thumb+"' alt='"+(p.caption||"photo")+"' style='width:100%;height:100%;object-fit:cover' loading='lazy' decoding='async'></div>").join("")+"</div>";const lightboxHtml="<div id='gallery-lightbox' style='display:none;position:fixed;inset:0;background:rgba(0,0,0,0.94);z-index:1000;align-items:center;justify-content:center'><button id='lb-close' style='position:absolute;top:30px;right:30px;background:none;border:none;color:rgba(255,255,255,0.8);font-size:24px;cursor:pointer'>x</button><button id='lb-prev' style='position:absolute;left:30px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.12);border:none;color:rgba(255,255,255,0.8);padding:10px 14px;cursor:pointer;border-radius:6px'>&lt;</button><img id='lb-img' style='max-width:90vw;max-height:90vh;object-fit:contain' src='' alt=''><button id='lb-next' style='position:absolute;right:30px;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.12);border:none;color:rgba(255,255,255,0.8);padding:10px 14px;cursor:pointer;border-radius:6px'>&gt;</button><div id='lb-footer' style='position:absolute;bottom:30px;left:50%;transform:translateX(-50%);text-align:center;color:rgba(255,255,255,0.8);font-size:13px'><div id='lb-counter'></div><div id='lb-caption' style='margin-top:8px'></div></div></div>";container.innerHTML=tabsHtml+gridHtml+lightboxHtml;container.querySelectorAll("[data-cat]").forEach(btn=>{btn.addEventListener("click",()=>{activeCategory=btn.dataset.cat;const grid=container.querySelector("[style*='display:grid']");const items=grid.querySelectorAll("[data-cat]");items.forEach(item=>{item.style.display=activeCategory==="all"||item.dataset.cat===activeCategory?"":"none";});container.querySelectorAll("[data-cat]").forEach(b=>b.style.background=b.dataset.cat===activeCategory?"rgba(184,155,94,0.18)":"rgba(255,255,255,0.07)");});});const lb=document.getElementById("gallery-lightbox");container.querySelectorAll("[data-idx]").forEach(item=>{item.addEventListener("click",()=>{currentPhotoIdx=parseInt(item.dataset.idx);showPhoto();lb.style.display="flex";document.body.style.overflow="hidden";});});function showPhoto(){const p=photos[currentPhotoIdx];document.getElementById("lb-img").src=p.orig;document.getElementById("lb-counter").textContent=(currentPhotoIdx+1)+" / "+photos.length;document.getElementById("lb-caption").textContent=p.caption||"";}document.getElementById("lb-close").addEventListener("click",()=>{lb.style.display="none";document.body.style.overflow="";});document.getElementById("lb-prev").addEventListener("click",()=>{currentPhotoIdx=(currentPhotoIdx-1+photos.length)%photos.length;showPhoto();});document.getElementById("lb-next").addEventListener("click",()=>{currentPhotoIdx=(currentPhotoIdx+1)%photos.length;showPhoto();});lb.addEventListener("click",(e)=>{if(e.target===lb){lb.style.display="none";document.body.style.overflow="";}});document.addEventListener("keydown",(e)=>{if(lb.style.display!=="flex")return;if(e.key==="ArrowLeft")document.getElementById("lb-prev").click();else if(e.key==="ArrowRight")document.getElementById("lb-next").click();else if(e.key==="Escape")document.getElementById("lb-close").click();});}window.addEventListener("load",loadGallery);})();</script>
 </body>
 </html>
