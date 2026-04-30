@@ -2,6 +2,16 @@
   "results": [
     {
       "label": "Club Event Result",
+      "game_type": "Scramble",
+      "title": "Spring Fling — 04/25/2026",
+      "winner": "Winners: , ",
+      "summary": "30 players competed",
+      "summary2": null,
+      "url": "/results/spring-fling-april-25-2026.html",
+      "event_date": "2026-04-25"
+    },
+    {
+      "label": "Club Event Result",
       "game_type": "Points Game",
       "title": "Sunday 4-19-26",
       "winner": "Winner: Scotty Covington — +11 pts ($80)",
@@ -39,16 +49,6 @@
       "summary2": null,
       "url": "/results/masters-pairing-2026-saturday-april-11-2026.html",
       "event_date": "2026-04-11"
-    },
-    {
-      "label": "Club Event Result",
-      "game_type": "Points Game",
-      "title": "Saturday 4-4-26",
-      "winner": "Winners: Danny Parkerson, Michael Patterson, Doug Sarro, Eddy Blaylock - +5 pts",
-      "summary": "32 players competed - $320 points pot",
-      "summary2": "8 scats - $320 scats pot",
-      "url": "/results/saturday-4-4-26-april-4-2026.html",
-      "event_date": "2026-04-04"
     }
   ]
 }
