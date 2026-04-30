@@ -597,7 +597,7 @@
       "thumb": "https://base44.app/api/apps/69ad1acaaa8eca64c17ca6c7/files/mp/public/69ad1acaaa8eca64c17ca6c7/3efed1caa_21ec1f08a_629A6488-thumb.jpg",
       "orig": "https://base44.app/api/apps/69ad1acaaa8eca64c17ca6c7/files/mp/public/69ad1acaaa8eca64c17ca6c7/21ec1f08a_629A6488.jpg",
       "caption": "",
-      "category": "Event Photos",
+      "category": "Other",
       "sort": 9999
     },
     {
@@ -1005,7 +1005,7 @@
       "thumb": "https://base44.app/api/apps/69ad1acaaa8eca64c17ca6c7/files/mp/public/69ad1acaaa8eca64c17ca6c7/4eac4d856_7d5490dda_629A6653-thumb.jpg",
       "orig": "https://base44.app/api/apps/69ad1acaaa8eca64c17ca6c7/files/mp/public/69ad1acaaa8eca64c17ca6c7/7d5490dda_629A6653.jpg",
       "caption": "",
-      "category": "Event Photos",
+      "category": "Action Shots",
       "sort": 9999
     },
     {
@@ -1013,7 +1013,7 @@
       "thumb": "https://base44.app/api/apps/69ad1acaaa8eca64c17ca6c7/files/mp/public/69ad1acaaa8eca64c17ca6c7/d415dd4c1_d5a1a82f0_629A6630-thumb.jpg",
       "orig": "https://base44.app/api/apps/69ad1acaaa8eca64c17ca6c7/files/mp/public/69ad1acaaa8eca64c17ca6c7/d5a1a82f0_629A6630.jpg",
       "caption": "",
-      "category": "Event Photos",
+      "category": "Action Shots",
       "sort": 9999
     },
     {
@@ -1021,7 +1021,7 @@
       "thumb": "https://base44.app/api/apps/69ad1acaaa8eca64c17ca6c7/files/mp/public/69ad1acaaa8eca64c17ca6c7/631f63d37_e77b2d6bd_629A6613-thumb.jpg",
       "orig": "https://base44.app/api/apps/69ad1acaaa8eca64c17ca6c7/files/mp/public/69ad1acaaa8eca64c17ca6c7/e77b2d6bd_629A6613.jpg",
       "caption": "",
-      "category": "Event Photos",
+      "category": "Action Shots",
       "sort": 9999
     },
     {
@@ -1029,7 +1029,7 @@
       "thumb": "https://base44.app/api/apps/69ad1acaaa8eca64c17ca6c7/files/mp/public/69ad1acaaa8eca64c17ca6c7/ee6fc39d5_9fe795397_629A6549-thumb.jpg",
       "orig": "https://base44.app/api/apps/69ad1acaaa8eca64c17ca6c7/files/mp/public/69ad1acaaa8eca64c17ca6c7/9fe795397_629A6549.jpg",
       "caption": "",
-      "category": "Event Photos",
+      "category": "Action Shots",
       "sort": 9999
     },
     {
@@ -3244,11 +3244,10 @@
   "metadata": {
     "total": 405,
     "categories": {
-      "Action Shots": 321,
+      "Action Shots": 325,
       "Candids": 21,
       "Team Photos": 57,
-      "Event Photos": 5,
-      "Other": 1
+      "Other": 2
     }
   }
 }
