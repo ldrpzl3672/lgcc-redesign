@@ -321,7 +321,6 @@
             <td style="padding:10px 16px;font-size:15px;font-weight:700;color:var(--text)">Melissa Boner</td>
           </tr></tbody></table></div>
         </div>
-  <div id="gallery-placeholder" style="margin-top:28px"></div>
   <footer class="site-footer">Lebanon Golf &amp; Country Club &nbsp;·&nbsp; Scramble Results &nbsp;·&nbsp; April 25, 2026</footer>
   <script>
     // Lazy gallery loader — loads /data/galleries/{slug}.json on demand
@@ -329,6 +328,13 @@
       const GALLERY_PATH = "../data/galleries/spring-fling-april-25-2026.json";
       let galleryData = null;
       let currentPhotoIdx = 0;
+      let activeCategory = "all";
+
+      function getCurrentCategoryPhotos() {
+        if (!galleryData || !galleryData.photos) return [];
+        return galleryData.photos.map((p, i) => ({ ...p, originalIdx: i }))
+          .filter(p => activeCategory === "all" || p.category === activeCategory);
+      }
 
       async function loadGallery() {
         if (galleryData) return;
@@ -349,12 +355,11 @@
 
         const photos = galleryData.photos;
         const categories = [...new Set(photos.map(p => p.category))];
-        let activeCategory = "all";
 
         // Build category tabs
         const tabsHtml = `
           <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
-            <button data-cat="all" style="padding:7px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.92);cursor:pointer;font-size:13px;font-weight:500">All (${photos.length})</button>
+            <button data-cat="all" style="padding:7px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.18);background:rgba(184,155,94,0.18);color:rgba(255,255,255,0.92);cursor:pointer;font-size:13px;font-weight:500;border-color:rgba(184,155,94,0.55)">All (${photos.length})</button>
             ${categories.map(cat => {
               const count = photos.filter(p => p.category === cat).length;
               return `<button data-cat="${cat}" style="padding:7px 14px;border-radius:999px;border:1px solid rgba(255,255,255,0.18);background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.65);cursor:pointer;font-size:13px;font-weight:500">${cat} (${count})</button>`;
@@ -364,7 +369,7 @@
 
         // Build photo grid
         const gridHtml = `
-          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px">
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px" id="gallery-grid">
             ${photos.map((p, i) => `
               <div style="aspect-ratio:1;border-radius:8px;overflow:hidden;cursor:pointer;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.05)" data-idx="${i}" data-cat="${p.category}">
                 <img src="${p.thumb}" alt="${p.caption || "photo"}" style="width:100%;height:100%;object-fit:cover" loading="lazy" decoding="async">
@@ -393,12 +398,15 @@
         container.querySelectorAll('[data-cat]').forEach(btn => {
           btn.addEventListener('click', () => {
             activeCategory = btn.dataset.cat;
-            const grid = container.querySelector('[style*="display:grid"]');
-            const items = grid.querySelectorAll('[data-cat]');
+            const grid = container.querySelector('#gallery-grid');
+            const items = grid.querySelectorAll('[data-idx]');
             items.forEach(item => {
               item.style.display = activeCategory === "all" || item.dataset.cat === activeCategory ? "" : "none";
             });
-            container.querySelectorAll('[data-cat]').forEach(b => b.style.background = b.dataset.cat === activeCategory ? "rgba(184,155,94,0.18)" : "rgba(255,255,255,0.07)");
+            container.querySelectorAll('button[data-cat]').forEach(b => {
+              b.style.background = b.dataset.cat === activeCategory ? "rgba(184,155,94,0.18)" : "rgba(255,255,255,0.07)";
+              b.style.borderColor = b.dataset.cat === activeCategory ? "rgba(184,155,94,0.55)" : "rgba(255,255,255,0.18)";
+            });
           });
         });
 
@@ -406,7 +414,10 @@
         const lb = document.getElementById("gallery-lightbox");
         container.querySelectorAll('[data-idx]').forEach(item => {
           item.addEventListener('click', () => {
-            currentPhotoIdx = parseInt(item.dataset.idx);
+            const originalIdx = parseInt(item.dataset.idx);
+            const categoryPhotos = getCurrentCategoryPhotos();
+            currentPhotoIdx = categoryPhotos.findIndex(p => p.originalIdx === originalIdx);
+            if (currentPhotoIdx === -1) currentPhotoIdx = 0;
             showPhoto();
             lb.style.display = "flex";
             document.body.style.overflow = "hidden";
@@ -414,9 +425,11 @@
         });
 
         function showPhoto() {
-          const p = photos[currentPhotoIdx];
+          const categoryPhotos = getCurrentCategoryPhotos();
+          if (categoryPhotos.length === 0) return;
+          const p = categoryPhotos[currentPhotoIdx];
           document.getElementById("lb-img").src = p.orig;
-          document.getElementById("lb-counter").textContent = (currentPhotoIdx + 1) + " / " + photos.length;
+          document.getElementById("lb-counter").textContent = (currentPhotoIdx + 1) + " / " + categoryPhotos.length;
           document.getElementById("lb-caption").textContent = p.caption || "";
         }
 
@@ -426,12 +439,14 @@
         });
 
         document.getElementById("lb-prev").addEventListener('click', () => {
-          currentPhotoIdx = (currentPhotoIdx - 1 + photos.length) % photos.length;
+          const categoryPhotos = getCurrentCategoryPhotos();
+          currentPhotoIdx = (currentPhotoIdx - 1 + categoryPhotos.length) % categoryPhotos.length;
           showPhoto();
         });
 
         document.getElementById("lb-next").addEventListener('click', () => {
-          currentPhotoIdx = (currentPhotoIdx + 1) % photos.length;
+          const categoryPhotos = getCurrentCategoryPhotos();
+          currentPhotoIdx = (currentPhotoIdx + 1) % categoryPhotos.length;
           showPhoto();
         });
 
