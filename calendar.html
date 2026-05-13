@@ -33,11 +33,11 @@
 
     .page-wrap {
       min-height: 100vh;
-      padding: 28px 16px 48px;
+      padding: 28px 32px 48px;
     }
 
     .calendar-shell {
-      max-width: 1180px;
+      width: min(1500px, 96vw);
       margin: 0 auto;
       background: var(--lgcc-cream);
       border-radius: 24px;
@@ -126,7 +126,7 @@
     .fc .fc-toolbar-title {
       font-family: Georgia, "Times New Roman", serif;
       color: var(--lgcc-green);
-      font-size: 30px;
+      font-size: 32px;
       font-weight: bold;
     }
 
@@ -164,6 +164,10 @@
       font-weight: bold;
     }
 
+    .fc .fc-daygrid-day-frame {
+      min-height: 122px;
+    }
+
     .fc .fc-daygrid-day-number {
       color: var(--lgcc-green);
       text-decoration: none;
@@ -180,9 +184,26 @@
       border: 1px solid var(--lgcc-green-2) !important;
       color: white !important;
       border-radius: 8px;
-      padding: 2px 4px;
+      padding: 3px 5px;
       font-weight: 700;
       cursor: pointer;
+      line-height: 1.2;
+    }
+
+    .fc-daygrid-event {
+      white-space: normal !important;
+      align-items: flex-start;
+    }
+
+    .fc-daygrid-event .fc-event-title {
+      white-space: normal !important;
+      overflow: visible !important;
+      text-overflow: clip !important;
+    }
+
+    .fc-daygrid-event .fc-event-time {
+      font-weight: 800;
+      margin-right: 3px;
     }
 
     .fc-event:hover {
@@ -213,6 +234,7 @@
       }
 
       .calendar-shell {
+        width: 100%;
         border-radius: 18px;
       }
 
@@ -283,7 +305,9 @@
   <script src="https://cdn.jsdelivr.net/npm/ical.js@1.5.0/build/ical.min.js"></script>
 
   <script>
-    const ICS_URL = "/calendar/events.ics";
+    const ICS_URL = window.location.hostname.includes("github.io")
+      ? "/lgcc-redesign/calendar/events.ics"
+      : "/calendar/events.ics";
 
     function isMobile() {
       return window.innerWidth < 720;
@@ -383,7 +407,7 @@
             calendarEl.innerHTML = `
               <div style="padding:24px;font-family:Arial,sans-serif;color:#7a271a;background:#fff4ed;border:1px solid #f7c7b0;border-radius:14px;">
                 <strong>Calendar could not be loaded.</strong><br>
-                The Google calendar feed may be blocked by the browser. If this happens, we can use a small GitHub Action to copy the calendar feed into the website automatically.
+                Please make sure <code>calendar/events.ics</code> exists and starts with <code>BEGIN:VCALENDAR</code>.
               </div>
             `;
           }
