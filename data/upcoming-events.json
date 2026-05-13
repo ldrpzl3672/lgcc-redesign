@@ -1,3 +1,20 @@
 {
-  "upcoming": []
+  "upcoming": [
+    {
+      "title": "Par 3 - 5/13/26",
+      "slug": "par-3---51326-may-13-2026",
+      "eventDate": "2026-05-13",
+      "eventTime": "18:00",
+      "afternoonTime": null,
+      "splitSessions": false,
+      "eventType": "Par 3",
+      "competitionFormat": "individual",
+      "holesTo": 9,
+      "entryFee": 10,
+      "description": null,
+      "bannerImage": null,
+      "detailUrl": "/upcoming/par-3---51326-may-13-2026.html",
+      "publishedAt": "2026-05-13T19:23:19.331Z"
+    }
+  ]
 }
