@@ -309,12 +309,32 @@
       ? "/lgcc-redesign/calendar/events.ics"
       : "/calendar/events.ics";
 
+    const EVENT_LINKS_URL = window.location.hostname.includes("github.io")
+      ? "/lgcc-redesign/calendar/event-links.json"
+      : "/calendar/event-links.json";
+
+    let eventLinks = {};
+
     function isMobile() {
       return window.innerWidth < 720;
     }
 
     function cleanText(value) {
       return value ? String(value).replace(/\\n/g, "\n").trim() : "";
+    }
+
+    function normalizeTitle(value) {
+      return String(value || "")
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, " ");
+    }
+
+    function formatDateKey(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
     }
 
     function isRealLgccDetailsLink(url) {
@@ -333,8 +353,65 @@
 
       return (
         cleanUrl.includes("lebanongolfandcountryclub.com") ||
-        cleanUrl.includes("ldrpzl3672.github.io")
+        cleanUrl.includes("ldrpzl3672.github.io") ||
+        cleanUrl.startsWith("/upcoming/") ||
+        cleanUrl.startsWith("/events/") ||
+        cleanUrl.startsWith("upcoming/") ||
+        cleanUrl.startsWith("events/")
       );
+    }
+
+    function makeAbsoluteUrl(url) {
+      if (!url) return null;
+
+      const cleanUrl = String(url).trim();
+
+      if (cleanUrl.startsWith("http://") || cleanUrl.startsWith("https://")) {
+        return cleanUrl;
+      }
+
+      if (cleanUrl.startsWith("/")) {
+        return cleanUrl;
+      }
+
+      return "/" + cleanUrl;
+    }
+
+    async function loadEventLinks() {
+      try {
+        const response = await fetch(EVENT_LINKS_URL, { cache: "no-store" });
+
+        if (!response.ok) {
+          eventLinks = {};
+          return;
+        }
+
+        eventLinks = await response.json();
+      } catch (error) {
+        console.warn("Event links file could not be loaded.", error);
+        eventLinks = {};
+      }
+    }
+
+    function findAppPublishedLink(event) {
+      const eventTitle = normalizeTitle(event.title);
+      const eventDate = formatDateKey(event.start);
+
+      for (const key in eventLinks) {
+        const linkEntry = eventLinks[key];
+
+        if (!linkEntry) continue;
+
+        const linkTitle = normalizeTitle(key);
+        const linkDate = linkEntry.date;
+        const linkUrl = linkEntry.url;
+
+        if (linkTitle === eventTitle && linkDate === eventDate && isRealLgccDetailsLink(linkUrl)) {
+          return makeAbsoluteUrl(linkUrl);
+        }
+      }
+
+      return null;
     }
 
     async function loadIcsEvents() {
@@ -382,7 +459,9 @@
       const title = event.title;
       const location = event.extendedProps.location;
       const description = event.extendedProps.description;
-      const url = event.url;
+      const calendarUrl = event.url;
+      const appPublishedUrl = findAppPublishedLink(event);
+      const finalUrl = appPublishedUrl || calendarUrl;
 
       let message = title;
 
@@ -394,10 +473,10 @@
         message += "\n\nDetails:\n" + description;
       }
 
-      if (isRealLgccDetailsLink(url)) {
+      if (isRealLgccDetailsLink(finalUrl)) {
         const openIt = confirm(message + "\n\nOpen full event details?");
         if (openIt) {
-          window.location.href = url;
+          window.location.href = makeAbsoluteUrl(finalUrl);
         }
       } else {
         message += "\n\nFull event details are not available yet. Please check back later.";
@@ -407,6 +486,8 @@
 
     document.addEventListener("DOMContentLoaded", async function () {
       const calendarEl = document.getElementById("calendar");
+
+      await loadEventLinks();
 
       const calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: isMobile() ? "listMonth" : "dayGridMonth",
