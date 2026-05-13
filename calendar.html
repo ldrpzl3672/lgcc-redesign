@@ -317,6 +317,26 @@
       return value ? String(value).replace(/\\n/g, "\n").trim() : "";
     }
 
+    function isRealLgccDetailsLink(url) {
+      if (!url) return false;
+
+      const cleanUrl = String(url).trim();
+
+      if (
+        cleanUrl === "" ||
+        cleanUrl === "#" ||
+        cleanUrl.toLowerCase().includes("null") ||
+        cleanUrl.toLowerCase().includes("undefined")
+      ) {
+        return false;
+      }
+
+      return (
+        cleanUrl.includes("lebanongolfandcountryclub.com") ||
+        cleanUrl.includes("ldrpzl3672.github.io")
+      );
+    }
+
     async function loadIcsEvents() {
       const response = await fetch(ICS_URL);
 
@@ -364,34 +384,25 @@
       const description = event.extendedProps.description;
       const url = event.url;
 
-      const hasRealDetailsPage =
-        url &&
-        (
-          url.includes("lebanongolfandcountryclub.com") ||
-          url.includes("ldrpzl3672.github.io")
-        ) &&
-        !url.includes("null") &&
-        !url.includes("undefined") &&
-        url.trim() !== "#";
-
-      if (hasRealDetailsPage) {
-        window.location.href = url;
-        return;
-      }
-
       let message = title;
 
       if (location) {
-        message += "\\n\\nLocation:\\n" + location;
+        message += "\n\nLocation:\n" + location;
       }
 
       if (description) {
-        message += "\\n\\nDetails:\\n" + description;
+        message += "\n\nDetails:\n" + description;
       }
 
-      message += "\\n\\nFull event details are not available yet. Please check back later.";
-
-      alert(message);
+      if (isRealLgccDetailsLink(url)) {
+        const openIt = confirm(message + "\n\nOpen full event details?");
+        if (openIt) {
+          window.location.href = url;
+        }
+      } else {
+        message += "\n\nFull event details are not available yet. Please check back later.";
+        alert(message);
+      }
     }
 
     document.addEventListener("DOMContentLoaded", async function () {
