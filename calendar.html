@@ -319,6 +319,7 @@
 
     async function loadIcsEvents() {
       const response = await fetch(ICS_URL);
+
       if (!response.ok) {
         throw new Error("Could not load calendar feed.");
       }
@@ -363,22 +364,34 @@
       const description = event.extendedProps.description;
       const url = event.url;
 
+      const hasRealDetailsPage =
+        url &&
+        (
+          url.includes("lebanongolfandcountryclub.com") ||
+          url.includes("ldrpzl3672.github.io")
+        ) &&
+        !url.includes("null") &&
+        !url.includes("undefined") &&
+        url.trim() !== "#";
+
+      if (hasRealDetailsPage) {
+        window.location.href = url;
+        return;
+      }
+
       let message = title;
 
       if (location) {
-        message += "\n\nLocation:\n" + location;
+        message += "\\n\\nLocation:\\n" + location;
       }
 
       if (description) {
-        message += "\n\nDetails:\n" + description;
+        message += "\\n\\nDetails:\\n" + description;
       }
 
-      if (url) {
-        const openIt = confirm(message + "\n\nOpen event link?");
-        if (openIt) window.open(url, "_blank");
-      } else {
-        alert(message);
-      }
+      message += "\\n\\nFull event details are not available yet. Please check back later.";
+
+      alert(message);
     }
 
     document.addEventListener("DOMContentLoaded", async function () {
@@ -387,32 +400,39 @@
       const calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: isMobile() ? "listMonth" : "dayGridMonth",
         height: "auto",
+
         headerToolbar: {
           left: "prev,next today",
           center: "title",
           right: "dayGridMonth,listMonth"
         },
+
         buttonText: {
           today: "Today",
           month: "Month",
           list: "List"
         },
+
         events: async function(fetchInfo, successCallback, failureCallback) {
           try {
             const events = await loadIcsEvents();
             successCallback(events);
           } catch (error) {
             console.error(error);
+
             failureCallback(error);
+
             calendarEl.innerHTML = `
               <div style="padding:24px;font-family:Arial,sans-serif;color:#7a271a;background:#fff4ed;border:1px solid #f7c7b0;border-radius:14px;">
                 <strong>Calendar could not be loaded.</strong><br>
-                Please make sure <code>calendar/events.ics</code> exists and starts with <code>BEGIN:VCALENDAR</code>.
+                Please make sure calendar/events.ics exists and starts with BEGIN:VCALENDAR.
               </div>
             `;
           }
         },
+
         eventClick,
+
         eventTimeFormat: {
           hour: "numeric",
           minute: "2-digit",
@@ -424,6 +444,7 @@
 
       window.addEventListener("resize", function () {
         const desiredView = isMobile() ? "listMonth" : "dayGridMonth";
+
         if (calendar.view.type !== desiredView) {
           calendar.changeView(desiredView);
         }
