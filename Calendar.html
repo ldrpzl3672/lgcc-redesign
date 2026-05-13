@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>LGCC Calendar | Lebanon Golf & Country Club</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --lgcc-green: #123c2b;
+      --lgcc-green-2: #1f5a40;
+      --lgcc-gold: #c9a646;
+      --lgcc-cream: #f7f3e8;
+      --lgcc-card: #ffffff;
+      --lgcc-text: #1f2933;
+      --lgcc-muted: #667085;
+      --lgcc-border: #ded7c8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: linear-gradient(180deg, var(--lgcc-green), #0d261d);
+      color: var(--lgcc-text);
+    }
+
+    .page-wrap {
+      min-height: 100vh;
+      padding: 28px 16px 48px;
+    }
+
+    .calendar-shell {
+      max-width: 1180px;
+      margin: 0 auto;
+      background: var(--lgcc-cream);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.28);
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+
+    .hero {
+      background:
+        linear-gradient(135deg, rgba(18,60,43,0.95), rgba(31,90,64,0.95)),
+        url("images/lgcc-course.jpg");
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding: 34px 28px;
+      border-bottom: 5px solid var(--lgcc-gold);
+    }
+
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .eyebrow {
+      color: var(--lgcc-gold);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(32px, 5vw, 56px);
+      line-height: 1;
+    }
+
+    .subtitle {
+      margin: 12px 0 0;
+      color: rgba(255,255,255,0.88);
+      font-size: 17px;
+      max-width: 720px;
+      line-height: 1.45;
+    }
+
+    .home-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      background: var(--lgcc-gold);
+      color: #17251d;
+      font-weight: bold;
+      padding: 12px 18px;
+      border-radius: 999px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.22);
+      white-space: nowrap;
+    }
+
+    .calendar-content {
+      padding: 24px;
+    }
+
+    .calendar-card {
+      background: var(--lgcc-card);
+      border: 1px solid var(--lgcc-border);
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: 0 10px 28px rgba(18,60,43,0.12);
+      overflow: hidden;
+    }
+
+    #calendar {
+      width: 100%;
+    }
+
+    .fc {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .fc .fc-toolbar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--lgcc-green);
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    .fc .fc-button {
+      background: var(--lgcc-green);
+      border-color: var(--lgcc-green);
+      border-radius: 999px;
+      font-weight: bold;
+      text-transform: capitalize;
+      box-shadow: none;
+    }
+
+    .fc .fc-button:hover,
+    .fc .fc-button:focus {
+      background: var(--lgcc-green-2);
+      border-color: var(--lgcc-green-2);
+    }
+
+    .fc .fc-button-primary:not(:disabled).fc-button-active {
+      background: var(--lgcc-gold);
+      border-color: var(--lgcc-gold);
+      color: #17251d;
+    }
+
+    .fc-theme-standard td,
+    .fc-theme-standard th,
+    .fc-theme-standard .fc-scrollgrid {
+      border-color: #e6dfd0;
+    }
+
+    .fc .fc-col-header-cell-cushion {
+      color: var(--lgcc-green);
+      text-decoration: none;
+      padding: 10px 4px;
+      font-weight: bold;
+    }
+
+    .fc .fc-daygrid-day-number {
+      color: var(--lgcc-green);
+      text-decoration: none;
+      font-weight: bold;
+      padding: 8px;
+    }
+
+    .fc .fc-day-today {
+      background: rgba(201,166,70,0.16) !important;
+    }
+
+    .fc-event {
+      background: var(--lgcc-green-2) !important;
+      border: 1px solid var(--lgcc-green-2) !important;
+      color: white !important;
+      border-radius: 8px;
+      padding: 2px 4px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .fc-event:hover {
+      filter: brightness(1.08);
+    }
+
+    .fc-list-event-dot {
+      border-color: var(--lgcc-gold) !important;
+    }
+
+    .fc-list-event-title a,
+    .fc-list-event-time {
+      color: var(--lgcc-text);
+      text-decoration: none;
+    }
+
+    .note {
+      margin-top: 14px;
+      color: var(--lgcc-muted);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 720px) {
+      .page-wrap {
+        padding: 12px;
+      }
+
+      .calendar-shell {
+        border-radius: 18px;
+      }
+
+      .hero {
+        padding: 26px 18px;
+      }
+
+      .home-btn {
+        width: 100%;
+      }
+
+      .calendar-content {
+        padding: 14px;
+      }
+
+      .calendar-card {
+        padding: 10px;
+        border-radius: 16px;
+      }
+
+      .fc .fc-toolbar {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .fc .fc-toolbar-title {
+        font-size: 25px;
+        text-align: center;
+      }
+
+      .fc .fc-button {
+        padding: 7px 10px;
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page-wrap">
+    <section class="calendar-shell">
+      <header class="hero">
+        <div class="hero-top">
+          <div>
+            <div class="eyebrow">Lebanon Golf & Country Club</div>
+            <h1>Club Calendar</h1>
+            <p class="subtitle">
+              View upcoming tournaments, leagues, association events, and club activities.
+            </p>
+          </div>
+
+          <a class="home-btn" href="index.html">Back to Home</a>
+        </div>
+      </header>
+
+      <div class="calendar-content">
+        <div class="calendar-card">
+          <div id="calendar"></div>
+          <p class="note">
+            Tap or click an event to view available details.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/ical.js@1.5.0/build/ical.min.js"></script>
+
+  <script>
+    const ICS_URL = "https://calendar.google.com/calendar/ical/ldrpzl3672%40gmail.com/public/basic.ics";
+
+    function isMobile() {
+      return window.innerWidth < 720;
+    }
+
+    function cleanText(value) {
+      return value ? String(value).replace(/\\n/g, "\n").trim() : "";
+    }
+
+    async function loadIcsEvents() {
+      const response = await fetch(ICS_URL);
+      if (!response.ok) {
+        throw new Error("Could not load calendar feed.");
+      }
+
+      const icsText = await response.text();
+      const jcalData = ICAL.parse(icsText);
+      const comp = new ICAL.Component(jcalData);
+      const vevents = comp.getAllSubcomponents("vevent");
+
+      return vevents.map((vevent) => {
+        const event = new ICAL.Event(vevent);
+
+        const start = event.startDate.toJSDate();
+        const end = event.endDate ? event.endDate.toJSDate() : null;
+
+        const description = cleanText(event.description);
+        const location = cleanText(event.location);
+        const url = event.component.getFirstPropertyValue("url");
+
+        return {
+          title: event.summary || "LGCC Event",
+          start,
+          end,
+          allDay: event.startDate.isDate,
+          description,
+          location,
+          url: url || null,
+          extendedProps: {
+            description,
+            location
+          }
+        };
+      });
+    }
+
+    function eventClick(info) {
+      info.jsEvent.preventDefault();
+
+      const event = info.event;
+      const title = event.title;
+      const location = event.extendedProps.location;
+      const description = event.extendedProps.description;
+      const url = event.url;
+
+      let message = title;
+
+      if (location) {
+        message += "\n\nLocation:\n" + location;
+      }
+
+      if (description) {
+        message += "\n\nDetails:\n" + description;
+      }
+
+      if (url) {
+        const openIt = confirm(message + "\n\nOpen event link?");
+        if (openIt) window.open(url, "_blank");
+      } else {
+        alert(message);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", async function () {
+      const calendarEl = document.getElementById("calendar");
+
+      const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: isMobile() ? "listMonth" : "dayGridMonth",
+        height: "auto",
+        headerToolbar: {
+          left: "prev,next today",
+          center: "title",
+          right: "dayGridMonth,listMonth"
+        },
+        buttonText: {
+          today: "Today",
+          month: "Month",
+          list: "List"
+        },
+        events: async function(fetchInfo, successCallback, failureCallback) {
+          try {
+            const events = await loadIcsEvents();
+            successCallback(events);
+          } catch (error) {
+            console.error(error);
+            failureCallback(error);
+            calendarEl.innerHTML = `
+              <div style="padding:24px;font-family:Arial,sans-serif;color:#7a271a;background:#fff4ed;border:1px solid #f7c7b0;border-radius:14px;">
+                <strong>Calendar could not be loaded.</strong><br>
+                The Google calendar feed may be blocked by the browser. If this happens, we can use a small GitHub Action to copy the calendar feed into the website automatically.
+              </div>
+            `;
+          }
+        },
+        eventClick,
+        eventTimeFormat: {
+          hour: "numeric",
+          minute: "2-digit",
+          meridiem: "short"
+        }
+      });
+
+      calendar.render();
+
+      window.addEventListener("resize", function () {
+        const desiredView = isMobile() ? "listMonth" : "dayGridMonth";
+        if (calendar.view.type !== desiredView) {
+          calendar.changeView(desiredView);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
