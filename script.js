@@ -139,7 +139,7 @@
           <h3>${title}</h3>
           ${formatLabel ? `<p class="schedule-card-format">${formatLabel}</p>` : ""}
           ${description ? `<p class="schedule-card-copy">${description}</p>` : ""}
-          <a class="text-link" href="${detailUrl}">View Details -&gt;</a>
+          <a class="text-link" href="${detailUrl}">${ev.hasResults ? "View Results" : "View Event Details"} -&gt;</a>
         </div>
         ${hasImage ? `
           <div class="schedule-card-thumb">
