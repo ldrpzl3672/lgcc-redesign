@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Par 3 - 5/13/26 Photos — LGCC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--bg:#0b1210;--card:rgba(255,255,255,0.06);--text:rgba(255,255,255,0.92);--muted:rgba(255,255,255,0.65);--faint:rgba(255,255,255,0.40);--line:rgba(255,255,255,0.12);--gold:#b89b5e;--radius:16px;--serif:"Playfair Display",Georgia,serif;--sans:Inter,system-ui,-apple-system,Arial,sans-serif;}
+    *,*::before,*::after{box-sizing:border-box}html{background:#000}
+    body{margin:0;font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+    .page-shell{max-width:960px;margin:0 auto;padding:0 20px 60px}
+    .top-bar{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);margin-bottom:36px;flex-wrap:wrap;gap:12px}
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+    .brand-mark{width:40px;height:40px;border-radius:10px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.05);overflow:hidden;display:grid;place-items:center}
+    .brand-mark img{width:110%;height:110%;object-fit:contain}
+    .brand-text{display:flex;flex-direction:column;line-height:1.15}
+    .brand-name{font-family:var(--serif);font-size:14px;font-weight:600;color:var(--text)}
+    .brand-tag{font-size:11px;color:var(--muted)}
+    .back-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:999px;border:1px solid rgba(184,155,94,0.35);background:rgba(184,155,94,0.10);color:var(--gold);font-size:13px;font-weight:600;text-decoration:none}
+    .back-btn:hover{background:rgba(184,155,94,0.18)}
+    .page-hero{margin-bottom:24px}
+    .eyebrow{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin:0 0 8px}
+    .page-title{font-family:var(--serif);font-size:clamp(22px,4vw,34px);font-weight:700;margin:0 0 6px;color:var(--text)}
+    .page-meta{font-size:14px;color:var(--muted);margin:0}
+    .cat-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+    .cat-tab{padding:7px 16px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,0.05);color:var(--muted);font-size:13px;font-weight:500;cursor:pointer;transition:background 0.15s,border-color 0.15s,color 0.15s}
+    .cat-tab:hover{background:rgba(255,255,255,0.10);color:var(--text)}
+    .cat-tab.active{background:rgba(184,155,94,0.18);border-color:rgba(184,155,94,0.55);color:var(--gold)}
+    .photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+    .photo-item{aspect-ratio:1;border-radius:10px;overflow:hidden;cursor:pointer;background:rgba(255,255,255,0.05);border:1px solid var(--line);transition:transform 0.15s,border-color 0.15s}
+    .photo-item:hover{transform:scale(1.02);border-color:rgba(184,155,94,0.45)}
+    .photo-item img{width:100%;height:100%;object-fit:cover;display:block}
+    .lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.94);z-index:1000;align-items:center;justify-content:center}
+    .lightbox.open{display:flex}
+    .lb-inner{position:relative;display:flex;flex-direction:column;align-items:center}
+    .lb-img{max-width:90vw;max-height:78vh;object-fit:contain;border-radius:8px;display:block}
+    .lb-close{position:absolute;top:-40px;right:0;background:none;border:none;color:var(--text);font-size:28px;cursor:pointer;opacity:0.8;line-height:1}
+    .lb-close:hover{opacity:1}
+    .lb-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.12);border:none;color:var(--text);font-size:22px;cursor:pointer;padding:10px 14px;border-radius:6px}
+    .lb-nav:hover{background:rgba(255,255,255,0.22)}
+    .lb-prev{left:-56px}.lb-next{right:-56px}
+    .lb-footer{display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:12px}
+    .lb-counter{font-size:13px;color:var(--muted)}
+    .lb-caption{font-size:14px;color:var(--text);text-align:center;max-width:500px}
+    .site-footer{text-align:center;padding-top:28px;border-top:1px solid var(--line);font-size:12px;color:var(--faint);margin-top:40px}
+    @media(max-width:540px){.photo-grid{grid-template-columns:repeat(2,1fr);gap:8px}.lb-prev{left:-42px}.lb-next{right:-42px}}
+  </style>
+</head>
+<body>
+<div class="page-shell">
+  <nav class="top-bar">
+    <a class="brand" href="../index.html">
+      <div class="brand-mark"><img src="../assets/logo.png" alt="LGCC" onerror="this.style.display='none'"/></div>
+      <div class="brand-text"><span class="brand-name">Lebanon Golf &amp; Country Club</span><span class="brand-tag">Est. 1951</span></div>
+    </a>
+    <a class="back-btn" href="../results/par-3---51326-may-13-2026.html">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      Back to Results
+    </a>
+  </nav>
+  <div class="page-hero">
+    <p class="eyebrow">Event Photos</p>
+    <h1 class="page-title">Par 3 - 5/13/26</h1>
+    <p class="page-meta">May 13, 2026 &nbsp;·&nbsp; 1 photos</p>
+  </div>
+  <div class="cat-tabs" id="cat-tabs">
+    <button class="cat-tab active" data-cat="all">All (1)</button>
+    <button class="cat-tab" data-cat="Event Photos">Event Photos (1)</button>
+  </div>
+  <div class="photo-grid" id="photo-grid">
+    <div class="photo-item" data-idx="0" data-cat="Event Photos"><img src="https://base44.app/api/apps/69ad1acaaa8eca64c17ca6c7/files/mp/public/69ad1acaaa8eca64c17ca6c7/eaf3a2ddc_IMG_9589-thumb.jpg" alt="Event photo" loading="lazy" decoding="async"/></div>
+  </div>
+  <div class="lightbox" id="lightbox">
+    <div class="lb-inner">
+      <button class="lb-close" id="lb-close">&#x2715;</button>
+      <button class="lb-nav lb-prev" id="lb-prev">&#x2039;</button>
+      <img class="lb-img" id="lb-img" src="" alt=""/>
+      <button class="lb-nav lb-next" id="lb-next">&#x203a;</button>
+      <div class="lb-footer">
+        <div class="lb-counter" id="lb-counter"></div>
+        <div class="lb-caption" id="lb-caption"></div>
+      </div>
+    </div>
+  </div>
+  <footer class="site-footer">Lebanon Golf &amp; Country Club &nbsp;·&nbsp; Event Photos &nbsp;·&nbsp; May 13, 2026</footer>
+</div>
+<script>
+  var PHOTOS = [{"idx":0,"thumb":"https://base44.app/api/apps/69ad1acaaa8eca64c17ca6c7/files/mp/public/69ad1acaaa8eca64c17ca6c7/eaf3a2ddc_IMG_9589-thumb.jpg","orig":"https://base44.app/api/apps/69ad1acaaa8eca64c17ca6c7/files/mp/public/69ad1acaaa8eca64c17ca6c7/9581038db_IMG_9589.jpeg","caption":"","category":"Event Photos","sort":9999}];
+  var activeCategory = "all";
+  var currentPhotoIdx = 0;
+
+  function getFilteredPhotos() {
+    return PHOTOS.map(function(p, i) { return Object.assign({}, p, { originalIdx: i }); })
+      .filter(function(p) { return activeCategory === "all" || p.category === activeCategory; });
+  }
+
+  function renderGrid() {
+    var filtered = getFilteredPhotos();
+    var filteredIdxSet = new Set(filtered.map(function(p) { return p.originalIdx; }));
+    document.querySelectorAll('#photo-grid .photo-item').forEach(function(item) {
+      item.style.display = filteredIdxSet.has(parseInt(item.dataset.idx)) ? "" : "none";
+    });
+  }
+
+  // Category tabs
+  document.querySelectorAll('.cat-tab').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      activeCategory = btn.dataset.cat;
+      document.querySelectorAll('.cat-tab').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      renderGrid();
+    });
+  });
+
+  // Photo grid click → open lightbox
+  document.querySelectorAll('#photo-grid .photo-item').forEach(function(item) {
+    item.addEventListener('click', function() {
+      var originalIdx = parseInt(item.dataset.idx);
+      var filtered = getFilteredPhotos();
+      currentPhotoIdx = filtered.findIndex(function(p) { return p.originalIdx === originalIdx; });
+      if (currentPhotoIdx === -1) currentPhotoIdx = 0;
+      showPhoto();
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  function showPhoto() {
+    var filtered = getFilteredPhotos();
+    if (filtered.length === 0) return;
+    var p = filtered[currentPhotoIdx];
+    document.getElementById('lb-img').src = p.orig;
+    document.getElementById('lb-img').alt = p.caption || '';
+    document.getElementById('lb-counter').textContent = (currentPhotoIdx + 1) + ' / ' + filtered.length;
+    document.getElementById('lb-caption').textContent = p.caption || '';
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('lb-close').addEventListener('click', closeLightbox);
+  document.getElementById('lightbox').addEventListener('click', function(e) {
+    if (e.target === document.getElementById('lightbox')) closeLightbox();
+  });
+  document.getElementById('lb-prev').addEventListener('click', function() {
+    var filtered = getFilteredPhotos();
+    currentPhotoIdx = (currentPhotoIdx - 1 + filtered.length) % filtered.length;
+    showPhoto();
+  });
+  document.getElementById('lb-next').addEventListener('click', function() {
+    var filtered = getFilteredPhotos();
+    currentPhotoIdx = (currentPhotoIdx + 1) % filtered.length;
+    showPhoto();
+  });
+  document.addEventListener('keydown', function(e) {
+    var lb = document.getElementById('lightbox');
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'ArrowLeft') document.getElementById('lb-prev').click();
+    else if (e.key === 'ArrowRight') document.getElementById('lb-next').click();
+    else if (e.key === 'Escape') closeLightbox();
+  });
+</script>
+</body>
+</html>
