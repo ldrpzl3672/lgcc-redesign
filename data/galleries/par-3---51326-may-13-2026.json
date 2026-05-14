@@ -1,0 +1,18 @@
+{
+  "photos": [
+    {
+      "idx": 0,
+      "thumb": "https://base44.app/api/apps/69ad1acaaa8eca64c17ca6c7/files/mp/public/69ad1acaaa8eca64c17ca6c7/eaf3a2ddc_IMG_9589-thumb.jpg",
+      "orig": "https://base44.app/api/apps/69ad1acaaa8eca64c17ca6c7/files/mp/public/69ad1acaaa8eca64c17ca6c7/9581038db_IMG_9589.jpeg",
+      "caption": "",
+      "category": "Event Photos",
+      "sort": 9999
+    }
+  ],
+  "metadata": {
+    "total": 1,
+    "categories": {
+      "Event Photos": 1
+    }
+  }
+}
