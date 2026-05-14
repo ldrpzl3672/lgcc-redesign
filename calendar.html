@@ -355,8 +355,10 @@
         cleanUrl.includes("lebanongolfandcountryclub.com") ||
         cleanUrl.includes("ldrpzl3672.github.io") ||
         cleanUrl.startsWith("/upcoming/") ||
+        cleanUrl.startsWith("/results/") ||
         cleanUrl.startsWith("/events/") ||
         cleanUrl.startsWith("upcoming/") ||
+        cleanUrl.startsWith("results/") ||
         cleanUrl.startsWith("events/")
       );
     }
@@ -405,9 +407,10 @@
         const linkTitle = normalizeTitle(key);
         const linkDate = linkEntry.date;
         const linkUrl = linkEntry.url;
+        const linkStage = linkEntry.stage || "upcoming";
 
         if (linkTitle === eventTitle && linkDate === eventDate && isRealLgccDetailsLink(linkUrl)) {
-          return makeAbsoluteUrl(linkUrl);
+          return { url: makeAbsoluteUrl(linkUrl), stage: linkStage };
         }
       }
 
@@ -460,9 +463,32 @@
       const location = event.extendedProps.location;
       const description = event.extendedProps.description;
       const calendarUrl = event.url;
-      const appPublishedUrl = findAppPublishedLink(event);
-      const finalUrl = appPublishedUrl || calendarUrl;
+      const eventDate = formatDateKey(event.start);
 
+      // --- Debug logging ---
+      console.log("[LGCC Calendar] eventClick fired:", title, eventDate);
+
+      const appLink = findAppPublishedLink(event);
+      console.log("[LGCC Calendar] App-published link found:", appLink);
+
+      // Determine stage and final URL
+      let finalUrl = null;
+      let stage = "none";
+
+      if (appLink) {
+        finalUrl = appLink.url;
+        stage = appLink.stage;
+        console.log("[LGCC Calendar] Using app link — stage:", stage, "url:", finalUrl);
+      } else if (isRealLgccDetailsLink(calendarUrl)) {
+        // Fallback: Google Calendar event had its own LGCC URL embedded
+        finalUrl = makeAbsoluteUrl(calendarUrl);
+        stage = "calendar_url";
+        console.log("[LGCC Calendar] Using embedded calendar URL:", finalUrl);
+      } else {
+        console.log("[LGCC Calendar] No app link or LGCC calendar URL found — stage: none");
+      }
+
+      // Build the popup message (always show all Google Calendar info)
       let message = title;
 
       if (location) {
@@ -473,14 +499,25 @@
         message += "\n\nDetails:\n" + description;
       }
 
-      if (isRealLgccDetailsLink(finalUrl)) {
+      console.log("[LGCC Calendar] Final popup decision — stage:", stage, "| url:", finalUrl || "(none)");
+
+      // Stage 3: Results published
+      if (stage === "results") {
+        const openIt = confirm(message + "\n\nResults are available! Open the results page?");
+        if (openIt) {
+          window.location.href = finalUrl;
+        }
+      }
+      // Stage 2: Upcoming event published
+      else if (stage === "upcoming" || stage === "calendar_url") {
         const openIt = confirm(message + "\n\nOpen full event details?");
         if (openIt) {
-          window.location.href = makeAbsoluteUrl(finalUrl);
+          window.location.href = finalUrl;
         }
-      } else {
-        message += "\n\nFull event details are not available yet. Please check back later.";
-        alert(message);
+      }
+      // Stage 1: Google Calendar only — no app page yet
+      else {
+        alert(message + "\n\nNo further details are available yet. Check back closer to the event date.");
       }
     }
 
