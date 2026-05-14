@@ -2,6 +2,16 @@
   "results": [
     {
       "label": "Club Event Result",
+      "game_type": "Par 3",
+      "title": "Par 3 - 5/13/26",
+      "winner": "Winner: Garrett Oliver",
+      "summary": "24 players competed",
+      "summary2": null,
+      "url": "/results/par-3---51326-may-13-2026.html",
+      "event_date": "2026-05-13"
+    },
+    {
+      "label": "Club Event Result",
       "title": "Spring Fling",
       "winner": "Flight 1: PM_4 (P. Tubbs / L. Personette / C. Mitchell / C. Moore) — 56 | Flight 2: AM_15 (E. Thompson / S. Bingham / A. Kenall / C. Shannon) — 63",
       "summary": "2 flights — 30 teams",
@@ -37,16 +47,6 @@
       "summary2": null,
       "url": "/results/masters-pairing-2026-sunday-april-12-2026.html",
       "event_date": "2026-04-12"
-    },
-    {
-      "label": "Club Event Result",
-      "game_type": "PGA Pairing",
-      "title": "Masters Pairing 2026 Saturday — 04/11/2026",
-      "winner": "Winner: Tony Eckler — +9 pts ($90)",
-      "summary": "28 players competed",
-      "summary2": null,
-      "url": "/results/masters-pairing-2026-saturday-april-11-2026.html",
-      "event_date": "2026-04-11"
     }
   ]
 }
