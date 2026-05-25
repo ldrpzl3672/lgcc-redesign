@@ -1,6 +1,17 @@
 {
   "results": [
     {
+  "label": "Club Event Result",
+  "game_type": "Scramble",
+  "title": "Memorial Day Scramble",
+  "winner": "Champ Flight: Bradley / Bradley / Bohanon / Bohanon — 57 | 1st Flight: Twilla / Oliver / Oliver / Reese — 64 | 2nd Flight: Cardwell / Cardwell / Brockette / Davis — 67",
+  "summary": "3 flights — manual scramble results",
+  "summary2": "Closest-to-pin winners included",
+  "url": "/results/memorial-day-scramble-may-25-2026.html",
+  "event_date": "2026-05-25",
+  "image": "assets/MemScrambleCard.png"
+}
+    {
       "label": "Club Event Result",
       "game_type": "Par 3",
       "title": "Par 3 - 5/13/26",
