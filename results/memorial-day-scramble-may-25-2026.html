@@ -1,1 +1,139 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Memorial Day Scramble Results — LGCC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--bg:#0b1210;--surface:#0f1c18;--card:rgba(255,255,255,0.06);--text:rgba(255,255,255,0.92);--muted:rgba(255,255,255,0.65);--faint:rgba(255,255,255,0.40);--line:rgba(255,255,255,0.12);--gold:#b89b5e;--gold-dim:rgba(184,155,94,0.20);--green-accent:#6ee7b7;--radius:16px;--serif:"Playfair Display",Georgia,serif;--sans:Inter,system-ui,-apple-system,Arial,sans-serif;}
+    *,*::before,*::after{box-sizing:border-box}html{background:#000}
+    body{margin:0;font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+    .page-shell{max-width:860px;margin:0 auto;padding:0 20px 60px}
+    .top-bar{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);margin-bottom:36px}
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+    .brand-mark{width:40px;height:40px;border-radius:10px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.05);overflow:hidden;display:grid;place-items:center}
+    .brand-mark img{width:110%;height:110%;object-fit:contain}
+    .brand-text{display:flex;flex-direction:column;line-height:1.15}
+    .brand-name{font-family:var(--serif);font-size:14px;font-weight:600;color:var(--text)}
+    .brand-tag{font-size:11px;color:var(--muted)}
+    .back-btn{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:999px;border:1px solid rgba(184,155,94,0.35);background:rgba(184,155,94,0.10);color:var(--gold);font-size:13px;font-weight:600;text-decoration:none}
+    .event-hero{margin-bottom:28px}
+    .eyebrow{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin:0 0 8px}
+    .event-title{font-family:var(--serif);font-size:clamp(26px,5vw,40px);font-weight:700;line-height:1.1;margin:0 0 8px;color:var(--text)}
+    .event-meta{font-size:14px;color:var(--muted)}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px 24px}
+    .summary-card{display:flex;flex-wrap:wrap;gap:16px 32px;margin-bottom:20px}
+    .stat-item{display:flex;flex-direction:column;gap:2px}
+    .stat-label{font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--faint)}
+    .stat-value{font-size:22px;font-weight:700;color:var(--text)}
+    .stat-value.gold{color:var(--gold)}
+    .section-card{margin-bottom:20px;padding:0;overflow:hidden}
+    .section-header{display:flex;align-items:center;justify-content:space-between;padding:16px 22px;border-bottom:1px solid var(--line)}
+    h2{font-family:var(--serif);font-size:18px;font-weight:700;margin:0;color:var(--text)}
+    .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+    table{width:100%;border-collapse:collapse;font-size:14px}
+    thead tr{background:rgba(255,255,255,0.04);border-bottom:1px solid var(--line)}
+    th{padding:10px 14px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--faint);text-align:left;white-space:nowrap}
+    td{padding:11px 14px;border-bottom:1px solid rgba(255,255,255,0.06);color:var(--text);vertical-align:middle}
+    tbody tr:last-child td{border-bottom:none}
+    tbody tr:hover td{background:rgba(255,255,255,0.03)}
+    .winner-row td{background:rgba(184,155,94,0.08)}
+    .col-place{color:var(--muted);font-weight:600;white-space:nowrap}
+    .col-name{font-weight:600;min-width:120px}
+    .col-num{text-align:center;white-space:nowrap}
+    .col-bold{font-weight:700;color:var(--green-accent)}
+    .col-payout{font-weight:700;color:var(--gold)}
+    .note{color:var(--muted);font-size:13px;padding:14px 22px;border-top:1px solid var(--line)}
+    .site-footer{text-align:center;padding-top:28px;border-top:1px solid var(--line);font-size:12px;color:var(--faint)}
+    @media(max-width:540px){.top-bar{flex-direction:column;align-items:flex-start;gap:12px}.card{padding:16px}.section-header{padding:14px 16px}th,td{padding:9px 10px}}
+  </style>
+</head>
+<body>
+<div class="page-shell">
+  <nav class="top-bar">
+    <a class="brand" href="../index.html">
+      <div class="brand-mark"><img src="../assets/logo.png" alt="LGCC" onerror="this.style.display='none'"/></div>
+      <div class="brand-text"><span class="brand-name">Lebanon Golf &amp; Country Club</span><span class="brand-tag">Est. 1951</span></div>
+    </a>
+    <a class="back-btn" href="../index.html#results">All Results</a>
+  </nav>
+
+  <div style="width:100%;max-height:260px;overflow:hidden;border-radius:var(--radius);margin-bottom:24px">
+    <img src="../assets/MemScrambleFullResultsBanner.png" alt="Memorial Day Scramble banner" style="width:100%;object-fit:cover;max-height:260px" />
+  </div>
+
+  <div class="event-hero">
+    <p class="eyebrow">Scramble &nbsp;·&nbsp; Club Results</p>
+    <h1 class="event-title">Memorial Day Scramble</h1>
+    <div class="event-meta">May 25, 2026</div>
+  </div>
+
+  <div class="card summary-card">
+    <div class="stat-item"><span class="stat-label">Flights</span><span class="stat-value">3</span></div>
+    <div class="stat-item"><span class="stat-label">Scoring</span><span class="stat-value gold">Manual</span></div>
+  </div>
+
+  <div class="card section-card">
+    <div class="section-header"><h2>Champ Flight</h2></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Place</th><th>Players</th><th style="text-align:center">Score</th><th style="text-align:center">Payout</th></tr></thead>
+        <tbody>
+          <tr class="winner-row"><td class="col-place">1st</td><td class="col-name">J. Bradley / C. Bradley / C. Bohanon / J. Bohanon</td><td class="col-num col-bold">57</td><td class="col-num col-payout">$75</td></tr>
+          <tr><td class="col-place">2nd</td><td class="col-name">L. Yates / P. Bell / R. Wood / W. Adams</td><td class="col-num col-bold">59</td><td class="col-num col-payout">$50</td></tr>
+          <tr><td class="col-place">3rd</td><td class="col-name">C. Moore / D. Moore / L. Moore / C. Mitchell</td><td class="col-num col-bold">61</td><td class="col-num col-payout">$25</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">Flight range shown on board: 57–63. Ties broken by last 9, last 6, last 3, then 18-hole draw.</div>
+  </div>
+
+  <div class="card section-card">
+    <div class="section-header"><h2>1st Flight</h2></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Place</th><th>Players</th><th style="text-align:center">Score</th><th style="text-align:center">Payout</th></tr></thead>
+        <tbody>
+          <tr class="winner-row"><td class="col-place">1st</td><td class="col-name">K. Twilla / G. Oliver / G. Oliver / B. Reese</td><td class="col-num col-bold">64</td><td class="col-num col-payout">$75</td></tr>
+          <tr><td class="col-place">2nd</td><td class="col-name">D. Williams / M. Patterson / T. Davis / E. Shelton</td><td class="col-num col-bold">64</td><td class="col-num col-payout">$50</td></tr>
+          <tr><td class="col-place">3rd</td><td class="col-name">E. Blaylock / J. Weaver / R. Buttrey / R. Bice</td><td class="col-num col-bold">65</td><td class="col-num col-payout">$25</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">Flight range shown on board: 64–66.</div>
+  </div>
+
+  <div class="card section-card">
+    <div class="section-header"><h2>2nd Flight</h2></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Place</th><th>Players</th><th style="text-align:center">Score</th><th style="text-align:center">Payout</th></tr></thead>
+        <tbody>
+          <tr class="winner-row"><td class="col-place">1st</td><td class="col-name">R. Cardwell / S. Cardwell / J. Brockette / E. Davis</td><td class="col-num col-bold">67</td><td class="col-num col-payout">$75</td></tr>
+          <tr><td class="col-place">2nd</td><td class="col-name">D. Walker / T. Walker / T. Walker / A. Walker</td><td class="col-num col-bold">68</td><td class="col-num col-payout">$50</td></tr>
+          <tr><td class="col-place">3rd</td><td class="col-name">D. Hamlet / N. Hamlet / M. Pitt / C. Simmons</td><td class="col-num col-bold">71</td><td class="col-num col-payout">$25</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">Flight range shown on board: 67+.</div>
+  </div>
+
+  <div class="card section-card">
+    <div class="section-header"><h2>Closest to the Pin</h2></div>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr><td class="col-place">Women — #2 / #11</td><td class="col-name">M. Boner</td><td class="col-num col-payout">$25</td></tr>
+          <tr><td class="col-place">Men — #2 / #11</td><td class="col-name">S. Robinson</td><td class="col-num col-payout">$25</td></tr>
+          <tr><td class="col-place">Men — #4 / #13</td><td class="col-name">C. Bohanon</td><td class="col-num col-payout">$25</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer class="site-footer">Lebanon Golf &amp; Country Club &nbsp;·&nbsp; Scramble Results &nbsp;·&nbsp; May 25, 2026</footer>
+</div>
+</body>
+</html>
