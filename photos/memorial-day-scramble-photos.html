@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Memorial Day Scramble Photos — LGCC</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--bg:#0b1210;--card:rgba(255,255,255,0.06);--text:rgba(255,255,255,0.92);--muted:rgba(255,255,255,0.65);--line:rgba(255,255,255,0.12);--gold:#b89b5e;--radius:16px;--serif:"Playfair Display",Georgia,serif;--sans:Inter,system-ui,-apple-system,Arial,sans-serif}
+    *{box-sizing:border-box}html{background:#000}body{margin:0;font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+    .page-shell{max-width:1100px;margin:0 auto;padding:0 20px 60px}
+    .top-bar{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);margin-bottom:36px;gap:14px}
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none}.brand-mark{width:40px;height:40px;border-radius:10px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);overflow:hidden;display:grid;place-items:center}.brand-mark img{width:110%;height:110%;object-fit:contain}
+    .brand-text{display:flex;flex-direction:column;line-height:1.15}.brand-name{font-family:var(--serif);font-size:14px;font-weight:600;color:var(--text)}.brand-tag{font-size:11px;color:var(--muted)}
+    .nav-actions{display:flex;gap:10px;flex-wrap:wrap}.btn{padding:9px 16px;border-radius:999px;border:1px solid rgba(184,155,94,.35);background:rgba(184,155,94,.10);color:var(--gold);font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap}
+    .eyebrow{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:0 0 8px}.event-title{font-family:var(--serif);font-size:clamp(28px,5vw,44px);font-weight:700;line-height:1.1;margin:0 0 8px}.event-meta{font-size:14px;color:var(--muted);margin-bottom:24px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px 24px;margin-bottom:24px}.card p{margin:0;color:var(--muted);font-size:14px}
+    .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}.photo{display:block;aspect-ratio:1/1;border-radius:14px;overflow:hidden;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10)}.photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .2s ease}.photo:hover img{transform:scale(1.04)}
+    .site-footer{text-align:center;padding-top:28px;border-top:1px solid var(--line);font-size:12px;color:rgba(255,255,255,.40);margin-top:32px}
+    @media(max-width:540px){.top-bar{flex-direction:column;align-items:flex-start}.card{padding:16px}.gallery{grid-template-columns:repeat(2,1fr);gap:10px}}
+  </style>
+</head>
+<body>
+<div class="page-shell">
+  <nav class="top-bar">
+    <a class="brand" href="../index.html">
+      <div class="brand-mark"><img src="../assets/logo.png" alt="LGCC" onerror="this.style.display='none'"/></div>
+      <div class="brand-text"><span class="brand-name">Lebanon Golf &amp; Country Club</span><span class="brand-tag">Est. 1951</span></div>
+    </a>
+    <div class="nav-actions">
+      <a class="btn" href="../results/memorial-day-scramble-may-25-2026.html">Back to Results</a>
+      <a class="btn" href="../index.html#results">All Results</a>
+    </div>
+  </nav>
+
+  <section>
+    <p class="eyebrow">Member Photos</p>
+    <h1 class="event-title">Memorial Day Scramble Photos</h1>
+    <div class="event-meta">May 25, 2026</div>
+  </section>
+
+  <div class="card">
+    <p>Photos from the Memorial Day Scramble were shared by a club member. These are casual member snapshots from the day.</p>
+  </div>
+
+  <div id="gallery" class="gallery"></div>
+
+  <footer class="site-footer">Lebanon Golf &amp; Country Club &nbsp;·&nbsp; Memorial Day Scramble Photos &nbsp;·&nbsp; May 25, 2026</footer>
+</div>
+
+<script>
+  // Put photos in: /photos/memorial-day-scramble-2026/
+  // Name them: photo-001.jpg, photo-002.jpg, photo-003.jpg, etc.
+  const photoCount = 150;
+  const folder = "./memorial-day-scramble-2026/";
+  const gallery = document.getElementById("gallery");
+
+  for (let i = 1; i <= photoCount; i++) {
+    const num = String(i).padStart(3, "0");
+    const href = folder + "photo-" + num + ".jpg";
+
+    const a = document.createElement("a");
+    a.className = "photo";
+    a.href = href;
+    a.target = "_blank";
+
+    const img = document.createElement("img");
+    img.src = href;
+    img.alt = "Memorial Day Scramble photo " + i;
+    img.loading = "lazy";
+    img.onerror = function(){ a.remove(); };
+
+    a.appendChild(img);
+    gallery.appendChild(a);
+  }
+</script>
+</body>
+</html>
