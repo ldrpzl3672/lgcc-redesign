@@ -3,6 +3,16 @@
     {
       "label": "Club Event Result",
       "game_type": "Par 3",
+      "title": "6-10-26 par 3",
+      "winner": "Winner: Joey Bradley",
+      "summary": "32 players competed",
+      "summary2": null,
+      "url": "/results/6-10-26-par-3-june-10-2026.html",
+      "event_date": "2026-06-10"
+    },
+    {
+      "label": "Club Event Result",
+      "game_type": "Par 3",
       "title": "Par 3",
       "winner": "Winner: Mike Manning ($50)",
       "summary": "22 players competed",
@@ -38,16 +48,6 @@
       "summary2": null,
       "url": "/results/spring-fling-april-25-2026.html",
       "event_date": "2026-04-25"
-    },
-    {
-      "label": "Club Event Result",
-      "game_type": "Points Game",
-      "title": "Sunday 4-19-26",
-      "winner": "Winner: Scotty Covington — +11 pts ($80)",
-      "summary": "14 players competed · $140 points pot",
-      "summary2": "5 scats · $140 scats pot",
-      "url": "/results/sunday-4-19-26-april-19-2026.html",
-      "event_date": "2026-04-19"
     }
   ]
 }
