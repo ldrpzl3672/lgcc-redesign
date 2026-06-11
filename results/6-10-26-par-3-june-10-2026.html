@@ -186,6 +186,9 @@
       margin:0;
     }
 
+    .scat-won-badge{font-size:11px;font-weight:700;color:#6ee7b7;background:rgba(110,231,183,0.12);border:1px solid rgba(110,231,183,0.25);padding:3px 10px;border-radius:999px}
+    .scat-no-badge{font-size:11px;color:var(--muted);background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);padding:3px 10px;border-radius:999px}
+
     .rollover-note{
       padding:10px 22px 16px;
       font-size:13px;
@@ -564,43 +567,72 @@
         </div>
   <div class="card section-card">
           <div class="section-header"><h2>Scats Results</h2><span class="pot-badge">Pot: $110</span></div>
-          <div class="skin-blocks-wrap"><div class="skin-block skin-block-odd">
-            <div class="skin-block-header">
-              <div class="skin-player-name">Joey Bradley</div>
-              <div class="skin-player-count">2 scats</div>
-            </div>
-            <div class="skin-block-head-row">
-              <div class="skin-col skin-head-label">Hole</div>
-              <div class="skin-col skin-head-label skin-score">Score</div>
-              <div class="skin-col skin-head-label skin-payout">Payout</div>
-            </div>
-            <div class="skin-block-body"><div class="skin-row">
-            <div class="skin-col skin-hole">Hole 7</div>
-            <div class="skin-col skin-score">2</div>
-            <div class="skin-col skin-payout">$36</div>
-          </div><div class="skin-row">
-            <div class="skin-col skin-hole">Hole 9</div>
-            <div class="skin-col skin-score">2</div>
-            <div class="skin-col skin-payout">$36</div>
-          </div></div>
-            <div class="skin-block-footer"><span>Subtotal</span><span class="skin-subtotal-amount">$72</span></div>
-          </div><div class="skin-block skin-block-even">
-            <div class="skin-block-header">
-              <div class="skin-player-name">Casey Bohanon</div>
-              <div class="skin-player-count">1 scat</div>
-            </div>
-            <div class="skin-block-head-row">
-              <div class="skin-col skin-head-label">Hole</div>
-              <div class="skin-col skin-head-label skin-score">Score</div>
-              <div class="skin-col skin-head-label skin-payout">Payout</div>
-            </div>
-            <div class="skin-block-body"><div class="skin-row">
-            <div class="skin-col skin-hole">Hole 4</div>
-            <div class="skin-col skin-score">2</div>
-            <div class="skin-col skin-payout">$36</div>
-          </div></div>
-            <div class="skin-block-footer"><span>Subtotal</span><span class="skin-subtotal-amount">$36</span></div>
-          </div></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr>
+                <th style="text-align:center">Hole</th>
+                <th style="text-align:center">Low Score</th>
+                <th>Players</th>
+                <th style="text-align:center">Result</th>
+                <th style="text-align:center">Payout</th>
+              </tr></thead>
+              <tbody><tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+              <td style="padding:10px 14px;text-align:center;color:var(--muted);font-weight:600">H1</td>
+              <td style="padding:10px 14px;text-align:center;font-weight:700;color:#6ee7b7">2</td>
+              <td style="padding:10px 14px;color:var(--text)">Carlos Shannon, Casey Bohanon, Lance</td>
+              <td style="padding:10px 14px;text-align:center"><span class="scat-no-badge">No Scat</span></td>
+              <td style="padding:10px 14px;text-align:center"><span style="color:var(--faint)">—</span></td>
+            </tr><tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+              <td style="padding:10px 14px;text-align:center;color:var(--muted);font-weight:600">H2</td>
+              <td style="padding:10px 14px;text-align:center;font-weight:700;color:#6ee7b7">3</td>
+              <td style="padding:10px 14px;color:var(--text)">Derek Southworth, Matt, Bryson, Lydia deffendall, Todd Lester, Ryan Wood, Carlos Shannon, Casey Bohanon, Joey Bradley, Jon Williams, Tyler, Eddy Blaylock</td>
+              <td style="padding:10px 14px;text-align:center"><span class="scat-no-badge">No Scat</span></td>
+              <td style="padding:10px 14px;text-align:center"><span style="color:var(--faint)">—</span></td>
+            </tr><tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+              <td style="padding:10px 14px;text-align:center;color:var(--muted);font-weight:600">H3</td>
+              <td style="padding:10px 14px;text-align:center;font-weight:700;color:#6ee7b7">2</td>
+              <td style="padding:10px 14px;color:var(--text)">Casey Bohanon, Joey Bradley, Lance</td>
+              <td style="padding:10px 14px;text-align:center"><span class="scat-no-badge">No Scat</span></td>
+              <td style="padding:10px 14px;text-align:center"><span style="color:var(--faint)">—</span></td>
+            </tr><tr style="border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(110,231,183,0.04)">
+              <td style="padding:10px 14px;text-align:center;color:var(--muted);font-weight:600">H4</td>
+              <td style="padding:10px 14px;text-align:center;font-weight:700;color:#6ee7b7">2</td>
+              <td style="padding:10px 14px;color:var(--text)">Casey Bohanon</td>
+              <td style="padding:10px 14px;text-align:center"><span class="scat-won-badge">Scat Won</span></td>
+              <td style="padding:10px 14px;text-align:center"><span style="font-weight:700;color:var(--gold)">$36</span></td>
+            </tr><tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+              <td style="padding:10px 14px;text-align:center;color:var(--muted);font-weight:600">H5</td>
+              <td style="padding:10px 14px;text-align:center;font-weight:700;color:#6ee7b7">2</td>
+              <td style="padding:10px 14px;color:var(--text)">Joey Bradley, Tyler</td>
+              <td style="padding:10px 14px;text-align:center"><span class="scat-no-badge">No Scat</span></td>
+              <td style="padding:10px 14px;text-align:center"><span style="color:var(--faint)">—</span></td>
+            </tr><tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+              <td style="padding:10px 14px;text-align:center;color:var(--muted);font-weight:600">H6</td>
+              <td style="padding:10px 14px;text-align:center;font-weight:700;color:#6ee7b7">2</td>
+              <td style="padding:10px 14px;color:var(--text)">Brad Davis, Todd Lester</td>
+              <td style="padding:10px 14px;text-align:center"><span class="scat-no-badge">No Scat</span></td>
+              <td style="padding:10px 14px;text-align:center"><span style="color:var(--faint)">—</span></td>
+            </tr><tr style="border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(110,231,183,0.04)">
+              <td style="padding:10px 14px;text-align:center;color:var(--muted);font-weight:600">H7</td>
+              <td style="padding:10px 14px;text-align:center;font-weight:700;color:#6ee7b7">2</td>
+              <td style="padding:10px 14px;color:var(--text)">Joey Bradley</td>
+              <td style="padding:10px 14px;text-align:center"><span class="scat-won-badge">Scat Won</span></td>
+              <td style="padding:10px 14px;text-align:center"><span style="font-weight:700;color:var(--gold)">$36</span></td>
+            </tr><tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+              <td style="padding:10px 14px;text-align:center;color:var(--muted);font-weight:600">H8</td>
+              <td style="padding:10px 14px;text-align:center;font-weight:700;color:#6ee7b7">2</td>
+              <td style="padding:10px 14px;color:var(--text)">Joey Bradley, Jon Williams</td>
+              <td style="padding:10px 14px;text-align:center"><span class="scat-no-badge">No Scat</span></td>
+              <td style="padding:10px 14px;text-align:center"><span style="color:var(--faint)">—</span></td>
+            </tr><tr style="border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(110,231,183,0.04)">
+              <td style="padding:10px 14px;text-align:center;color:var(--muted);font-weight:600">H9</td>
+              <td style="padding:10px 14px;text-align:center;font-weight:700;color:#6ee7b7">2</td>
+              <td style="padding:10px 14px;color:var(--text)">Joey Bradley</td>
+              <td style="padding:10px 14px;text-align:center"><span class="scat-won-badge">Scat Won</span></td>
+              <td style="padding:10px 14px;text-align:center"><span style="font-weight:700;color:var(--gold)">$36</span></td>
+            </tr></tbody>
+            </table>
+          </div>
         </div>
   <footer class="site-footer">Lebanon Golf &amp; Country Club &nbsp;·&nbsp; Par 3 Results</footer>
 <!-- LGCC:DYNAMIC_END -->
