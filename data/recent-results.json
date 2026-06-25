@@ -3,6 +3,16 @@
     {
       "label": "Club Event Result",
       "game_type": "Par 3",
+      "title": "6-24-26 Par 3",
+      "winner": "See full results",
+      "summary": "25 players competed",
+      "summary2": null,
+      "url": "/results/6-24-26-par-3-june-24-2026.html",
+      "event_date": "2026-06-24"
+    },
+    {
+      "label": "Club Event Result",
+      "game_type": "Par 3",
       "title": "6-10-26 par 3",
       "winner": "Winner: Joey Bradley ($50)",
       "summary": "30 players competed",
@@ -39,15 +49,6 @@
       "summary2": null,
       "url": "/results/par-3---51326-may-13-2026.html",
       "event_date": "2026-05-13"
-    },
-    {
-      "label": "Club Event Result",
-      "title": "Spring Fling",
-      "winner": "Flight 1: PM_4 (P. Tubbs / L. Personette / C. Mitchell / C. Moore) — 56 | Flight 2: AM_15 (E. Thompson / S. Bingham / A. Kenall / C. Shannon) — 63",
-      "summary": "2 flights — 30 teams",
-      "summary2": null,
-      "url": "/results/spring-fling-april-25-2026.html",
-      "event_date": "2026-04-25"
     }
   ]
 }
